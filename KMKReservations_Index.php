@@ -27,8 +27,7 @@
 </header>
 
 <main>
-    <section class="hero">
-       
+    <section class="hero">       
     <section class="services-section" id="services">
         <div class="section-heading">
             <p class="eyebrow">CHOOSE YOUR NEXT STEP</p>

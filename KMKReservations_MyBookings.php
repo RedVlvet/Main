@@ -21,8 +21,8 @@
         <a  href="KMKReservations_Index.php">Home</a>
         <a href="KMKReservations_Restaurants.php">Restaurants</a>
         <a href="KMKReservations_Rooms.php">Rooms</a>
-         <a  href="KMKReservations_Drivers.php">Drivers</a>
-         <a class="active" href="KMKReservations_MyBookings.php">My Bookings</a>
+        <a href="KMKReservations_Drivers.php">Drivers</a>
+        <a class="active" href="KMKReservations_MyBookings.php">My Bookings</a>
         
     </nav>
 </header>
