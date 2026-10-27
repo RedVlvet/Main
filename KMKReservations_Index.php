@@ -19,7 +19,6 @@
     <nav class="main-nav" aria-label="Main navigation">
         <img src="KMKReservations_Logo.png" style="height:130px;width:130px">
         <a class="active" href="KMKReservations_Index.php">Home</a>
-            <a class="active" href="KMKReservations_Index.php">Home</a>
         <a href="KMKReservations_Restaurants.php">Restaurants</a>
         <a href="KMKReservations_Rooms.php">Rooms</a>
         <a href="KMKReservations_Drivers.php">Drivers</a>
