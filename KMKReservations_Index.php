@@ -32,8 +32,8 @@
     <section class="services-section" id="services">
         <div class="section-heading">
             <p class="eyebrow">CHOOSE YOUR NEXT STEP</p>
-            <h2>What would you like to reserve?</h2>
-            <p>Select a service below to get started.</p>
+            <h2>What?</h2>
+            <p>Select</p>
         </div>
     </section>
 
