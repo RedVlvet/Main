@@ -49,7 +49,7 @@
             <a class="btn btn-light" href="rooms.php">Book now →</a>
         </article>
         <article class="service-card driver-card">
-            <img src = "DriverReservation.jpg" style = "height: 150px; width: 250px"> <br>
+            <img src = "DriverReservation.jpeg" style = "height: 150px; width: 250px"> <br>
             <h2>Driver Reservations</h2>
             <p>Get there safely and on time.</p>
             <a class="btn btn-light" href="drivers.php">Book now →</a>
