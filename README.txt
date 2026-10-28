@@ -5,7 +5,7 @@ Initial home page prototype by Kayla Brown
 CONTENTS
 - index.php: Home page and service cards generated from a PHP array.
 - style.css: Website colours, layout, cards, navigation and responsive styling.
-
+ffafas
 HOW TO RUN IN XAMPP
 1. Install and open XAMPP Control Panel.
 2. Click Start beside Apache.
