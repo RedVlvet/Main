@@ -1,11 +1,20 @@
+/* KMK Reservations - Website styling by Kayla Brown */
+
 * {
     box-sizing: border-box;
     margin: 0;
     padding: 0;
 }
 
+body {
+    font-family: Arial, Helvetica, sans-serif;
+    background-color: var(--light-background);
+    color: var(--dark-text);
+    line-height: 1.6;
+}
+
 :root {
-    --navy: #0D1F3C;
+    --navy: #0D1F3C; 
     --navy-light: #142F57;
     --purple: #883DDB;
     --teal: #17BEBB;
@@ -15,9 +24,295 @@
     --dark-text: #13294B;
 }
 
-body {
-    font-family: Arial, Helvetica, sans-serif;
-    background-color: var(--light-background);
-    color: var(--dark-text);
-    line-height: 1.6;
+
+
+.site-header {
+    background-color: var(--navy);
+    color: var(--white);
+    padding: 20px 6%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 24px;
+    flex-wrap: wrap;
+}
+
+.brand {
+    color: var(--white);
+    text-decoration: none;
+    display: flex;
+    flex-direction: column;
+    line-height: 1.1;
+}
+
+.brand-name {
+    font-size: 32px;
+    font-weight: 800;
+    letter-spacing: 3px;
+}
+
+.brand-subtitle {
+    font-size: 12px;
+    font-weight: bold;
+    letter-spacing: 4px;
+}
+
+.brand-slogan {
+    color: var(--teal);
+    font-size: 11px;
+    font-style: italic;
+    margin-top: 5px;
+}
+
+.main-nav {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 22px;
+}
+
+.main-nav a {
+    color: var(--white);
+    text-decoration: none;
+    font-size: 14px;
+    padding: 8px ;
+    border-bottom: 2px solid transparent;
+}
+
+.main-nav a:hover,
+.main-nav a:focus,
+.main-nav a.active {
+    color: var(--teal);
+    border-bottom-color: var(--teal);
+}
+
+.hero {
+    background: linear-gradient(120deg, var(--navy), var(--navy-light));
+    color: var(--white);
+    padding: 70px 8%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 40px;
+    min-height: 350px;
+}
+
+.hero-content {
+    max-width: 650px;
+}
+
+.eyebrow {
+    color: var(--teal);
+    font-size: 12px;
+    font-weight: bold;
+    letter-spacing: 2px;
+    margin-bottom: 12px;
+}
+
+.hero h1 {
+    font-size: clamp(30px, 4vw, 48px);
+    line-height: 1.15;
+    margin-bottom: 20px;
+}
+
+.hero-description {
+    max-width: 540px;
+    margin-bottom: 28px;
+    color: #E0E9F7;
+}
+
+.primary-button,
+.service-button {
+    display: inline-block;
+    text-decoration: none;
+    font-weight: bold;
+    border-radius: 8px;
+    padding: 12px 22px;
+    transition: opacity 0.2s ease;
+}
+
+.primary-button {
+    background-color: var(--teal);
+    color: var(--navy);
+}
+
+.primary-button:hover,
+.service-button:hover {
+    opacity: 0.85;
+}
+
+.hero-art {
+    width: 230px;
+    height: 230px;
+    flex-shrink: 0;
+    border: 3px solid var(--teal);
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.06);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    color: var(--white);
+    font-size: 40px;
+    font-weight: 800;
+    letter-spacing: 5px;
+}
+
+.art-calendar {
+    position: absolute;
+    top: 20px;
+    right: 25px;
+    color: var(--teal);
+    font-size: 38px;
+}
+
+.art-check {
+    position: absolute;
+    bottom: 20px;
+    left: 30px;
+    background: var(--purple);
+    border-radius: 50%;
+    padding: 5px 12px;
+    font-size: 26px;
+}
+
+.services-section {
+    padding: 65px 6%;
+}
+
+.section-heading {
+    text-align: center;
+    margin-bottom: 35px;
+}
+
+.section-heading h2,
+.how-it-works h2 {
+    font-size: clamp(24px, 3vw, 32px);
+    margin-bottom: 10px;
+}
+
+.section-heading > p:last-child {
+    color: #5C6C83;
+}
+
+.services-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 24px;
+}
+
+.service-card {
+    color: var(--white);
+    border-radius: 16px;
+    padding: 30px 24px;
+    min-height: 260px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    box-shadow: 0 8px 20px rgba(13, 31, 60, 0.12);
+}
+
+.service-card.purple {
+    background: linear-gradient(145deg, #883DDB, #6225B2);
+}
+
+.service-card.teal {
+    background: linear-gradient(145deg, #17BEBB, #087F89);
+}
+
+.service-card.blue {
+    background: linear-gradient(145deg, #2388F5, #145AC0);
+}
+
+.service-icon {
+    width: 64px;
+    height: 64px;
+    display: grid;
+    place-items: center;
+    border: 2px solid var(--white);
+    border-radius: 50%;
+    font-size: 30px;
+    margin-bottom: 20px;
+}
+
+.service-card h2 {
+    font-size: 21px;
+    margin-bottom: 10px;
+}
+
+.service-card p {
+    margin-bottom: 24px;
+    flex-grow: 1;
+}
+
+.service-button {
+    background-color: var(--white);
+    color: var(--navy);
+    text-align: center;
+}
+
+.how-it-works {
+    padding: 55px 6%;
+    text-align: center;
+    background-color: var(--white);
+}
+
+.steps-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 25px;
+    margin-top: 30px;
+}
+
+.step {
+    padding: 20px;
+}
+
+.step-number {
+    color: var(--purple);
+    font-size: 28px;
+    font-weight: bold;
+}
+
+.step h3 {
+    margin: 10px 0;
+}
+
+.step p {
+    color: #5C6C83;
+}
+
+.site-footer {
+    background-color: var(--navy);
+    color: var(--white);
+    text-align: center;
+    padding: 25px;
+    font-size: 13px;
+}
+
+@media (max-width: 800px) {
+    .site-header {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .main-nav {
+        gap: 14px;
+    }
+
+    .hero {
+        flex-direction: column;
+        align-items: flex-start;
+        padding: 45px 6%;
+    }
+
+    .hero-art {
+        width: 170px;
+        height: 170px;
+        font-size: 30px;
+    }
+
+    .services-grid,
+    .steps-grid {
+        grid-template-columns: 1fr;
+    }
 }
