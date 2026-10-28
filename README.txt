@@ -1,25 +1,22 @@
-KMK RESERVATIONS - STARTER PROJECT
-CWEB3401 Web Development III Using PHP
-Initial home page prototype by Kayla Brown
+Home/Index Page 
 
-CONTENTS
-- index.php: Home page and service cards generated from a PHP array.
-- style.css: Website colours, layout, cards, navigation and responsive styling
-HOW TO RUN IN XAMPP
-1. Install and open XAMPP Control Panel.
-2. Click Start beside Apache.
-3. Extract the kmk_reservations folder into C:\xampp\htdocs\
-4. Confirm index.php and style.css are directly inside:
-   C:\xampp\htdocs\kmk_reservations\
-5. Open this address in your browser:
-   http://localhost/kmk_reservations/
+The Home will provide a section where users can check their previous reservation 
+from either of the three services.
 
-NOTES
-- MySQL is not required for this initial home page prototype.
-- The Restaurants, Rooms, Drivers and My Bookings links are placeholders.
-  Their PHP pages will be developed in later stages.
-- This is not yet the complete required application. The team still needs to
-  implement database storage, booking forms and validation, login and roles,
-  record management, search/reporting, CSV export, and testing.
-- Use fictional sample records during development.
-- Keep a dated contribution record and be ready to explain the code you wrote.
+This page is the first page the user will see. 
+This is where the user gets a general feel of what the website is about.
+
+KMK Reservations provides three services:
+- They are Hotel Room Reservations
+ Where the user can tap the "explore services" button 
+ that directs them to the Hotel Room Reservation's webpage
+
+-Chauffeur Services 
+  Where the user can tap the "explore services" button 
+  that directs them to the Chauffeur Services webpage
+
+- Restaurant Reservations
+  Where the user can tap the "explore services" button 
+  that directs them to the Restaurant Reservationss webpage
+
+ 
