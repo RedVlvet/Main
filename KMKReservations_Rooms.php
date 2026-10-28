@@ -18,12 +18,11 @@
 
      <nav class="main-nav" aria-label="Main navigation">
         <img src="KMKReservations_Logo.png" style="height:130px;width:130px">
-        <a  href="KMKReservations_Index.php">Home</a>
+        <a href="KMKReservations_Index.php">Home</a>
         <a href="KMKReservations_MyBookings.php">Restaurants</a>
-        <a class="active" href="KMKReservations_MyBookings.php">Rooms</a>
-        
-         <a  href="KMKReservations_Drivers.php">Drivers</a>
-         <a  href="KMKReservations_MyBookings.php">My Bookings</a>
+        <a class="active" href="KMKReservations_MyBookings.php">Rooms</a>        
+        <a href="KMKReservations_Drivers.php">Drivers</a>
+        <a href="KMKReservations_MyBookings.php">My Bookings</a>
         
     </nav>
 </header>
