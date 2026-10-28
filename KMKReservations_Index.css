@@ -6,8 +6,15 @@
     padding: 0;
 }
 
+body {
+    font-family: Arial, Helvetica, sans-serif;
+    background-color: var(--light-background);
+    color: var(--dark-text);
+    line-height: 1.6;
+}
+
 :root {
-    --navy: #0D1F3C;
+    --navy: #0D1F3C; 
     --navy-light: #142F57;
     --purple: #883DDB;
     --teal: #17BEBB;
@@ -17,12 +24,7 @@
     --dark-text: #13294B;
 }
 
-body {
-    font-family: Arial, Helvetica, sans-serif;
-    background-color: var(--light-background);
-    color: var(--dark-text);
-    line-height: 1.6;
-}
+
 
 .site-header {
     background-color: var(--navy);
@@ -65,14 +67,14 @@ body {
 .main-nav {
     display: flex;
     flex-wrap: wrap;
-    gap: 22px;
+    gap: 40px;
 }
 
 .main-nav a {
     color: var(--white);
     text-decoration: none;
     font-size: 14px;
-    padding: 8px 0;
+    padding: 8px 12px;
     border-bottom: 2px solid transparent;
 }
 

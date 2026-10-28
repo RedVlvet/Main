@@ -1,5 +1,5 @@
 <?php
-// KMK Reservations - Home Page
+// KMK Reservations - Cauffeur Page
 
 ?>
 <!DOCTYPE html>
@@ -8,7 +8,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>KMK Reservations | Plan Your Day Your Way</title>
-    <link rel="stylesheet" href="KMKReservations_Index.css">
+    <link rel="stylesheet" href="KMKReservations_Chauffeur.css">
 </head>
 <body>
     
@@ -21,7 +21,7 @@
         <a  href="KMKReservations_Index.php">Home</a>
         <a href="KMKReservations_Restaurants.php">Restaurants</a>
         <a href="KMKReservations_Rooms.php">Rooms</a>
-        <a class="active" href="KMKReservations_Drivers.php">Drivers</a>       
+        <a class="active" href="KMKReservations_Chauffeur.php">Drivers</a>       
         <a href="KMKReservations_MyBookings.php">My Bookings</a>
     </nav>
 </header>

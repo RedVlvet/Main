@@ -13,15 +13,14 @@
 <body>
     
 
-<header class="site-header">
-    
+<header class="site-header">  
 
     <nav class="main-nav" aria-label="Main navigation">
         <img src="KMKReservations_Logo.png" style="height:130px;width:130px">
         <a class="active" href="KMKReservations_Index.php">Home</a>
         <a href="KMKReservations_Restaurants.php">Restaurants</a>
         <a href="KMKReservations_Rooms.php">Rooms</a>
-        <a href="KMKReservations_Drivers.php">Drivers</a>
+        <a href="KMKReservations_Chauffeurs.php">Drivers</a>
         <a href="KMKReservations_MyBookings.php">My Bookings</a>
     </nav>
 </header>
@@ -36,7 +35,26 @@
         </div>
     </section>
 
-    
+    <section>
+        <article class="service-card restaurant-card">
+            <img src = "RestaurantReservation.jpg" style = "height: 150px; width: 250px" > <br>
+            <h2>Restaurant Reservations</h2>
+            <p>Save a seat at your favourite spot.</p>
+            <a class="btn btn-light" href="reservations.php">Book now →</a>
+        </article>
+        <article class="service-card room-card">
+            <img src = "RoomReservation.jpg" style = "height: 150px; width: 250px"> <br>
+            <h2>Room Reservations</h2>
+            <p>Find a stay for every kind of trip.</p>
+            <a class="btn btn-light" href="rooms.php">Book now →</a>
+        </article>
+        <article class="service-card driver-card">
+            <img src = "DriverReservation.jpg" style = "height: 150px; width: 250px"> <br>
+            <h2>Driver Reservations</h2>
+            <p>Get there safely and on time.</p>
+            <a class="btn btn-light" href="drivers.php">Book now →</a>
+        </article>    
+    </section>    
 </main>
 
 <footer class="site-footer">
