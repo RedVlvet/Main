@@ -1,0 +1,14 @@
+/*GENERAL PAGE SETTINGS*/
+
+* {
+    margin: 2;
+    padding:1.5;
+    box-sizing: border-box;
+}
+
+body {
+    background-color: #00152B;
+    color: #FFFFFF;
+    font-family: Arial, sans-serif;
+    min-height: 100vh;
+}

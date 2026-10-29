@@ -61,7 +61,7 @@
         <!--Footer-->
         <footer>
             <div id="content" style="text-align: center;">
-                <p>&copy; KMK Reservations 2026 </p>
+                <p>&copy; KMK Reservations 2026. All Rights Reserved. </p>
                 <p>Plan your day your way.</p>
             </div>
         </footer>

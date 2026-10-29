@@ -11,7 +11,7 @@
     <!-- Navigation of the website-->
         <nav>
             <div class="navbar">
-                <img src="KMKReservations_Logo.png" style="height:130px;width:130px">
+                <img src="KMKReservations_Logo.png" style="height:150px;width:160px">
                 <a class = "active" href="KMKReservations_Index.php">Home</a>
                 <a href="KMKReservations_Restaurants.php">Restaurant</a>
                 <a href="KMKReservations_Rooms.php">Room</a>
@@ -20,52 +20,76 @@
             </div>
         </nav>
     
+        <h3>Your plans,perfectly reserved.</h3>
+        <p>Book restaurants, rooms and drivers all in one place.</p> 
+        <p>Fast, easy and reliable — across Jamaica.</p>
+
     <!-- Services -->
-    <section class ="services-section">
-        <h2> Choose your next step </h2>
-        <h1> What would you like to reserve? </h1>
 
-        <p> Select a service below to get started. </p>
-                    
-            <div class = "services-container">
+<section class="services-section">
 
-                <!-- Restaurant -->
-                <div class = "service-card">
+    <div class="services-heading">
+        <h1>What would you like to reserve?</h1>
+        <p>Select a service below to get started.</p>
+    </div>
 
-                    <img src = "RestaurantReservation.jpg" style = "width: 250px; height: 150px"  alt = "Restaurant">
-                
-                    <div class = "service-content">
-                        <h2> Restaurant Reservation </h2>
-                        <a href = "KMKReservations_Restaurants.php" class = "explore-btn"> Explore Service </a>
-                    </div>
-            </div>    
-            
-            <!-- Rooms --> 
-            <div class = "service-card">
-                <img src ="RoomReservation.jpg" style="width: 250px; height: 150px" alt = "Room">
+    <div class="services-container">
 
-                <div class = "service-content">
-                    <h2> Room Reservation </h2>
-                    <a href = "KMKReservations_Rooms.php" class = "explore-btn"> Explore Service </a>
-                </div>
+        <!-- Restaurant Card -->
+        <div class="service-card restaurant-card">
+
+            <div class="service-image">
+                <img src="RestaurantReservation.jpg" alt="Restaurant reservation">
             </div>
 
-            <!-- Driver --> 
-            <div class = "service-card">
-                <img src = "DriverReservation.jpeg" style = "width: 250px; height: 150px" alt = "Driver">
+            <div class="service-content">
+                <h2>Restaurant Reservation</h2>
+                <p>
+                    Find and reserve a table at your favourite restaurant.
+                </p>
+                <a href="KMKReservations_Restaurants.php" class="explore-btn">
+                    Explore Service
+                </a>
+            </div>
+        </div>
 
-                <div class = "service-content">
-                    <h2> Driver Reservation </h2>
-                    <a href = "KMKReservations_Chauffeur.php" class = "explore-btn"> Explore Service </a>
-                </div>          
-            </div>       
-    </section>
+        <!-- Room/Hotel Section -->
+        <div class="service-card room-card">
 
-   
+            <div class="service-image">
+                <img src="RoomReservation.jpg" alt="Hotel room reservation">
+            </div>
+            <div class="service-content">
+                <h2>Room Reservation</h2>
+                <p>
+                    Find and reserve a comfortable room for your stay.
+                </p>
+                <a href="KMKReservations_Rooms.php" class="explore-btn">
+                    Explore Service
+                </a>
+            </div>
+        </div>
 
-    
+        <!-- Driver Section -->
+        <div class="service-card driver-card">
+            <div class="service-image">
+                <img src="DriverReservation.jpeg" alt="Driver reservation">
+            </div>
+            <div class="service-content">
+                <h2>Driver Reservation</h2>
+                <p>
+                    Book a reliable driver for your journey.
+                </p>
+                <a href="KMKReservations_Chauffeur.php" class="explore-btn">
+                    Explore Service 
+                </a>
+            </div>
 
-    
+        </div>
+
+    </div>
+
+</section>
 
     <!-- Draws a horizontal line at the bottom of the page --> 
     <hr> 
@@ -73,7 +97,7 @@
     <!--Footer-->
     <footer>
         <div id="content" style="text-align: center;">
-            <p>&copy; KMK Reservations 2026 </p>
+            <p>&copy; KMK Reservations 2026. All Rights Reserved. </p>
             <p>Plan your day your way.</p>
         </div>
     </footer>
