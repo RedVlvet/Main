@@ -1,0 +1,24 @@
+// what data will be collected in each website or displayed
+
+home/index
+-Display: Info about KMKreservations, small over view of the services we offer
+- If the user is logged in display previous bookings
+
+Restaurants
+- Display: restaurant Info(Name, Location, Menu, Driver Cost, Drivers in that area)
+- Collect: (Customer ID, Customer Name, Restaurant Name, Restaurant location, selected driver and date/time of the lunch )
+
+Rooms
+- Display: Room Type, Location, Occuancy Status, Room Size, Room Cost, Room rating from customers
+- Collect: Customer ID, Customer name, Room information, update room Occupancy status
+- Add cost to bill, Duration of stay 
+
+Chauffer
+- Display (Driver Name, Location Speciality,Driver rating, Cost of Drive/Per mile rate, Type of car)
+- Collect CustomerID, CustomerName, Driver ID, DriverName, Add cost to bill
+
+Bookings
+- When the customer selects what they want from the other tabs display a reservation overview 
+- that when clicked on gives on show what the customer has requested and the total cost of it all.
+- When the duration of stay is up prompt them asking if they would like the extend it or finialise bookings
+- When Bookings are up a displaybill button should display on the bookings tab a bill with a small breakdown of the total
