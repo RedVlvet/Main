@@ -1,23 +1,14 @@
-* {
-    box-sizing: border-box;
-    margin: 0;
-    padding: 0;
-}
+/*GENERAL PAGE SETTINGS*/
 
-:root {
-    --navy: #0D1F3C;
-    --navy-light: #142F57;
-    --purple: #883DDB;
-    --teal: #17BEBB;
-    --blue: #2388F5;
-    --white: #FFFFFF;
-    --light-background: #F3F6FC;
-    --dark-text: #13294B;
+* {
+    margin: 2;
+    padding:1.5;
+    box-sizing: border-box;
 }
 
 body {
-    font-family: Arial, Helvetica, sans-serif;
-    background-color: var(--light-background);
-    color: var(--dark-text);
-    line-height: 1.6;
+    background-color: #00152B;
+    color: #FFFFFF;
+    font-family: Arial, sans-serif;
+    min-height: 100vh;
 }
