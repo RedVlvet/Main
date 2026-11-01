@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
      <title> KMK Reservation Home Page </title>
     <link rel="stylesheet" href="KMKReservations_MyBookings.css">
+    <link rel="stylesheet" href="KMKReservations_Index.css">
 </head>
     <body>
        <!-- Navigation of the website-->
