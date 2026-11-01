@@ -8,21 +8,13 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>KMK Reservations Drivers </title>
-    <link rel="stylesheet" href="KMKReservations_Chauffeur.css">
+    <link rel="stylesheet" href="KMKReservations_Index.css">
+    <link rel="stylesheet" href="KMKReservations_Chauffer.css">
 </head>
 <body>
 
     <!-- Drivers Tab -->
-    <section id = "hotel" class="service-section">
-
-        <h1> Driver Reservations <//h1>
-
-        <p>
-            Book your ride with a driver of your choice.
-        </p>
-
-        <!-- Form section that the client will interact with-->
-    </section>
+    
     
 
 <header class="site-header">
@@ -30,7 +22,7 @@
     <!-- Navigation of the website-->
         <nav>
             <div class="navbar">
-                <img src="KMKReservations_Logo.png" style="height:130px;width:130px">
+                <img src="KMKReservations_Logo2.png" style="width:180px">
                 <a href="KMKReservations_Index.php">Home</a>
                 <a href="KMKReservations_Restaurants.php">Restaurant</a>
                 <a href="KMKReservations_Rooms.php">Room</a>
@@ -42,6 +34,16 @@
 
 <main>
     <section class="hero">
+    <section id = "hotel" class="service-section">
+
+        <h1> Driver Reservations <//h1>
+
+        <p>
+            Book your ride with a driver of your choice.
+        </p>
+
+        <!-- Form section that the client will interact with-->
+    </section>
        
     <section class="services-section" id="services">
         <div class="section-heading">

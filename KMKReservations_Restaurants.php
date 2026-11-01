@@ -4,13 +4,14 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title> KMK Reservation Restaurants Page </title>
+    <link rel="stylesheet" href="KMKReservations_Index.css">
     <link rel="stylesheet" href="KMKReservations_Restaurants.css">
 </head>
     <body>
        <!-- Navigation of the website-->
         <nav>
             <div class="navbar">
-                <img src="KMKReservations_Logo.png" style="height:130px;width:130px">
+                <img src="KMKReservations_Logo2.png" style="width:180px">
                 <a href="KMKReservations_Index.php">Home</a>
                 <a class = "active" href="KMKReservations_Restaurants.php">Restaurant</a>
                 <a href="KMKReservations_Rooms.php">Room</a>

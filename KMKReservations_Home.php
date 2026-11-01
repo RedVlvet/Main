@@ -11,7 +11,7 @@
     <!-- Navigation of the website-->
         <nav>
             <div class="navbar">
-                <img src="KMKReservations_Logo.png" style="height:150px;width:160px">
+                <img src="KMKReservations_Logo2.png" style="width:180px">
                 <a class = "active" href="KMKReservations_Index.php">Home</a>
                 <a href="KMKReservations_Restaurants.php">Restaurant</a>
                 <a href="KMKReservations_Rooms.php">Room</a>
@@ -22,7 +22,7 @@
     
         <h3>Your plans,perfectly reserved.</h3>
         <p>Book restaurants, rooms and drivers all in one place.</p> 
-        <p>Fast, easy and reliable — across Jamaica.</p>
+        <p>Fast, easy and reliable across Jamaica.</p>
 
     <!-- Services -->
 
@@ -88,7 +88,53 @@
         </div>
 
     </div>
+</section>
+<section>
+    <div class = "info">
+        <h1 >What We Do </h1>        
+        <ul>            
+            <li>
+                🍽️ Restaurant Reservations
+                Book tables at restaurants based on your preferred date and time.
+            </li>
+            <br>   
 
+            <li>
+                🏨 Hotel Reservations
+                Find and reserve rooms for stays, whether for a short visit or longer trip.
+            </li>
+            <br>  
+            
+            <li>
+                🚗 Driver Reservations
+                Book a driver for transportation when you need a convenient way to get around.
+            </li>
+            <br>  
+
+            <li>
+                📅 Appointment Booking
+                Schedule services and appointments without having to make multiple phone calls.
+            </li>
+            <br>
+
+            <li>
+                🔔 Booking Management
+                Keep track of your reservations and appointment details in one place.
+            </li>
+            <br>                                    
+        </ul>        
+    <div>
+        <h1> About Us </h1>
+
+        </ol>
+            <ul>
+                KMK Reservations is an online reservation and appointment booking platform designed to make planning easier and more convenient. 
+                Our goal is to give customers one simple place to manage reservations for restaurants, hotels, and drivers. 
+                We help users save time by making the booking process quick, organized, and accessible.
+            </ul>
+        </ol>
+    </div>
+    </div>  
 </section>
 
     <!-- Draws a horizontal line at the bottom of the page --> 
