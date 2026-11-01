@@ -64,6 +64,15 @@ h1, h2, h3 {
     font-weight: bold;
 }
 
+/*Sticky section for navigation bar */
+nav{
+    position: -webkit-sticky;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    margin: 0;
+}
+
 
 
 @media (max-width: 400px) {
@@ -282,9 +291,3 @@ h1, h2, h3 {
     color: #A0AEC0;
     font-size: 14px;
 }
-
-
-
-
-
-
