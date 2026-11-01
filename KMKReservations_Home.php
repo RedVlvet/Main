@@ -4,15 +4,15 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title> KMK Reservation Home Page </title>
-    <link rel="stylesheet" href="KMKReservations_Index.css">
+    <link rel="stylesheet" href="KMKReservations_Home.css">
 </head>
 <body>
 
-    <!-- Navigation of the website-->
+    
         <nav>
             <div class="navbar">
-                <img src="KMKReservations_Logo2.png" style="width:180px">
-                <a class = "active" href="KMKReservations_Index.php">Home</a>
+                <img src="KMKReservations_Logo2.png" style="width:150px">
+                <a class = "active" href="KMKReservations_Home.php">Home</a>
                 <a href="KMKReservations_Restaurants.php">Restaurant</a>
                 <a href="KMKReservations_Rooms.php">Room</a>
                 <a href="KMKReservations_Chauffeur.php">Drivers</a>
@@ -24,7 +24,7 @@
         <p>Book restaurants, rooms and drivers all in one place.</p> 
         <p>Fast, easy and reliable across Jamaica.</p>
 
-    <!-- Services -->
+   
 
 <section class="services-section">
 
@@ -35,7 +35,7 @@
 
     <div class="services-container">
 
-        <!-- Restaurant Card -->
+        
         <div class="service-card restaurant-card">
 
             <div class="service-image">
@@ -53,7 +53,7 @@
             </div>
         </div>
 
-        <!-- Room/Hotel Section -->
+        
         <div class="service-card room-card">
 
             <div class="service-image">
@@ -94,31 +94,31 @@
         <h1 >What We Do </h1>        
         <ul>            
             <li>
-                🍽️ Restaurant Reservations
+                Restaurant Reservations
                 Book tables at restaurants based on your preferred date and time.
             </li>
             <br>   
 
             <li>
-                🏨 Hotel Reservations
+                Hotel Reservations
                 Find and reserve rooms for stays, whether for a short visit or longer trip.
             </li>
             <br>  
             
             <li>
-                🚗 Driver Reservations
+                Driver Reservations
                 Book a driver for transportation when you need a convenient way to get around.
             </li>
             <br>  
 
             <li>
-                📅 Appointment Booking
+                Appointment Booking
                 Schedule services and appointments without having to make multiple phone calls.
             </li>
             <br>
 
             <li>
-                🔔 Booking Management
+                Booking Management
                 Keep track of your reservations and appointment details in one place.
             </li>
             <br>                                    
@@ -137,10 +137,10 @@
     </div>  
 </section>
 
-    <!-- Draws a horizontal line at the bottom of the page --> 
+    
     <hr> 
 
-    <!--Footer-->
+    
     <footer>
         <div id="content" style="text-align: center;">
             <p>&copy; KMK Reservations 2026. All Rights Reserved. </p>
