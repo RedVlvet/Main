@@ -4,16 +4,16 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title> KMK Reservation Rooms Page </title>
-    <link rel="stylesheet" href="KMKReservations_Index.css">
+    <link rel="stylesheet" href="KMKReservations_Home.css">
     <link rel="stylesheet" href="KMKReservations_Rooms.css">
-    <link rel="stylesheet" href="KMKReservations_Index.css">
+    
 </head>
     <body>
-        <!-- Navigation of the website-->
+        
         <nav>
             <div class="navbar">
-                <img src="KMKReservations_Logo2.png" style="width:180px">
-                <a href="KMKReservations_Index.php">Home</a>
+                <img src="KMKReservations_Logo2.png" style="width:150px">
+                <a href="KMKReservations_Home.php">Home</a>
                 <a href="KMKReservations_Restaurants.php">Restaurant</a>
                 <a class = "active" href="KMKReservations_Rooms.php">Room</a>
                 <a href="KMKReservations_Chauffeur.php">Drivers</a>
@@ -23,7 +23,7 @@
 
 
     
-      <!-- Room Tab -->
+      
         <section id = "hotel" class="service-section">
 
             <h1> Room Reservations <//h1>
@@ -32,14 +32,14 @@
                 Find and reserve a room that suits your needs.
             </p>
 
-            <!-- Form section that the client will interact with-->
+            
         </section>  
 
         
-        <!-- Draws a horizontal line at the bottom of the page --> 
+         
         <hr> 
 
-        <!--Footer-->
+        
         <footer>
             <div id="content" style="text-align: center;">
                 <p>&copy; KMK Reservations 2026.All Rights Reserved. </p>
