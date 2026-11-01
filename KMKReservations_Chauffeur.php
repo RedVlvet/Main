@@ -22,7 +22,7 @@
     
         <nav>
             <div class="navbar">
-                <img src="KMKReservations_Logo2.png" style="width:150px">
+                <img src="KMKReservations_Logo.png" style="width:150px">
                 <a href="KMKReservations_Home.php">Home</a>
                 <a href="KMKReservations_Restaurants.php">Restaurant</a>
                 <a href="KMKReservations_Rooms.php">Room</a>
