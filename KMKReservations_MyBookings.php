@@ -1,3 +1,7 @@
+<?php
+
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -17,7 +21,8 @@
                 <a href="KMKReservations_Restaurants.php">Restaurant</a>
                 <a href="KMKReservations_Rooms.php">Room</a>
                 <a href="KMKReservations_Chauffeur.php">Drivers</a>
-                <a class = "active" href="KMKReservations_MyBookings.php">My Bookings</a>
+                <a class = "active" href="KMKReservations_MyBookings.php">My Bookings</a>\
+                <a href="KMKReservations_MyProfile.php">My Profile</a>
             </div>
         </nav>
         
