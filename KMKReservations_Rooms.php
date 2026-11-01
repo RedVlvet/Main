@@ -6,6 +6,7 @@
     <title> KMK Reservation Rooms Page </title>
     <link rel="stylesheet" href="KMKReservations_Index.css">
     <link rel="stylesheet" href="KMKReservations_Rooms.css">
+    <link rel="stylesheet" href="KMKReservations_Index.css">
 </head>
     <body>
         <!-- Navigation of the website-->

@@ -6,6 +6,7 @@
      <title> KMK Reservation Home Page </title>
     <link rel="stylesheet" href="KMKReservations_Index.css">
     <link rel="stylesheet" href="KMKReservations_MyBookings.css">
+    <link rel="stylesheet" href="KMKReservations_Index.css">
 </head>
     <body>
        <!-- Navigation of the website-->
