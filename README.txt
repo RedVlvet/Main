@@ -9,6 +9,7 @@ This is where the user gets a general feel of what the website is about.
 - User Account
 This is where the user's data will be stored to include:
 * email
+* Password
 * Phone number
 
 
