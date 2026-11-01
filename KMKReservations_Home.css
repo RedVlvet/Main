@@ -29,7 +29,7 @@ h1, h2, h3 {
     display: flex;
     align-items: center;
     background-color: #001F3C;
-    padding: 10px 24px;
+    padding: 1px 100px;
     border-bottom: 2px solid #17BEBB;
 }
 
@@ -73,8 +73,6 @@ nav{
     margin: 0;
 }
 
-
-
 @media (max-width: 400px) {
 
     
@@ -117,8 +115,6 @@ nav{
     }
 }
 
-
-
 /*SERVICES SECTION */
 .services-section {
     width: 95%;
@@ -144,7 +140,6 @@ nav{
     font-size: 16px;
 }
 
-
 /* CONTAINER*/
 .services-container {
     display: flex;
@@ -154,7 +149,6 @@ nav{
 }
 
 /* SERVICE CARD*/
-
 .service-card {
     width: 300px;
     border-radius: 15px;
@@ -163,7 +157,6 @@ nav{
     box-shadow: 0 5px 15px rgba(0, 0, 0, 0.25);
     transition: 0.3s ease;
 }
-
 
 .service-card:hover {
     transform: translateY(-8px);
@@ -209,7 +202,6 @@ nav{
     background-color: #1D4ED8;
 }
 
-
 .service-image {
     width: 100%;
     height: 190px;
@@ -222,7 +214,6 @@ nav{
     object-fit: cover;
     display: block;
 }
-
 
 .service-content {
     padding: 25px;
@@ -276,8 +267,6 @@ nav{
 .info li span {
     display: block;              
 }
-
-
 
 .footer-bottom {
     max-width: 1200px;
