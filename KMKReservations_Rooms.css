@@ -1,170 +1,124 @@
 
-/* ===== KMK Reservations - Rooms page (teal theme) ===== */
-:root {
-    --theme-bg: #17B1BB;
-    --theme-accent: #2DD4BF;
-    --theme-button: #0EA5A4;
-    --nav-bg: #0D1F5C;
-    --nav-text: #FFFFFF;
-    --nav-muted: #A0AEC0;
-    --page-bg: #EEF9F9;
-    --card-bg: #FFFFFF;
-    --text: #0F3A3D;
-    --border: #CDEBEC;
-}
-
-* { box-sizing: border-box; margin: 0; padding: 0; }
-
 body {
-    font-family: "Segoe UI", Arial, sans-serif;
-    background: var(--page-bg);
-    color: var(--text);
+    background-color: #00152B;
+    color: #FFFFFF;
+    font-family: Arial, sans-serif;
     min-height: 100vh;
-    display: flex;
-    flex-direction: column;
 }
 
-/* ----- Navigation ----- */
-.site-nav {
-    background: var(--nav-bg);
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 10px 40px;
-}
-.nav-brand img { height: 56px; display: block; }
-.nav-links { display: flex; align-items: center; gap: 28px; }
-.nav-links a {
-    color: var(--nav-text);
-    text-decoration: none;
-    font-size: 0.9rem;
-    padding-bottom: 4px;
-    border-bottom: 2px solid transparent;
-}
-.nav-links a:hover { color: var(--nav-muted); }
-.nav-links a.active { border-bottom-color: var(--theme-accent); color: var(--theme-accent); }
-.nav-account { font-size: 1.2rem !important; }
-
-/* ----- Hero banner ----- */
-.page-hero {
-    background: linear-gradient(120deg, var(--theme-bg), #0E7C86);
-    color: #fff;
-    display: flex;
-    align-items: center;
-    gap: 20px;
-    padding: 34px 40px;
-}
-.hero-icon {
-    width: 68px; height: 68px;
-    border: 3px solid #fff;
-    border-radius: 50%;
-    display: grid;
-    place-items: center;
-    font-size: 2rem;
-    flex-shrink: 0;
-}
-.page-hero h1 { font-size: 1.7rem; margin-bottom: 4px; }
-.page-hero p { color: #D9F7F5; font-size: 0.95rem; }
-
-/* ----- Search bar ----- */
-.search-bar {
-    background: var(--card-bg);
-    border: 1px solid var(--border);
-    border-radius: 12px;
-    max-width: 1000px;
-    margin: -22px auto 0;
-    padding: 18px 20px;
-    display: flex;
-    flex-wrap: wrap;
-    align-items: flex-end;
-    gap: 16px;
-    box-shadow: 0 6px 18px rgba(14, 165, 164, 0.15);
-    position: relative;
-}
-.search-field { flex: 1 1 160px; }
-.search-field label { display: block; font-size: 0.8rem; font-weight: 600; margin-bottom: 6px; }
-.search-field input,
-.search-field select {
-    width: 100%;
-    padding: 10px 12px;
-    border: 1px solid var(--border);
-    border-radius: 8px;
-    font-size: 0.92rem;
-    color: var(--text);
-    background: #fff;
-}
-.search-field input:focus,
-.search-field select:focus {
-    outline: 3px solid rgba(45, 212, 191, 0.45);
-    border-color: var(--theme-accent);
-}
-.btn-search {
-    background: var(--theme-button);
-    color: #fff;
-    border: none;
-    border-radius: 8px;
-    padding: 11px 32px;
-    font-size: 0.95rem;
-    font-weight: 600;
-    cursor: pointer;
-}
-.btn-search:hover { background: var(--theme-bg); }
-
-/* ----- Listing section ----- */
-.listing {
-    flex: 1;
-    width: 100%;
-    max-width: 1000px;
-    margin: 32px auto;
-    padding: 0 20px;
-}
-.section-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: baseline;
-    margin-bottom: 16px;
-}
-.section-header h2 { font-size: 1.2rem; }
-.view-all { color: var(--theme-button); font-size: 0.85rem; font-weight: 600; text-decoration: none; }
-.view-all:hover { text-decoration: underline; }
-
-.card-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(210px, 1fr));
-    gap: 20px;
-}
-.card {
-    background: var(--card-bg);
-    border: 1px solid var(--border);
-    border-radius: 12px;
-    overflow: hidden;
-    display: flex;
-    flex-direction: column;
-}
-.card img { width: 100%; height: 130px; object-fit: cover; display: block; background: var(--border); }
-.card-body { padding: 14px; display: flex; flex-direction: column; gap: 6px; flex: 1; }
-.card-title { font-size: 1rem; font-weight: 700; }
-.card-location { font-size: 0.82rem; color: #4F7C80; }
-.card-rating { font-size: 0.82rem; color: #4F7C80; }
-.card-rating .star { color: var(--theme-accent); }
-.card-price { font-size: 0.85rem; font-weight: 600; }
-
-.btn-book {
-    margin-top: auto;
-    display: block;
-    width: 100%;
-    background: var(--theme-button);
-    color: #fff;
+/* headings */
+h1, h2, h3 {
+    color: #FFFFFF;
     text-align: center;
-    text-decoration: none;
-    border: none;
-    border-radius: 8px;
-    padding: 10px;
-    font-size: 0.9rem;
-    font-weight: 600;
-    cursor: pointer;
 }
-.btn-book:hover { background: var(--theme-bg); }
+
+.info{
+    width: 95%;
+    max-width: 1400px;
+    margin: 30px auto;
+    padding: 60px 20px;
+    text-align: center;
+    margin-bottom: 40px;
+    color: #FFFFFF;
+    font-size: 16px;
+    margin-bottom: 10px;
+}
+
+
+
+
+
+
+/* Navigation bar */
+.navbar {
+    display: flex;
+    align-items: center;
+    background-color: #001F3C;
+    padding: 1px 100px;
+    border-bottom: 2px solid #17BEBB;
+    width: 100dvw;
+    font-size: 0.8rem;
+}
+
+.navbar img {
+ justify-content: start;
+ margin-right: 20%;
+}
+
+/* Style for navigation tabs */
+.navbar a {
+    color: #FFFFFF;
+    text-decoration: none;
+    padding: 10px 18px;
+    margin: 0;
+    border-radius: 20px;
+    background-color: #001F3C;
+    transition: background-color 0.3s ease, color 0.3s ease;
+    font-weight: bold;
+    text-align: center;
+}
+
+/* Hover for tabs */
+.navbar a:hover {
+    background-color: #001F3C;
+    color: #B5A9D6;
+}
+
+/* Active tab   */
+.navbar a.active {
+    background-color: white;
+    color: #A855F7;
+    font-weight: bold;
+}
+
+
+
+.image-container {
+    position: relative;
+    width: 60%;               /* smaller image */
+    max-width: 700px;
+    margin: 0 auto;           /* centred */
+}
+
+.image-container img {
+    width: 100%;
+    height: 300px;            /* banner height */
+    object-fit: cover;        /* crops instead of stretching */
+    display: block;
+    border-radius: 15px;
+}
+
+/* dark overlay so the text is readable */
+.image-container::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.4);
+    border-radius: 15px;
+}
+
+.image-text {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+    color: #FFFFFF;
+    width: 90%;
+    z-index: 1;               /* sits above the overlay */
+}
+
+.image-text h1 {
+    font-size: 32px;
+    margin: 0 0 10px;
+    text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.7);
+}
+
+.image-text p {
+    font-size: 16px;
+    margin: 0;
+    text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.7);
+}
 
 /* ----- Footer ----- */
 .site-footer {
@@ -174,12 +128,5 @@ body {
     padding: 24px 20px;
     font-style: italic;
 }
-.footer-small { color: var(--nav-muted); font-size: 0.8rem; font-style: normal; margin-top: 6px; }
 
-/* ----- Mobile ----- */
-@media (max-width: 760px) {
-    .site-nav { flex-direction: column; gap: 10px; padding: 12px 16px; }
-    .nav-links { flex-wrap: wrap; justify-content: center; gap: 16px; }
-    .page-hero { padding: 26px 20px; }
-    .search-bar { margin: -16px 16px 0; }
-}
+.footer-small { color: var(--nav-muted); font-size: 0.8rem; font-style: normal; margin-top: 6px; }

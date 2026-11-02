@@ -1,5 +1,5 @@
 <?php
-
+    session_start();
 ?>
 
 <!DOCTYPE html>
@@ -19,7 +19,7 @@
                     <a href="KMKReservations_Rooms.php">Room</a>
                     <a href="KMKReservations_Chauffeur.php">Drivers</a>
                     <a href="KMKReservations_MyBookings.php">My Bookings</a>
-                    <a href="KMKReservations_MyProfile.php">My Profile</a>
+                    <a href="KMKReservations_Account.php">Account</a>
                 </div>
             </nav>
 
@@ -82,7 +82,7 @@
                     <div class="service-card restaurant-card">
 
                         <div class="service-image">
-                            <img src="RestaurantReservation.jpg" alt="Restaurant reservation">
+                            <img src="RestaurantReservations.jpg" alt="Restaurant reservation">
                         </div>
 
                         <div class="service-content">
@@ -147,11 +147,9 @@
         <hr> 
             
         <!-- footer with copyright and slogan-->    
-        <footer>
-            <div id="content" style="text-align: center;">
-                <p>&copy; KMK Reservations 2026. All Rights Reserved. </p>
-                <p>Plan your day your way.</p>
-            </div>
+        <footer class="site-footer">
+            <p>Plan your day your way.</p>
+            <p class="footer-small">&copy; 2026 KMK Reservations</p>
         </footer>
     </body>
 </html>

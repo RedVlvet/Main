@@ -1,5 +1,5 @@
 <?php
-
+    session_start();
 
 ?>
 <!DOCTYPE html>
@@ -8,7 +8,6 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>KMK Reservations Drivers </title>
-        <link rel="stylesheet" href="KMKReservations_Home.css">
         <link rel="stylesheet" href="KMKReservations_Chauffeur.css">
     </head>
     <body> 
@@ -24,42 +23,29 @@
                     <a href="KMKReservations_Rooms.php">Room</a>
                     <a class = "active" href="KMKReservations_Chauffeur.php">Drivers</a>
                     <a href="KMKReservations_MyBookings.php">My Bookings</a>
-                    <a href="KMKReservations_MyProfile.php">My Profile</a>
+                    <a href="KMKReservations_Account.php">Account</a>
                 </div>
             </nav>
         </header>
 
-        <main>
-            <section class="hero">
-            <section id = "hotel" class="service-section">
+        
+            <section id="driver" class="service-section">
+                <div class="image-container">
+                    <img src="DriverReservation.jpeg" alt="Driver Image">
 
-                <h1> Driver Reservations <//h1>
-
-                <p>
-                    Book your ride with a driver of your choice.
-                </p>
-
-                
-            </section>
-            
-            <section class="services-section" id="services">
-                <div class="section-heading">
-                    <p class="eyebrow">CHOOSE YOUR NEXT STEP</p>
-                    <h2>What would you like to reserve?</h2>
-                    <p>Select a service below to get started.</p>
+                    <div class="image-text">
+                        <h1>Driver Reservations</h1>
+                        <p>Book a reliable driver for your journey.</p>
+                    </div>
                 </div>
             </section>
-
-            
-        </main>
             
         <hr>
         
-        <footer>
-            <div id="content" style="text-align: center;">
-                <p>&copy; KMK Reservations 2026. All Rights Reserved. </p>
-                <p>Plan your day your way.</p>
-            </div>
+        <!-- footer with copyright and slogan-->    
+        <footer class="site-footer">
+            <p>Plan your day your way.</p>
+            <p class="footer-small">&copy; 2026 KMK Reservations</p>
         </footer>
     </body>
 </html>

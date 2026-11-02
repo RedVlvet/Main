@@ -19,6 +19,13 @@ KMK Reservations provides three services:
   Where the user can tap the "explore services" button 
   that directs them to the Restaurant Reservationss webpage
 
+  Page Color
+  Background:#
+  Accent:#
+  Button:#
+  Text:#
+
+
 - Hotel Room Reservations
  Where the user can tap the "explore services" button 
  that directs them to the Hotel Room Reservation's webpage
@@ -30,4 +37,8 @@ KMK Reservations provides three services:
 - My Bookings
   This is where the user can check their previous and current Reservations
   which includes the date the reservation was made and other information entered in by the user.
+
+
+
+
 
