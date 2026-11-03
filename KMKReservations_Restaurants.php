@@ -7,7 +7,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    
+    <title>Restaurants | KMK Reservations</title>
     <link rel="stylesheet" href="KMKReservations_Restaurants.css">
     
 </head>
