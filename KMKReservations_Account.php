@@ -19,6 +19,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>My Account | KMK Reservations</title>
+    <link rel="stylesheet" href="KMKReservations_Home.css">
     <link rel="stylesheet" href="KMKReservations_Account.css">
 </head>
 <body>

@@ -11,17 +11,19 @@
         <link rel="stylesheet" href="KMKReservations_Home.css">
     </head>
         <body>    
-            <nav>
-                <div class="navbar">
-                    <img src="KMKReservations_Logo.png" style="width:150px">
-                    <a class = "active" href="KMKReservations_Home.php">Home</a>
+            <header class="site-nav">
+                <a href="KMKReservations_Home.php" class="nav-brand">
+                    <img src="KMKReservations_Logo.png" alt="KMK Reservations logo">
+                </a>
+                <nav class="nav-links">
+                    <a class="active" href="KMKReservations_Home.php">Home</a>
                     <a href="KMKReservations_Restaurants.php">Restaurant</a>
                     <a href="KMKReservations_Rooms.php">Room</a>
                     <a href="KMKReservations_Chauffeur.php">Drivers</a>
                     <a href="KMKReservations_MyBookings.php">My Bookings</a>
-                    <a href="KMKReservations_Account.php">Account</a>
-                </div>
-            </nav>
+                    <a href="KMKReservations_Account.php" class="nav-account" aria-label="My account">&#128100;</a>
+                </nav>
+            </header>
 
             <section style="text-align: center;">
                 <div>

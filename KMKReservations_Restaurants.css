@@ -1,130 +1,185 @@
-
-body {
-    background-color: #00152B;
-    color: #FFFFFF;
-    font-family: Arial, sans-serif;
-    min-height: 100vh;
-}
-
-/* headings */
-h1, h2, h3 {
-    color: #FFFFFF;
-    text-align: center;
-}
-
-.info{
-    width: 95%;
-    max-width: 1400px;
-    margin: 30px auto;
-    padding: 60px 20px;
-    text-align: center;
-    margin-bottom: 40px;
-    color: #FFFFFF;
-    font-size: 16px;
-    margin-bottom: 10px;
+:root {
+    --restaurant-purple: #883DDB;
+    --restaurant-purple-dark: #6028D9;
+    --restaurant-page: #F4F6FC;
+    --restaurant-text: #1B2559;
+    --restaurant-muted: #68728F;
 }
 
 
 
 
 
-/* Navigation bar */
-.navbar {
+.restaurant-main {
+    flex: 1;
+    width: 100%;
+    padding-bottom: 48px;
+}
+/*This makes the purple banner */
+.Restaurant_Banner {
+    min-height: 170px;
     display: flex;
     align-items: center;
-    background-color: #001F3C;
-    padding: 1px 100px;
-    border-bottom: 2px solid #17BEBB;
-    width: 100dvw;
-    font-size: 0.8rem;
-}
-
-.navbar img {
- justify-content: start;
- margin-right: 20%;
-}
-
-/* Style for navigation tabs */
-.navbar a {
+    gap: 20px;
+    padding: 28px clamp(20px, 5vw, 72px);
     color: #FFFFFF;
-    text-decoration: none;
-    padding: 10px 18px;
-    margin: 0;
-    border-radius: 20px;
-    background-color: #001F3C;
-    transition: background-color 0.3s ease, color 0.3s ease;
-    font-weight: bold;
-    text-align: center;
-}
-
-/* Hover for tabs */
-.navbar a:hover {
-    background-color: #001F3C;
-    color: #B5A9D6;
-}
-
-/* Active tab   */
-.navbar a.active {
-    background-color: white;
-    color: #A855F7;
-    font-weight: bold;
+    background: rgba(136, 61, 219, 0.92);
 }
 
 
-.image-container {
-    position: relative;
-    width: 60%;               /* smaller image */
-    max-width: 700px;
-    margin: 0 auto;           /* centred */
+
+.restaurant-hero-copy h1 {
+    margin: 0 0 7px;
+    color: #FFFFFF;
+    font-size: clamp(1.5rem, 3vw, 2rem);
+    text-align: left;
 }
 
-.image-container img {
-    width: 100%;
-    height: 300px;            /* banner height */
-    object-fit: cover;        /* crops instead of stretching */
+.restaurant-hero-copy p {
+    color: #F1E8FF;
+    font-size: 0.98rem;
+}
+
+.popular-restaurants {
+    width: min(1200px, 100%);
+    margin: 34px auto 0;
+    padding: 0 24px;
+}
+
+.popular-restaurants-heading {
+    display: flex;
+    align-items: end;
+    justify-content: space-between;
+    gap: 16px;
+    margin-bottom: 18px;
+}
+
+.popular-restaurants-heading h2 {
+    margin-bottom: 6px;
+    color: var(--restaurant-text);
+    font-size: 1.4rem;
+    text-align: left;
+}
+
+.popular-restaurants-heading p {
+    color: var(--restaurant-muted);
+    font-size: 0.92rem;
+}
+
+.restaurant-grid {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 18px;
+}
+
+.restaurant-card {
+    min-width: 0;
+    overflow: hidden;
+    border: 1px solid #E1E5F0;
+    border-radius: 12px;
+    background: #FFFFFF;
+    transition: transform 0.2s ease;
+}
+
+.restaurant-card:hover {
+    transform: translateY(-4px);
+}
+
+.restaurant-photo {
     display: block;
-    border-radius: 15px;
+    width: 100%;
+    height: 142px;
+    object-fit: cover;
 }
 
-/* dark overlay so the text is readable */
-.image-container::after {
-    content: "";
-    position: absolute;
-    inset: 0;
-    background: rgba(0, 0, 0, 0.4);
-    border-radius: 15px;
+.restaurant-photo-one {
+    object-position: 12% center;
 }
 
-.image-text {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    text-align: center;
-    color: #FFFFFF;
-    width: 90%;
-    z-index: 1;               /* sits above the overlay */
+.restaurant-photo-two {
+    object-position: 38% center;
 }
 
-.image-text h1 {
-    font-size: 32px;
-    margin: 0 0 10px;
-    text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.7);
+.restaurant-photo-three {
+    object-position: 65% center;
 }
 
-.image-text p {
-    font-size: 16px;
-    margin: 0;
-    text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.7);
+.restaurant-photo-four {
+    object-position: 90% center;
 }
 
-/* ----- Footer ----- */
-.site-footer {
-    background: var(--nav-bg);
-    color: var(--nav-text);
-    text-align: center;
-    padding: 24px 20px;
-    font-style: italic;
+.restaurant-card-content {
+    padding: 14px 15px 16px;
 }
 
-.footer-small { color: var(--nav-muted); font-size: 0.8rem; font-style: normal; margin-top: 6px; }
+.restaurant-card-content h3 {
+    margin-bottom: 6px;
+    color: var(--restaurant-text);
+    font-size: 1.02rem;
+    text-align: left;
+}
+
+.restaurant-cuisine,
+.restaurant-location {
+    margin-bottom: 6px;
+    color: var(--restaurant-muted);
+    font-size: 0.84rem;
+}
+
+.restaurant-rating {
+    margin-top: 10px;
+    color: var(--restaurant-text);
+    font-size: 0.86rem;
+    font-weight: 700;
+}
+
+.restaurant-rating > span:first-child {
+    color: #F4A623;
+}
+
+.rating-count {
+    color: var(--restaurant-muted);
+    font-weight: 400;
+}
+/* ----- End of grid styling  ----- */
+@media (max-width: 900px) {
+    .restaurant-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+}
+
+@media (max-width: 520px) {
+    .restaurant-hero {
+        min-height: 150px;
+        gap: 14px;
+        padding: 24px 18px;
+    }
+
+    .restaurant-hero-icon {
+        width: 52px;
+        height: 52px;
+        flex-basis: 52px;
+        font-size: 25px;
+    }
+
+    .restaurant-hero-copy p {
+        font-size: 0.88rem;
+    }
+
+    .popular-restaurants {
+        margin-top: 26px;
+        padding: 0 16px;
+    }
+
+    .restaurant-grid {
+        gap: 12px;
+    }
+
+    .restaurant-photo {
+        height: 112px;
+    }
+
+    .restaurant-card-content {
+        padding: 12px;
+    }
+}
