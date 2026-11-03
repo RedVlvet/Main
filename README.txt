@@ -20,19 +20,31 @@ KMK Reservations provides three services:
   that directs them to the Restaurant Reservationss webpage
 
   Page Color
-  Background:#
-  Accent:#
-  Button:#
-  Text:#
+  Background:#883DDB
+  Accent:#A855F7
+  Button:#6D28D9
+  Text:#FFFFFF
 
 
 - Hotel Room Reservations
  Where the user can tap the "explore services" button 
  that directs them to the Hotel Room Reservation's webpage
 
+ Page Color
+  Background:#17BEBB
+  Accent:#2DD4BF
+  Button:#0EASA4
+  Text:#FFFFFF
+
 -Driver / Chauffeur Services 
   Where the user can tap the "explore services" button 
   that directs them to the Chauffeur Services webpage
+
+  Page Color
+  Background:#2388F5
+  Accent:#60ASFA
+  Button:#1D4EDB
+  Text:#FFFFFF
 
 - My Bookings
   This is where the user can check their previous and current Reservations
