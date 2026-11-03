@@ -17,7 +17,7 @@
 }
 /*This makes the purple banner */
 .Restaurant_Banner {
-    min-height: 170px;
+    min-height: 120px;
     display: flex;
     align-items: center;
     gap: 20px;
