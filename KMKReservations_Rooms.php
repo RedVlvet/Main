@@ -20,7 +20,7 @@
                 <a class = "active" href="KMKReservations_Rooms.php">Rooms</a>
                 <a href="KMKReservations_Chauffeur.php">Drivers</a>
                 <a href="KMKReservations_MyBookings.php">My Bookings</a>
-                <a href="KMKReservations_Account.php">Account</a>
+                <a href="KMKReservations_MyProfile.php">My Profile</a>
             </div>
         </nav>
  
