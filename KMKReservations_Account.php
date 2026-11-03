@@ -33,7 +33,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         <a href="KMKReservations_Rooms.php">Rooms</a>
         <a href="KMKReservations_Chauffeur.php">Drivers</a>
         <a href="KMKReservations_MyBookings.php">My Bookings</a>
-        <a href="KMKReservations_Account.php" class="nav-account active" aria-label="My account">&#128100;</a>
+        <a href="KMKReservations_MyProfile.php" class="nav-account active" aria-label="My Profile">&#128100;</a>
     </nav>
 </header>
 
