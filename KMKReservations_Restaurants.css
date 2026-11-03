@@ -10,11 +10,6 @@
 
 
 
-.restaurant-main {
-    flex: 1;
-    width: 100%;
-    padding-bottom: 48px;
-}
 /*This makes the purple banner */
 .Restaurant_Banner {
     min-height: 120px;
@@ -27,19 +22,14 @@
     
 }
 
-
-
-
-
-
 .popular-restaurants {
     width: min(1200px, 100%);
     margin: 34px auto 0;
     padding: 0 24px;
-    
+    color: var(--restaurant-text);
 }
 
-.popular-restaurants-heading {
+.heading {
     display: flex;
     align-items: end;
     justify-content: space-between;
@@ -48,105 +38,102 @@
     
 }
 
-
-
-.restaurant-grid {
+.grid {
     display: grid;
     grid-template-columns: repeat(4, minmax(0, 1fr));
     gap: 18px;
 }
 
-.restaurant-card {
+.Restaurant {
     min-width: 0;
     overflow: hidden;
     border: 1px solid #E1E5F0;
     border-radius: 12px;
     background: #FFFFFF;
-    transition: transform 0.2s ease;
+    box-shadow: 0 4px 14px rgba(27, 37, 89, 0.08);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
 
-.restaurant-card:hover {
-    transform: translateY(4px );
+.Restaurant:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 20px rgba(27, 37, 89, 0.14);
 }
 
-.restaurant-photo {
+.Restaurant > img {
     display: block;
     width: 100%;
     height: 142px;
     object-fit: cover;
 }
 
-
-.restaurant-card-content {
+.content,
+.Card_content {
     padding: 14px 15px 16px;
 }
 
-.restaurant-card-content h3 {
-    margin-bottom: 6px;
+.Restaurant h3 {
+    margin: 0 0 8px;
     color: var(--restaurant-text);
     font-size: 1.02rem;
     text-align: left;
 }
 
-.restaurant-cuisine,
-.restaurant-location {
-    margin-bottom: 6px;
+.R-cuisine,
+.R,
+.location {
+    margin: 0 0 6px;
     color: var(--restaurant-muted);
     font-size: 0.84rem;
 }
 
-.restaurant-rating {
-    margin-top: 10px;
-    color: var(--restaurant-text);
+.R-rating,
+.rating {
+    margin: 10px 0 0;
+    color: #F4A623;
     font-size: 0.86rem;
     font-weight: 700;
-}
-
-.restaurant-rating  {
-    color: #F4A623;
 }
 
 .rating-count {
     color: var(--restaurant-muted);
     font-weight: 400;
 }
+
+.popular-restaurants .heading h2 {
+    margin: 0 0 6px;
+    color: var(--restaurant-text);
+    text-align: left;
+}
+
+.popular-restaurants .heading p {
+    margin-bottom: 6px;
+    color: var(--restaurant-muted);
+    font-size: 0.84rem;
+}
+
 /* ----- End of grid styling  ----- */
 @media (max-width: 900px) {
-    .restaurant-grid {
+    .grid {
         grid-template-columns: repeat(2, minmax(0, 1fr));
     }
 }
 
 @media (max-width: 520px) {
-    .restaurant-hero {
-        min-height: 150px;
-        gap: 14px;
-        padding: 24px 18px;
-    }
-
-    .restaurant-hero-icon {
-        width: 52px;
-        height: 52px;
-        flex-basis: 52px;
-        font-size: 25px;
-    }
-
-    
-
-    .popular-restaurants {
+    #popular-restaurants {
         margin-top: 26px;
         padding: 0 16px;
     }
 
-    .restaurant-grid {
+    .grid {
         gap: 12px;
     }
 
-    .restaurant-photo {
+    .Restaurant > img {
         height: 112px;
     }
 
-    .restaurant-card-content {
+    .content,
+    .Card_content {
         padding: 12px;
     }
 }
