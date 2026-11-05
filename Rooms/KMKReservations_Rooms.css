@@ -1,0 +1,392 @@
+
+/* General page styling */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background-color: #001F3C;
+    color: #FFFFFF;
+}
+
+
+/* =========================
+   Navigation Bar
+========================= */
+
+header {
+    background-color: #001F3C;
+    color: #FFFFFF;
+    min-height: 75px;
+    padding: 15px 40px;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    border-bottom: 3px solid #17BEBB;
+
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+}
+
+.logo {
+    font-size: 23px;
+    font-weight: bold;
+}
+
+nav {
+    display: flex;
+    gap: 30px;
+}
+
+nav a {
+    color: #FFFFFF;
+    text-decoration: none;
+    font-size: 16px;
+    padding: 10px 5px;
+    transition: 0.3s;
+}
+
+nav a:hover,
+nav a.active {
+    color: #A855F7;
+    border-bottom: 2px solid #FFFFFF;
+}
+
+
+/* =========================
+   Main Rooms Section
+========================= */
+
+.rooms-hero {
+    min-height: 85vh;
+    padding: 50px 4%;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 40px;
+
+    /* Replace with your hotel background image */
+    background-image:
+        linear-gradient(rgba(0, 21, 43, 0.45),
+                        rgba(0, 21, 43, 0.45)),
+        url("RoomReservation.jpg");
+
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+
+/* Left Side Content */
+
+.hero-content {
+    flex: 1;
+    max-width: 550px;
+}
+
+.hero-content h1 {
+    font-size: 42px;
+    margin-bottom: 15px;
+}
+
+.hero-content h2 {
+    font-size: 32px;
+    margin-bottom: 20px;
+}
+
+.hero-content p {
+    font-size: 16px;
+    line-height: 1.7;
+    margin-bottom: 30px;
+}
+
+.discover-btn {
+    display: inline-block;
+    background-color: #6D28D9;
+    color: #FFFFFF;
+    padding: 14px 30px;
+
+    text-decoration: none;
+    border-radius: 5px;
+    transition: 0.3s;
+}
+
+.discover-btn:hover {
+    background-color: #A855F7;
+}
+
+
+/* =========================
+   Booking Panel
+========================= */
+
+.booking-panel {
+    background-color: #FFFFFF;
+    color: #222222;
+
+    width: 430px;
+    padding: 30px;
+
+    border-radius: 10px;
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.3);
+}
+
+.booking-panel h2 {
+    font-size: 25px;
+    margin-bottom: 30px;
+    color: #001F3C;
+}
+
+
+/* Form Fields */
+
+.form-group {
+    margin-bottom: 22px;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 9px;
+    font-size: 15px;
+    font-weight: 500;
+}
+
+.form-group input,
+.form-group select {
+    width: 100%;
+    padding: 13px;
+
+    border: 1px solid #CCCCCC;
+    border-radius: 4px;
+
+    font-size: 15px;
+    background-color: #FFFFFF;
+    color: #222222;
+}
+
+.form-group input:focus,
+.form-group select:focus {
+    outline: none;
+    border: 2px solid #17BEBB;
+}
+
+
+/* Booking Button */
+
+.booking-btn {
+    width: 100%;
+    padding: 15px;
+
+    background-color: #17BEBB;
+    color: #001F3C;
+
+    border: none;
+    border-radius: 5px;
+
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+
+    transition: 0.3s;
+}
+
+.booking-btn:hover {
+    background-color: #A855F7;
+    color: #FFFFFF;
+}
+
+
+/* =========================
+   Account Required Pop-up
+========================= */
+
+.modal-overlay {
+    display: none;
+
+    position: fixed;
+    top: 0;
+    left: 0;
+
+    width: 100%;
+    height: 100%;
+
+    background-color: rgba(0, 0, 0, 0.65);
+
+    justify-content: center;
+    align-items: center;
+
+    padding: 20px;
+    z-index: 2000;
+}
+
+/* JavaScript adds this class to show the pop-up */
+.modal-overlay.show {
+    display: flex;
+}
+
+.modal-box {
+    background-color: #FFFFFF;
+    color: #222222;
+
+    width: 100%;
+    max-width: 420px;
+
+    padding: 35px;
+    border-radius: 12px;
+
+    text-align: center;
+    position: relative;
+
+    animation: popup 0.3s ease;
+}
+
+.modal-icon {
+    width: 55px;
+    height: 55px;
+
+    margin: 0 auto 20px;
+
+    border-radius: 50%;
+    background-color: #A855F7;
+    color: #FFFFFF;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    font-size: 30px;
+    font-weight: bold;
+}
+
+.modal-box h2 {
+    color: #001F3C;
+    margin-bottom: 15px;
+}
+
+.modal-box p {
+    font-size: 15px;
+    line-height: 1.6;
+    margin-bottom: 25px;
+}
+
+
+/* Pop-up Buttons */
+
+.profile-btn,
+.cancel-btn {
+    width: 100%;
+    padding: 13px;
+
+    border: none;
+    border-radius: 5px;
+
+    font-size: 15px;
+    cursor: pointer;
+}
+
+.profile-btn {
+    background-color: #6D28D9;
+    color: #FFFFFF;
+    margin-bottom: 12px;
+}
+
+.profile-btn:hover {
+    background-color: #A855F7;
+}
+
+.cancel-btn {
+    background-color: #EEEEEE;
+    color: #222222;
+}
+
+.cancel-btn:hover {
+    background-color: #DDDDDD;
+}
+
+
+/* Close Button */
+
+.close-btn {
+    position: absolute;
+    top: 10px;
+    right: 15px;
+
+    background: none;
+    border: none;
+
+    font-size: 28px;
+    cursor: pointer;
+    color: #555555;
+}
+
+
+/* Pop-up Animation */
+
+@keyframes popup {
+    from {
+        opacity: 0;
+        transform: scale(0.8);
+    }
+
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+
+/* =========================
+   Responsive Design
+========================= */
+
+@media screen and (max-width: 900px) {
+
+    .rooms-hero {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .hero-content {
+        max-width: 100%;
+        text-align: center;
+    }
+
+    .booking-panel {
+        width: 100%;
+        max-width: 500px;
+    }
+}
+
+@media screen and (max-width: 600px) {
+
+    header {
+        flex-direction: column;
+        gap: 15px;
+        padding: 15px;
+    }
+
+    nav {
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 15px;
+    }
+
+    .hero-content h1 {
+        font-size: 32px;
+    }
+
+    .hero-content h2 {
+        font-size: 25px;
+    }
+
+    .booking-panel {
+        padding: 22px;
+    }
+}

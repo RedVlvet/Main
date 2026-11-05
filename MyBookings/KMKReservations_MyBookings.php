@@ -15,13 +15,12 @@
        
         <nav>
             <div class="navbar">
-                <img src="KMKReservations_Logo.png" style="width:150px">
-                <a href="KMKReservations_Home.php">Home</a>
-                <a href="KMKReservations_Restaurants.php">Restaurant</a>
-                <a href="KMKReservations_Rooms.php">Room</a>
-                <a href="KMKReservations_Chauffeur.php">Drivers</a>
-                <a class = "active" href="KMKReservations_MyBookings.php">My Bookings</a>
-                <a href="KMKReservations_My Profile.php">My Profile</a>
+                <a href="../KMKReservations_Home.php">Home</a>
+                <a href="../Restaurants/KMKReservations_Restaurants.php">Restaurant</a>
+                <a href="../Rooms/KMKReservations_Rooms.php">Rooms</a>
+                <a href="../Drivers/KMKReservations_Chauffeur.php">Drivers</a>
+                <a class ="active" href="MyBookings/KMKReservations_MyBookings.php">My Bookings</a>
+                <a href="../MyProfile/KMKReservations_MyProfile.php" aria-label="MyProfile">&#128100;</a>
             </div>
         </nav>
         

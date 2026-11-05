@@ -17,13 +17,13 @@
         <header class="site-header">        
             <nav>
                 <div class="navbar">
-                    <img src="KMKReservations_Logo.png" style="width:150px">
-                    <a href="KMKReservations_Home.php">Home</a>
-                    <a href="KMKReservations_Restaurants.php">Restaurant</a>
-                    <a href="KMKReservations_Rooms.php">Room</a>
-                    <a class = "active" href="KMKReservations_Chauffeur.php">Drivers</a>
-                    <a href="KMKReservations_MyBookings.php">My Bookings</a>
-                    <a href="KMKReservations_MyProfile.php">My Profile</a>
+                <img src="../KMKReservations_Logo.png" style="width:150px">
+                <a href="../KMKReservations_Home.php">Home</a>
+                <a href="../Restaurants/KMKReservations_Restaurants.php">Restaurant</a>
+                <a href="../Rooms/KMKReservations_Rooms.php">Rooms</a>
+                <a class ="active" href="../Drivers/KMKReservations_Chauffeur.php">Drivers</a>
+                <a href="../MyBookings/KMKReservations_MyBookings.php">My Bookings</a>
+                <a href="../MyProfile/KMKReservations_MyProfile.php" aria-label="MyProfile">&#128100;</a>
                 </div>
             </nav>
         </header>
