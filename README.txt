@@ -13,7 +13,7 @@ This is where the user's data will be stored to include:
 * Phone number
 
 
-KMK Reservations provides three services:
+KMK Reservations provides three separate services:
 
 - Restaurant Reservations
   Where the user can tap the "explore services" button 
