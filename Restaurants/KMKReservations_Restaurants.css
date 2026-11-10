@@ -1,142 +1,148 @@
+/* General page styling */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
 
 body {
-    background-color: #00152B;
-    color: #FFFFFF;
     font-family: Arial, sans-serif;
-    min-height: 100vh;
-    margin: 0;
-    accent-color: #7B2CBF; 
-}
-
-/* headings */
-h1, h2, h3 {
+    background-color: #001F3C;
     color: #FFFFFF;
-    text-align: center;
 }
 
-.info{
-    width: 95%;
-    max-width: 1400px;
-    margin: 30px auto 10px;
-    padding: 60px 20px;
-    text-align: center;
+/*Navigation Bar*/
+header {
+    background-color: #001F3C;
     color: #FFFFFF;
-    font-size: 16px;
-}
+    min-height: 75px;
+    padding: 15px 40px;
 
-/* Navigation bar */
-.navbar {
     display: flex;
     align-items: center;
-    background-color: #001F3C;
-    padding: 1px 100px;
-    border-bottom: 2px solid #17BEBB;
-    width: 100%;
-    box-sizing: border-box;
-    font-size: 0.8rem;
+    justify-content: space-between;
+
+    border-bottom: 3px solid #17BEBB;
+
+    position: sticky;
+    top: 0;
+    z-index: 1000;
 }
 
-.navbar img {
- justify-content: start;
- margin-right: 20%;
+.logo {
+    font-size: 23px;
+    font-weight: bold;
 }
 
-/* Style for navigation tabs */
-.navbar a {
+nav {
+    display: flex;
+    gap: 30px;
+}
+
+nav a {
     color: #FFFFFF;
     text-decoration: none;
-    padding: 10px 18px;
-    margin: 0;
-    border-radius: 20px;
-    background-color: #001F3C;
-    transition: background-color 0.3s ease, color 0.3s ease;
-    font-weight: bold;
-    text-align: center;
-}
-
-/* Hover for tabs */
-.navbar a:hover {
-    background-color: #001F3C;
-    color: #B5A9D6;
-}
-
-/* Active tab   */
-.navbar a.active {
-    background-color: white;
-    color: #A855F7;
-    font-weight: bold;
-}
-
-.image-container {
-    position: relative;
-    width: 100%;
-    height: min(60vh, 520px);
-    min-height: 320px;
-    overflow: hidden;
-}
-
-.image-container img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    display: block;
-}
-
-/* dark overlay so the text is readable */
-.image-container::after {
-    content: "";
-    position: absolute;
-    inset: 0;
-    background: rgba(0, 0, 0, 0.4);
-}
-
-.image-text {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    text-align: center;
-    color: #FFFFFF;
-    width: 90%;
-    z-index: 1;              
-}
-
-.image-text h1 {
-    font-size: 32px;
-    margin: 0 0 10px;
-    text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.7);
-}
-
-.image-text p {
     font-size: 16px;
-    margin: 0;
-    text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.7);
+    padding: 10px 5px;
+    transition: 0.3s;
 }
 
-form {
-    background: #fff;
-    color: #000;
-    padding: 20px;
-    max-width: 400px;
-    margin: 20px auto;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+nav a:hover,
+nav a.active {
+    color: #A855F7;
+    border-bottom: 2px solid #FFFFFF;
+}
+
+/*Main Rooms Section*/
+.restaurants-hero {
+    min-height: 85vh;
+    padding: 50px 4%;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 40px;
+
+    /* Replace with restaurant background image */
+    background-image:
+        linear-gradient(rgba(0, 21, 43, 0.45),
+                        rgba(0, 21, 43, 0.45)),
+        url("../Restaurants/RestaurantReservation.jpg");        
+
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+/* Left Side Content */
+.hero-content {
+    flex: 1;
+    max-width: 550px;
+}
+
+.hero-content h1 {
+    font-size: 42px;
+    margin-bottom: 15px;
+}
+
+.hero-content h2 {
+    font-size: 32px;
+    margin-bottom: 20px;
+}
+
+.hero-content p {
+    font-size: 16px;
+    line-height: 1.7;
+    margin-bottom: 30px;
+}
+
+/*Reserve Panel*/
+.reserve-panel {
+    background-color: #FFFFFF;
+    color: #222222;
+
+    width: 430px;
+    padding: 30px;
+
     border-radius: 10px;
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.3);
 }
 
-label {
+.reserve-panel h2 {
+    font-size: 25px;
+    margin-bottom: 30px;
+    color: #001F3C;
+}
+
+/* Form Fields */
+.form-group {
+    margin-bottom: 22px;
+}
+
+.form-group label {
     display: block;
-    font-weight: bold;
-    margin: 10px 0 5px;
+    margin-bottom: 9px;
+    font-size: 15px;
+    font-weight: 500;
 }
 
-input, textarea, select {
+.form-group input,
+.form-group select {
     width: 100%;
-    padding: 8px;
-    margin-bottom: 10px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    box-sizing: border-box;
-    font-size: 1rem;
+    padding: 13px;
+
+    border: 1px solid #CCCCCC;
+    border-radius: 4px;
+
+    font-size: 15px;
+    background-color: #FFFFFF;
+    color: #222222;
+}
+
+.form-group input:focus,
+.form-group select:focus {
+    outline: none;
+    border: 2px solid #17BEBB;
 }
 
 /* message shown when the form has an error */
@@ -152,19 +158,46 @@ input, textarea, select {
     box-sizing: border-box;
 }
 
-button {
-    background: #7B2CBF;
-    color: #fff;
-    border: none;
-    padding: 10px;
+/* Reserve Button */
+.reserve-btn {
     width: 100%;
-    font-size: 16px;
-    cursor: pointer;
+    padding: 15px;
+
+    background-color: #883DDB;
+    color: #FFFFFF;
+
+    border: none;
     border-radius: 5px;
+
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+
+    transition: 0.3s;
 }
 
-button:hover {
-    background: #4E148C;
+.reserve-btn:hover {
+    background-color: #b43eb0;
+    color: #FFFFFF;
+}
+
+/*Account Required Pop-up*/
+.modal-overlay {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+
+    width: 100%;
+    height: 100%;
+
+    background-color: rgba(0, 0, 0, 0.65);
+
+    justify-content: center;
+    align-items: center;
+
+    padding: 20px;
+    z-index: 2000;
 }
 
 /* colours used by the footer */
@@ -183,4 +216,9 @@ button:hover {
     font-style: italic;
 }
 
-.footer-small { color: var(--nav-muted); font-size: 0.8rem; font-style: normal; margin-top: 6px; }
+.footer-small { 
+    color: var(--nav-muted); 
+    font-size: 0.8rem; 
+    font-style: normal; 
+    margin-top: 6px;
+}

@@ -13,9 +13,7 @@ body {
 }
 
 
-/* =========================
-   Navigation Bar
-========================= */
+/*Navigation Bar*/
 
 header {
     background-color: #001F3C;
@@ -59,11 +57,9 @@ nav a.active {
 }
 
 
-/* =========================
-   Main Rooms Section
-========================= */
+/*Main Rooms Section*/
 
-.rooms-hero {
+.accomodation-hero {
     min-height: 85vh;
     padding: 50px 4%;
 
@@ -72,20 +68,18 @@ nav a.active {
     justify-content: space-between;
     gap: 40px;
 
-    /* Replace with your hotel background image */
+    /* Replace with hotel background image */
     background-image:
         linear-gradient(rgba(0, 21, 43, 0.45),
                         rgba(0, 21, 43, 0.45)),
-        url("RoomReservation.jpg");
+        url("../Accomodations/Accomodation.jpg");        
 
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
 }
 
-
 /* Left Side Content */
-
 .hero-content {
     flex: 1;
     max-width: 550px;
@@ -107,26 +101,7 @@ nav a.active {
     margin-bottom: 30px;
 }
 
-.discover-btn {
-    display: inline-block;
-    background-color: #6D28D9;
-    color: #FFFFFF;
-    padding: 14px 30px;
-
-    text-decoration: none;
-    border-radius: 5px;
-    transition: 0.3s;
-}
-
-.discover-btn:hover {
-    background-color: #A855F7;
-}
-
-
-/* =========================
-   Booking Panel
-========================= */
-
+/*Booking Panel*/
 .booking-panel {
     background-color: #FFFFFF;
     color: #222222;
@@ -144,9 +119,7 @@ nav a.active {
     color: #001F3C;
 }
 
-
 /* Form Fields */
-
 .form-group {
     margin-bottom: 22px;
 }
@@ -198,18 +171,13 @@ nav a.active {
 }
 
 .booking-btn:hover {
-    background-color: #A855F7;
+    background-color: #308baf;
     color: #FFFFFF;
 }
 
-
-/* =========================
-   Account Required Pop-up
-========================= */
-
+/*Account Required Pop-up*/
 .modal-overlay {
     display: none;
-
     position: fixed;
     top: 0;
     left: 0;
@@ -225,6 +193,37 @@ nav a.active {
     padding: 20px;
     z-index: 2000;
 }
+
+
+/* Success message icon */
+.modal-icon.success {
+    background-color: #16A34A;
+}
+
+/* Warning message icon */
+.modal-icon.warning {
+    background-color: #D97706;
+}
+
+/* Error or account message icon */
+.modal-icon.error {
+    background-color: #A855F7;
+}
+
+/* Hide the secondary button when not needed */
+.cancel-btn.hidden {
+    display: none;
+}
+
+/* Change primary button colour for important actions */
+.profile-btn.success-btn {
+    background-color: #16A34A;
+}
+
+.profile-btn.warning-btn {
+    background-color: #D97706;
+}
+
 
 /* JavaScript adds this class to show the pop-up */
 .modal-overlay.show {
@@ -389,4 +388,27 @@ nav a.active {
     .booking-panel {
         padding: 22px;
     }
+}
+
+/* colours used by the footer */
+:root {
+    --nav-bg: #001F3C;
+    --nav-text: #FFFFFF;
+    --nav-muted: #A0AEC0;
+}
+
+/* ----- Footer ----- */
+.site-footer {
+    background: var(--nav-bg);
+    color: var(--nav-text);
+    text-align: center;
+    padding: 24px 20px;
+    font-style: italic;
+}
+
+.footer-small { 
+    color: var(--nav-muted); 
+    font-size: 0.8rem; 
+    font-style: normal;
+    margin-top: 6px; 
 }

@@ -1,6 +1,23 @@
 <?php
-session_start();
-// require_once 'DB.php';   // uncomment once your DB connection is ready
+// Start the session and checks the user is logged in.
+    session_start();
+    $isLoggedIn = isset($_SESSION['user_id']);
+
+
+// After successfully inserting the new account
+// and retrieving the new user's ID:
+
+session_regenerate_id(true); //runs after successful sign in or when automatically signing in the user has an account
+
+// Store the user's ID in the session
+$_SESSION['user_id'] = $userID;
+
+// Record the last activity time
+$_SESSION['last_activity'] = time();
+
+// Redirect to My Profile
+header("Location: ../MyProfile/KMKReservations_MyProfile.php");
+exit;
 
 // Temporary values until login/DB is connected
 $fullName = $_SESSION['user_name']  ?? 'Guest User';
@@ -13,27 +30,29 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $message = 'Your details have been saved.';
 }
 ?>
+
 <!DOCTYPE html>
 <html lang="en">
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <title>My Account | KMK Reservations</title>
-        <link rel="stylesheet" href="KMKReservations_MyProfile.css">
+        <link rel="stylesheet" href="KMKReservations_MyProfile.css"> 
+        <link rel="stylesheet" href="MessagePopUps.css">       
     </head>
     <body>
 
     <header class="site-nav">
-        <a href="KMKReservations_Home.php" class="nav-brand">
-            <img src="../KMKReservations_Logo.png" alt="KMK Reservations logo">
+        <a href="../Home/KMKReservations_Home.php" class="nav-brand">
+            <img src="KMKReservations_Logo.png" alt="KMK Reservations logo">
         </a>
         <nav class="nav-links">
-            <a href="../KMKReservations_Home.php">Home</a>
-            <a  href="../Restaurants/KMKReservations_Restaurants.php">Restaurant</a>
-            <a href="../Rooms/KMKReservations_Rooms.php">Rooms</a>
-            <a href="../Drivers/KMKReservations_Chauffeur.php">Drivers</a>
+            <a href="../Home/KMKReservations_Home.php">Home</a>
+            <a href="../Restaurants/KMKReservations_Restaurants.php">Restaurant</a>
+            <a href="../Accomodations/KMKReservations_Accomodations.php">Accomodations</a>
+            <a href="../Drivers/KMKReservations_Drivers.php">Drivers</a>
             <a href="../MyBookings/KMKReservations_MyBookings.php">My Bookings</a>
-            <a href="KMKReservations_MyProfile.php" class="nav-account active" aria-label="MyProfile">&#128100;</a>
+            <a class ="active" href="../MyProfile/KMKReservations_MyProfile.php">My Profile</a>
         </nav>
     </header>
 
@@ -51,7 +70,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             <div class="avatar"><?= strtoupper(substr($fullName, 0, 1)) ?></div>
             <h2><?= htmlspecialchars($fullName) ?></h2>
             <p class="profile-email"><?= htmlspecialchars($email) ?></p>
-            <a href="KMKReservations_MyBookings.php" class="btn btn-primary">View my bookings</a>
+            <a href="../MyBookings/KMKReservations_MyBookings.php" class="btn btn-primary">View my bookings</a>
             <a href="logout.php" class="btn btn-outline">Log out</a>
         </aside>
 
@@ -94,6 +113,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             </form>
         </section>
     </main>
+
+        <!-- Link the JavaScript file -->
+        <script> src="MessagePopUps.js"></script>
+        <script src="../Myb/ookings/KMKReservations_MyBookings.js"></script>
+        <script src ="../MyProfile/KMKReservations_MyProfile.js"></script>
 
     <footer class="site-footer">
         <p>Plan your day your way.</p>

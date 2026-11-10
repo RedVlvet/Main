@@ -1,124 +1,127 @@
 
-// Get the booking form and pop-up elements
-const bookingForm = document.getElementById("bookingForm");
+// Wait until the page has finished loading.
+document.addEventListener("DOMContentLoaded", function () {
 
-const accountModal = document.getElementById("accountModal");
+    // Get the service buttons.
+    const serviceButtons = document.querySelectorAll(".service-card");
 
-const closeModal = document.getElementById("closeModal");
+    // Get the Current and Previous buttons.
+    const statusButtons = document.querySelectorAll(".tab");
 
-const cancelBtn = document.getElementById("cancelBtn");
+    // Get all reservation cards.
+    const reservationCards = document.querySelectorAll(".reservation-card");
 
-const profileBtn = document.getElementById("profileBtn");
+    // Get the reservation heading.
+    const reservationTitle = document.getElementById("reservationTitle");
+
+    // Get the message shown when there are no reservations.
+    const noReservations = document.getElementById("noReservations");
+
+    // If the My Bookings elements are not on the page, there is nothing to do, so stop here.
+    if (!reservationTitle || !noReservations) {
+        return;
+    }
+
+    // Default selections when the page opens.
+    let selectedService = "restaurant";
+    let selectedStatus = "current";
 
 
-// Only run this code if the page has a booking form
-if (bookingForm) {
+    // Names used for the reservation heading.
+    const serviceNames = {
+        restaurant: "Restaurant",
+        room: "Room",
+        driver: "Driver"
+    };
 
-    // Check when the user submits the booking form
-    bookingForm.addEventListener("submit", function(event) {
 
-        // Get the login status from PHP
-        const loggedIn = bookingForm.dataset.loggedIn === "true";
+    // Display the reservations based on the selected buttons.
+    function displayReservations() {
 
-        // Get the profile page link
-        const profilePage = bookingForm.dataset.profileUrl;
+        let found = 0;
 
-        // Stop the booking if the user is not logged in
-        if (!loggedIn) {
+        reservationCards.forEach(function (card) {
 
-            event.preventDefault();
+            // Get the service and status of each reservation.
+            const service = card.dataset.service;
+            const status = card.dataset.status;
 
-            // Display the account required pop-up
-            accountModal.classList.add("show");
+            // Check whether the reservation matches both selections.
+            if (service === selectedService && status === selectedStatus) {
 
-        } else {
+                card.hidden = false;
+                found++;
 
-            // Check that the check-out date is after check-in
-            if (bookingForm.dataset.service === "rooms") {
+            } else {
 
-                const checkin = document.getElementById("checkin").value;
-                const checkout = document.getElementById("checkout").value;
+                card.hidden = true;
 
-                if (new Date(checkout) <= new Date(checkin)) {
-
-                    event.preventDefault();
-
-                    alert("Check-out date must be after check-in date.");
-
-                    return;
-                }
             }
 
-            // The form can now continue to process-booking.php
-        }
-    });
+        });
 
 
-    // Redirect the user to My Profile
-    profileBtn.addEventListener("click", function() {
-
-        window.location.href = bookingForm.dataset.profileUrl;
-
-    });
+        // Show a message if no matching reservations are found.
+        noReservations.hidden = found > 0;
 
 
-    // Close the pop-up using the X button
-    closeModal.addEventListener("click", function() {
+        // Update the heading.
+        const statusName =
+            selectedStatus === "current" ? "Current" : "Previous";
 
-        accountModal.classList.remove("show");
+        reservationTitle.textContent =
+            statusName + " " + serviceNames[selectedService] + " Reservations";
 
-    });
-
-
-    // Close the pop-up using Maybe Later
-    cancelBtn.addEventListener("click", function() {
-
-        accountModal.classList.remove("show");
-
-    });
+    }
 
 
-    // Close the pop-up when the user clicks outside the box
-    accountModal.addEventListener("click", function(event) {
+    // Handle clicks on Restaurant, Room and Drivers.
+    serviceButtons.forEach(function (button) {
 
-        if (event.target === accountModal) {
+        button.addEventListener("click", function () {
 
-            accountModal.classList.remove("show");
+            selectedService = button.dataset.service;
 
-        }
+            // Highlight the selected service.
+            serviceButtons.forEach(function (item) {
 
-    });
+                item.classList.remove("active");
 
-}
+            });
 
+            button.classList.add("active");
 
-// Set the earliest check-in date to today
-const checkinField = document.getElementById("checkin");
+            displayReservations();
 
-const checkoutField = document.getElementById("checkout");
-
-if (checkinField && checkoutField) {
-
-    // Get today's date in YYYY-MM-DD format
-    const today = new Date();
-    const localToday = new Date(
-        today.getTime() - today.getTimezoneOffset() * 60000
-    ).toISOString().split("T")[0];
-
-    checkinField.min = localToday;
-
-    // Update the earliest checkout date when check-in changes
-    checkinField.addEventListener("change", function() {
-
-        checkoutField.min = checkinField.value;
-
-        // Clear an invalid checkout date
-        if (checkoutField.value &&
-            checkoutField.value <= checkinField.value) {
-
-            checkoutField.value = "";
-        }
+        });
 
     });
 
-}
+
+    // Handle clicks on Current and Previous Reservations.
+    statusButtons.forEach(function (button) {
+
+        button.addEventListener("click", function () {
+
+            selectedStatus = button.dataset.status;
+
+            // Highlight the selected tab.
+            statusButtons.forEach(function (item) {
+
+                item.classList.remove("active");
+
+            });
+
+            button.classList.add("active");
+
+            displayReservations();
+
+        });
+
+    });
+
+
+    // Display the default reservations when the page opens.
+    displayReservations();
+
+});

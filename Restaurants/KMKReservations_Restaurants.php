@@ -1,5 +1,8 @@
 <?php
+    // Start the session and checks the user is logged in.
     session_start();
+    $isLoggedIn = isset($_SESSION['user_id']);
+    
     // require_once 'DB.php';   
     $basepath = dirname(__DIR__);
     $base = str_replace('\\','/',$basepath);
@@ -11,13 +14,18 @@
     $done  = false;
     
     if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-        $name       = trim($_POST['name']);
+        //$name       = trim($_POST['name']);
+        //not sure if the above will be needed seeing that the user would have to login 
+        //they would see their name in my booking 
         $restaurant = trim($_POST['restaurant']);
         $date       = $_POST['date'];
         $time       = $_POST['time'];
         $guests     = $_POST['guests'];
     
-        if ($name == '' || $restaurant == '' || $date == '' || $time == '' || $guests == '') {
+        //place $name == '' || before restaurants 
+        //not sure if the above will be needed seeing that the user would have to login
+        //they would see their name in my booking
+        if ($restaurant == '' || $date == '' || $time == '' || $guests == '') {
             $error = 'All fields are required.';
         } elseif ($date < date('Y-m-d')) {
             $error = 'The date cannot be in the past.';
@@ -34,113 +42,117 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Restaurants | KMK Reservations</title>
-        <link rel="stylesheet" href="KMKReservations_Restaurants.css">    
+        <link rel="stylesheet" href="KMKReservations_Restaurants.css">   
+        <link rel ="stylesheet" href="MessagePopUps.css"> 
     </head>
 
-    <!-- data-done lets javascript know if the form was submitted successfully; 
-    1 being yes 0 being no  using ternary operatior --> 
-    <body data-done="<?= $done ? '1' : '0' ?>">       
-        <nav>
-            <div class="navbar">
-                <img src="../KMKReservations_Logo.png" style="width:150px">
-                        <a href="../KMKReservations_Home.php">Home</a>
+    <body>       
+        <!-- Navigation Bar -->
+        <header>
+            <div>
+                <nav>
+                    <div class="navbar">
+                        <img src="../KMKReservations_Logo.png" style="width:150px">
+                        <a href="../Home/KMKReservations_Home.php">Home</a>
                         <a class ="active" href="../Restaurants/KMKReservations_Restaurants.php">Restaurant</a>
-                        <a href="../Rooms/KMKReservations_Rooms.php">Rooms</a>
-                        <a href="../Drivers/KMKReservations_Chauffeur.php">Drivers</a>
+                        <a href="../Accomodations/KMKReservations_Accomodations.php">Accomodations</a>
+                        <a href="../Drivers/KMKReservations_Drivers.php">Drivers</a>
                         <a href="../MyBookings/KMKReservations_MyBookings.php">My Bookings</a>
-                        <a href="../MyProfile/KMKReservations_MyProfile.php" aria-label="MyProfile">&#128100;</a>
+                        <a href="../MyProfile/KMKReservations_MyProfile.php">My Profile</a>
+                    </div>
+                </nav>
             </div>
-        </nav>     
+        </header>
         
-      <section id="restaurant" class="service-section">
-            <div class="image-container">
-                <img src="RestaurantReservations.jpg" alt="Restaurant Image">
-                <div class="image-text">
-                    <h1>Restaurant Reservations</h1>
-                    <p>Find and reserve a table at your favourite restaurant.</p>
-                </div>
-            </div>
-        </section>
+        <!-- Main Restaurants Section -->
+        <main class="restaurants-hero">
 
-        <main class = "restaurants-layout">
-            <!-- restaurant reservation form -->
-             <section class ="form-card" id ="reservation-form">
+            <!-- Left Side: Welcome Message -->
+            <section class="hero-content">
+                <h1>Restaurant Reservations</h1>
+                <p>Find and reserve a table at your favourite restaurant.</p>
+            </section>
+
+
+            <!-- Right Side: Reserving Form -->
+            <section class="reserve-panel" id="reserve-panel">
                 <h2> Reserve your table </h2>
 
-                <!-- Only shows a message if there is an error in the form -->
-                <?php if ($error) : ?>
-                    <p class="alert-error"> <?=htmlspecialchars($error) ?> </p>
-                <?php endif; ?>
+                <!--The data allows the same JavaScript to work with restaurant and driver bookings.-->
+                <form
+                    id="bookingForm"
+                    action="../MyBookings/KMKReservations_MyBookings.php"
+                    method="POST"
+                    data-service="restaurants"
+                    data-logged-in="<?php echo $isLoggedIn ? 'true' : 'false'; ?>"
+                    data-profile-url="../MyProfile/KMKReservations_MyProfile.php"
+                >
 
-                <!-- sends the data back to the same page for it to be processed -->
-                 <form method = "post" action = "" id="booking-form">
+                    <!-- Hidden field identifies the service -->
+                    <input type="hidden" name="service" value="restaurants">
 
-                 <!--Where the client enters their name-->
-                <div class = "field">
-                    <label for = "name"> Name of the client </label>
-                    <input type ="text" id="name" name="name" placeholder="Mary Jane" required> <!-- place after name='name' value="<?=htmlspecialchars($name) ?>" --> 
-                </div>
+                    <!-- Name of the Restaurant -->
+                    <div class = "form-group">
+                        <label for = "restaurant"> Select restaurant: </label>
+                        <select id = "restaurant" name = "restaurant" required>
+                            <option value = ""> Select a restaurant </option>
+                            <option value = "The Jerk Centre" <?= $restaurant === 'The Jerk Centre' ? 'selected' : '' ?>>The Jerk Centre - Ocho Rios</option>
+                            <option value = "Pier 1 Restaurant" <?= $restaurant === 'Pier 1 Restaurant' ? 'selected' : '' ?>>Pier 1 Restaurant -Howard Cooke Boulevard</option>
+                            <option value = "Food to go" <?= $restaurant === 'Food to go' ? 'selected' : '' ?>>Food to go - Ocho Rios</option>
+                            <option value = "Sally's at Sunset" <?= $restaurant === "Sally's at Sunset" ? 'selected' : '' ?>>Sally's at Sunset - Negril</option>
+                            <option value = "Cabarita Inn" <?= $restaurant === 'Cabarita Inn' ? 'selected' : '' ?>> Cabarita Inn - Port Maria </option>
+                            <option value = "Roots 21 | Bar & Kitchen" <?= $restaurant === 'Roots 21 | Bar & Kitchen' ? 'selected' : '' ?>> Roots 21 | Bar & Kitchen - Port Antonio </option>
+                        </select>
+                    </div>
 
-                <!--Where the client enters the name of the restaurant 
-                <div class = "field">
-                    <label for="restaurant"> Name of the restaurant </label>
-                    <input type="text" id="restaurant" name="restaurant" placeholder = "Hong Kong Restaurant" required>
-                    <place after name='name' value="<?=htmlspecialchars($name) ?>" 
-                </div>
-                -->
+                    <!-- Date of the Reservation -->
+                    <div class="form-group">
+                        <label for="reservation"> Reservation Date: </label>
+                        <input type="date" id="reserve" name="reserve" required>
+                    </div>
 
-            <!--Where the client selects the name of the restaurant -->
-            <div class = "field">
-                <label for = "restaurant"> Select restaurant: </label>
-                    <select id = "restaurant" name = "restaurant" required>
-                        <option value = ""> Select a restaurant </option>
-                        <option value = "The Jerk Centre" <?= $restaurant === 'The Jerk Centre' ? 'selected' : '' ?>>The Jerk Centre - Ocho Rios</option>
-                        <option value = "Pier 1 Restaurant" <?= $restaurant === 'Pier 1 Restaurant' ? 'selected' : '' ?>>Pier 1 Restaurant -Howard Cooke Boulevard</option>
-                        <option value = "Food to go" <?= $restaurant === 'Food to go' ? 'selected' : '' ?>>Food to go - Ocho Rios</option>
-                        <option value = "Sally's at Sunset" <?= $restaurant === "Sally's at Sunset" ? 'selected' : '' ?>>Sally's at Sunset - Negril</option>
-                    </select>
-                </div><br>
+                    <!-- Time of the reservation -->
+                    <div class = "form-group">
+                        <label for = "time"> Time for your reservation </label>
+                        <input type = "time" id="time" name = "time" value = "<?= htmlspecialchars($time) ?>" required>
+                    </div>
+                   
+                    <!-- Number of Adults -->
+                    <div class="form-group">
+                        <label for="adults">Adults:</label>
+                        <select id="adults" name="adults" required>
+                            <option value="1">1 Adult</option>
+                            <option value="2">2 Adults</option>
+                            <option value="3">3 Adults</option>
+                            <option value="4">4 Adults</option>
+                            <option value="5">5 Adults</option>
+                            <option value="6">6 Adults</option>
+                        </select>
+                    </div>
 
-
-                <!--Where the client enters the date of the reservation-->
-                <div class = "field">
-                    <label for="date"> Date of the reservation </label>
-
-                    <!-- min stops the user from picking a date that has already passed -->
-                    <input type = "date" id="date" name="date" value="<?= htmlspecialchars($date) ?> " min =" <?= date ('Y-m-d') ?>" required>
-                </div>
-
-                <!--Where the client enters the time of the reservation-->
-                <div class = "field">
-                    <label for = "time"> Time for your reservation </label>
-                    <input type = "time" id="time" name = "time" value = "<?= htmlspecialchars($time) ?>" required>
-                </div>
-
-                <!--Where the client enters the number of persons-->
-                <div class = "field">
-                    <label for = "guests"> Number of Persons: </label>
-                    <select id = "guests" name = "guests" value = "<?=htmlspecialchars($guests) ?>" required>
-                        <option value = ""> Select number of persons </option>
-                        <option value = "1"> 1 </option>
-                        <option value = "2"> 2 </option>
-                        <option value = "3"> 3 </option>
-                        <option value = "4"> 4 </option>
-                        <option value = "5"> 5 </option>
-                        <option value = "6"> 6 </option>
-                        <option value = "7"> 7 </option>
-                        <option value = "8"> 8 </option>
-                    </select>
-                </div><br>
-
-                <button type = "submit" id = "submit-button"> Reserve </button>
-
-                </form> 
-            </section>           
+                    <!-- Number of Children -->
+                    <div class="form-group">
+                        <label for="children">Children:</label>
+                        <select id="children" name="children">
+                            <option value="0">No Children</option>
+                            <option value="1">1 Child</option>
+                            <option value="2">2 Children</option>
+                            <option value="3">3 Children</option>
+                            <option value="4">4 Children</option>
+                        </select>
+                    </div>
+                    
+                    <!-- Submit Button -->
+                    <button type="submit" class="reserve-btn">
+                        Check Availability
+                    </button>
+                </form>
+            </section>
         </main>
         
-        <!-- handles events/actions in the restaurant reservation form -->
-        <script src="KMKReservations_Restaurants.js"></script>
-        <hr> 
+        <!-- Link the JavaScript file -->
+        <script src="MessagePopUps.js"></script>
+        <script src="KMKReservations_MyBookings.js"></script>        
 
         <!-- footer with copyright and slogan-->    
         <footer class="site-footer">

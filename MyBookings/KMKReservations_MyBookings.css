@@ -1,123 +1,237 @@
 
+/* General Page Styling */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
 body {
-    background-color: #00152B;
-    color: #FFFFFF;
     font-family: Arial, sans-serif;
+    background-image: url("../MyBookings/Bookings.jpg");
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+    color: #222222;
     min-height: 100vh;
 }
 
-/* headings */
-h1, h2, h3 {
+/*Navigation Bar*/
+
+header {
+    background-color: #001F3C;
     color: #FFFFFF;
-    text-align: center;
+    min-height: 75px;
+    padding: 15px 40px;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    border-bottom: 3px solid #17BEBB;
+
+    position: sticky;
+    top: 0;
+    z-index: 1000;
 }
 
-.info{
-    width: 95%;
-    max-width: 1400px;
-    margin: 30px auto;
-    padding: 60px 20px;
-    text-align: center;
-    margin-bottom: 40px;
+.logo {
+    font-size: 23px;
+    font-weight: bold;
+}
+
+nav {
+    display: flex;
+    gap: 30px;
+}
+
+nav a {
     color: #FFFFFF;
+    text-decoration: none;
     font-size: 16px;
+    padding: 10px 5px;
+    transition: 0.3s;
+}
+
+nav a:hover,
+nav a.active {
+    color: #A855F7;
+    border-bottom: 2px solid #FFFFFF;
+}
+
+/* Main Content */
+.container {
+    width: 90%;
+    max-width: 1100px;
+    margin: 40px auto;
+    padding: 30px;
+
+    /* Adds a light background behind the content
+       so the text is easy to read over the image. */
+    background-color: rgba(255, 255, 255, 0.94);
+    border-radius: 12px;
+}
+
+/* Welcome Message */
+.welcome {
+    margin-bottom: 30px;
+}
+
+.welcome h1 {
+    color: #001F3C;
+    font-size: 32px;
     margin-bottom: 10px;
 }
 
+.welcome p {
+    color: #555555;
+}
 
-
-
-
-
-
-/* Navigation bar */
-.navbar {
+/* Restaurant, Room and Driver Sections */
+.service-sections {
     display: flex;
-    align-items: center;
-    background-color: #001F3C;
-    padding: 1px 100px;
-    border-bottom: 2px solid #17BEBB;
-    width: 100dvw;
-    font-size: 0.8rem;
+    flex-direction: column;
+    gap: 20px;
+    margin-bottom: 40px;
 }
 
-.navbar img {
- justify-content: start;
- margin-right: 20%;
-}
-
-/* Style for navigation tabs */
-.navbar a {
-    color: #FFFFFF;
-    text-decoration: none;
-    padding: 10px 18px;
-    margin: 0;
-    border-radius: 20px;
-    background-color: #001F3C;
-    transition: background-color 0.3s ease, color 0.3s ease;
-    font-weight: bold;
-    text-align: center;
-}
-
-/* Hover for tabs */
-.navbar a:hover {
-    background-color: #001F3C;
-    color: #B5A9D6;
-}
-
-/* Active tab   */
-.navbar a.active {
-    background-color: white;
-    color: #A855F7;
-    font-weight: bold;
-}
-
-
-.image-container {
-    position: relative;
-    width: 60%;               /* smaller image */
-    max-width: 700px;
-    margin: 0 auto;           /* centred */
-}
-
-.image-container img {
+/* Individual Service Panels */
+.service-card {
     width: 100%;
-    height: 300px;            /* banner height */
-    object-fit: cover;        /* crops instead of stretching */
-    display: block;
-    border-radius: 15px;
+    padding: 30px;
+    min-height: 150px;
+    border: 3px solid transparent;
+    border-radius: 12px;
+    text-align: left;
+    cursor: pointer;
+    color: white;
+    transition: 0.3s;
 }
 
-/* dark overlay so the text is readable */
-.image-container::after {
-    content: "";
-    position: absolute;
-    inset: 0;
-    background: rgba(0, 0, 0, 0.4);
-    border-radius: 15px;
+.service-card h2 {
+    margin-bottom: 10px;
 }
 
-.image-text {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
+.service-card p {
+    color: white;
+}
+
+/* Individual Service Colours */
+.restaurant {
+    background-color: #17BEBB;
+}
+
+.room {
+    background-color: #6D28D9;
+}
+
+.driver {
+    background-color: #001F3C;
+}
+
+/* Highlight the selected service */
+.service-card.active {
+    border-color: #222222;
+    transform: translateY(-3px);
+}
+
+.service-card:hover {
+    opacity: 0.9;
+}
+
+/* Reservations Section */
+.reservations {
+    margin-top: 20px;
+}
+
+.reservations h2 {
+    color: #001F3C;
+    margin-bottom: 20px;
+}
+
+/* Current and Previous Tabs */
+.reservation-tabs {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 25px;
+    flex-wrap: wrap;
+}
+
+.tab {
+    padding: 12px 20px;
+    border: none;
+    border-radius: 6px;
+    background-color: #E5E7EB;
+    color: #222222;
+    cursor: pointer;
+}
+
+.tab.active {
+    background-color: #001F3C;
+    color: white;
+}
+
+/* Reservation Cards */
+.reservation-list {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+}
+
+.reservation-card {
+    background-color: white;
+    border: 1px solid #DDDDDD;
+    border-left: 5px solid #17BEBB;
+    border-radius: 8px;
+    padding: 20px;
+}
+
+.reservation-card h3 {
+    color: #001F3C;
+    margin-bottom: 15px;
+}
+
+.reservation-card p {
+    margin-bottom: 8px;
+    color: #555555;
+}
+
+.status {
+    display: inline-block;
+    margin-top: 10px;
+    padding: 5px 12px;
+    border-radius: 15px;
+    background-color: #E0F2F1;
+    color: #00796B;
+    font-size: 13px;
+    font-weight: bold;
+}
+
+/* Hide reservations that do not match the selected tabs */
+.reservation-card[hidden],
+#noReservations[hidden] {
+    display: none;
+}
+
+/* No Reservations Message */
+#noReservations {
+    grid-column: 1 / -1;
     text-align: center;
-    color: #FFFFFF;
-    width: 90%;
-    z-index: 1;               /* sits above the overlay */
+    padding: 30px;
+    background-color: #F5F7FA;
+    border-radius: 8px;
 }
 
-.image-text h1 {
-    font-size: 32px;
-    margin: 0 0 10px;
-    text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.7);
+#noReservations h3 {
+    color: #001F3C;
+    margin-bottom: 10px;
 }
 
-.image-text p {
-    font-size: 16px;
-    margin: 0;
-    text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.7);
+/* colours used by the footer */
+:root {
+    --nav-bg: #001F3C;
+    --nav-text: #FFFFFF;
+    --nav-muted: #A0AEC0;
 }
 
 /* ----- Footer ----- */
@@ -129,4 +243,31 @@ h1, h2, h3 {
     font-style: italic;
 }
 
-.footer-small { color: var(--nav-muted); font-size: 0.8rem; font-style: normal; margin-top: 6px; }
+.footer-small { 
+    color: var(--nav-muted); 
+    font-size: 0.8rem; 
+    font-style: normal; 
+    margin-top: 6px; 
+}
+
+/* Adjust the page for smaller screens */
+@media screen and (max-width: 700px) {
+
+    header {
+        flex-direction: column;
+        gap: 15px;
+    }
+
+    nav {
+        justify-content: center;
+    }
+
+    .reservation-list {
+        grid-template-columns: 1fr;
+    }
+
+    .container {
+        padding: 20px;
+    }
+
+}
