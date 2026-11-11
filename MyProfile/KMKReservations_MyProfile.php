@@ -10,14 +10,14 @@
 session_regenerate_id(true); //runs after successful sign in or when automatically signing in the user has an account
 
 // Store the user's ID in the session
-$_SESSION['user_id'] = $userID;
+
 
 // Record the last activity time
 $_SESSION['last_activity'] = time();
 
 // Redirect to My Profile
-header("Location: ../MyProfile/KMKReservations_MyProfile.php");
-exit;
+
+
 
 // Temporary values until login/DB is connected
 $fullName = $_SESSION['user_name']  ?? 'Guest User';
@@ -44,7 +44,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     <header class="site-nav">
         <a href="../Home/KMKReservations_Home.php" class="nav-brand">
-            <img src="KMKReservations_Logo.png" alt="KMK Reservations logo">
+            <img src="../KMKReservations_Logo.png" alt="KMK Reservations logo">
         </a>
         <nav class="nav-links">
             <a href="../Home/KMKReservations_Home.php">Home</a>
