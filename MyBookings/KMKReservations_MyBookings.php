@@ -3,7 +3,9 @@
     session_start();
     $isLoggedIn = isset($_SESSION['user_id']);
 
-    // require_once 'DB.php';   
+    // Database connection and shared functions
+    require_once '../Database/DB.php';
+    require_once '../Shared/KMKReservations_Functions.php';
     $basepath = dirname(__DIR__);
     $base = str_replace('\\','/',$basepath);
 
@@ -12,13 +14,55 @@
 
     // An array that stores all reservation made
     $reservations =
-    ["restaurants" => [],
-    "rooms" => [],
-    "drivers" => []
+    ["restaurant" => [],
+    "room" => [],
+    "driver" => []
     ];
 
-    //retrieves records belonging to a user
-    $_SESSION['user_id']
+    $message = '';
+
+    if ($isLoggedIn) {
+
+        // Cancel a booking (the booking is not deleted, its status becomes "Cancelled")
+        if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['cancel_id'])) {
+            // "AND user_id = ?" makes sure users can only cancel their OWN bookings
+            // and only upcoming ones (a booking in the past can't be cancelled)
+            $stmt = runQuery($conn,
+                "UPDATE bookings SET status = 'Cancelled'
+                 WHERE booking_id = ? AND user_id = ? AND status <> 'Cancelled'
+                   AND COALESCE(end_date, booking_date) >= CURDATE()",
+                "ii", [(int) $_POST['cancel_id'], $_SESSION['user_id']]);
+
+            $message = ($stmt && mysqli_stmt_affected_rows($stmt) == 1)
+                ? 'Your reservation has been cancelled.'
+                : 'That reservation could not be cancelled.';
+        }
+
+        //retrieves records belonging to a user
+        $rows = getAllRows($conn,
+            "SELECT b.*, s.service_type, s.name AS service_name, s.location
+             FROM bookings b
+             JOIN services s ON b.service_id = s.service_id
+             WHERE b.user_id = ?
+             ORDER BY b.booking_date, b.booking_time",
+            "i", [$_SESSION['user_id']]);
+
+        // Put each booking in the right group (restaurant, room or driver)
+        foreach ($rows as $row) {
+            $reservations[$row['service_type']][] = [
+                'id'        => $row['booking_id'],
+                'name'      => $row['service_name'] . ' - ' . $row['location'],
+                'date'      => $row['booking_date'],
+                'time'      => $row['booking_time'] ? substr($row['booking_time'], 0, 5) : 'Check-in day',
+                'details'   => bookingDetails($row),
+                'reference' => $row['reference'],
+                'made_on'   => $row['created_at'],          // the date the reservation was made
+                'booking_status' => $row['status'],         // Pending, Confirmed or Cancelled
+                // Cancelled bookings go under "Previous"
+                'status'    => $row['status'] === 'Cancelled' ? 'previous' : bookingPeriod($row)
+            ];
+        }
+    }
 ?>
 
 <!DOCTYPE html>
@@ -31,21 +75,23 @@
 </head>
     <body>
        <!-- Navigation Bar -->
-        <header>
-            <div>
-                <nav>
-                    <div class="navbar">
-                        <img src="../KMKReservations_Logo.png" style="width:150px">
-                        <a href="../Home/KMKReservations_Home.php">Home</a>
-                        <a href="../Restaurants/KMKReservations_Restaurants.php">Restaurant</a>
-                        <a href="../Accomodations/KMKReservations_Accomodations.php">Accomodations</a>
-                        <a href="../Drivers/KMKReservations_Drivers.php">Drivers</a>
-                        <a class ="active" href="../MyBookings/KMKReservations_MyBookings.php">My Bookings</a>
-                        <a href="../MyProfile/KMKReservations_MyProfile.php">My Profile</a>
-                    </div>
-                </nav>
-            </div>
-        </header>  
+        <header class="site-nav">
+            <a href="../Home/KMKReservations_Home.php" class="nav-brand">
+                <img src="../KMKReservations_Logo.png" alt="KMK Reservations logo">
+            </a>
+            <nav class="nav-links">
+                <a href="../Home/KMKReservations_Home.php">Home</a>
+                <a href="../Restaurants/KMKReservations_Restaurants.php">Restaurant</a>
+                <a href="../Accomodations/KMKReservations_Accomodations.php">Accommodations</a>
+                <a href="../Drivers/KMKReservations_Drivers.php">Drivers</a>
+                <a class="active" href="../MyBookings/KMKReservations_MyBookings.php">My Bookings</a>
+                <a href="../MyProfile/KMKReservations_MyProfile.php">My Profile</a>
+                <!-- Admin link: only admins see it -->
+                <?php if (($_SESSION['role'] ?? '') === 'admin'): ?>
+                    <a href="../Admin/KMKReservations_Admin.php">Admin</a>
+                <?php endif; ?>
+            </nav>
+        </header>
         
         <main class = "container">
 
@@ -56,6 +102,18 @@
                     These are your current and previous reservations.
                     Where you can view in one place.
                 </p>
+
+                <!-- Shown when nobody is logged in -->
+                <?php if (!$isLoggedIn): ?>
+                    <p class="login-note">
+                        Please <a href="../MyProfile/KMKReservations_MyProfile.php">log in</a> to see your reservations.
+                    </p>
+                <?php endif; ?>
+
+                <!-- Message after cancelling -->
+                <?php if ($message != ''): ?>
+                    <p class="booking-message"><?php echo htmlspecialchars($message); ?></p>
+                <?php endif; ?>
             </section>
 
             <!-- Reservation Service Section -->
@@ -83,22 +141,24 @@
                 </h2>
 
                 <!-- Current and Previous Tabs -->
-                <div class = "rerservation-tabs">
+                <div class = "reservation-tabs">
                     <button class = "tab active" data-status = "current">
                         Current Reservations
                     </button>
 
-                    <button class = "tab" data-source = "previous">
+                    <button class = "tab" data-status = "previous">
                         Previous Reservations
                     </button>
                 </div> 
 
                 <!-- Reservation Cards -->
                 <div class = "reservation-list">
-                    <?php foreach ($reservations as $reservation): ?>
+                    <!-- Loop through each service, then each reservation in that service -->
+                    <?php foreach ($reservations as $service => $serviceReservations): ?>
+                    <?php foreach ($serviceReservations as $reservation): ?>
                         <div class = "reservation-card"
-                        data-service = "<?php echo $reservation['service']; ?>"
-                        data-status = "<?php echo $reservation['status']; ?>">
+                        data-service = "<?php echo htmlspecialchars($service); ?>"
+                        data-status = "<?php echo htmlspecialchars($reservation['status']); ?>">
 
                         <h3> 
                             <?php echo htmlspecialchars($reservation['name']); ?>
@@ -123,15 +183,29 @@
                             <strong> Reference Number: </strong>
                             <?php echo htmlspecialchars($reservation['reference']); ?>
                         </p>
+
+                        <p> 
+                            <strong> Booked on: </strong>
+                            <?php echo htmlspecialchars($reservation['made_on']); ?>
+                        </p>
                         
-                        <!-- Display the reservation status (Current or Previous) -->
-                        <span class = "status"> 
-                            <!-- Capitalises the first letter of the reservation status --> 
-                            <?php echo ucfirst($reservation['status']); ?>
+                        <!-- Display the reservation status (Pending, Confirmed or Cancelled) -->
+                        <span class = "status status-<?php echo strtolower($reservation['booking_status']); ?>"> 
+                            <?php echo htmlspecialchars($reservation['booking_status']); ?>
                         </span>
+
+                        <!-- Cancel button (only for current bookings that are not cancelled) -->
+                        <?php if ($reservation['status'] === 'current' && $reservation['booking_status'] !== 'Cancelled'): ?>
+                            <form method="post" action="" class="cancel-form"
+                                  onsubmit="return confirm('Cancel reservation <?php echo htmlspecialchars($reservation['reference']); ?>?');">
+                                <input type="hidden" name="cancel_id" value="<?php echo (int) $reservation['id']; ?>">
+                                <button type="submit" class="cancel-booking-btn">Cancel reservation</button>
+                            </form>
+                        <?php endif; ?>
                     </div>
 
-                    <!-- End the foreach loop --> 
+                    <!-- End the foreach loops --> 
+                    <?php endforeach; ?>
                     <?php endforeach; ?>
 
                     <!-- Message displaying that there are no reservations --> 
@@ -146,8 +220,8 @@
         </main>
 
         <!-- Link the JavaScript file -->
-        <script> src="MessagePopUps.js"></script>
-        <script> src="KMKReservation_MyBookings.js"></script>         
+        <script src="../Shared/MessagePopUps.js"></script>
+        <script src="KMKReservations_MyBookings.js"></script>         
 
        <!-- footer with copyright and slogan-->    
         <footer class="site-footer">

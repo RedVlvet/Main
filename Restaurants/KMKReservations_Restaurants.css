@@ -1,3 +1,6 @@
+/* Fonts (from Google Fonts) */
+@import url('https://fonts.googleapis.com/css2?family=Oswald:wght@500;600&family=Poppins:wght@400;500;600&display=swap');
+
 /* General page styling */
 * {
     margin: 0;
@@ -6,51 +9,55 @@
 }
 
 body {
-    font-family: Arial, sans-serif;
+    font-family: "Poppins", Arial, sans-serif;
     background-color: #001F3C;
     color: #FFFFFF;
 }
 
-/*Navigation Bar*/
-header {
-    background-color: #001F3C;
-    color: #FFFFFF;
-    min-height: 75px;
-    padding: 15px 40px;
-
+/*Navigation Bar (same as the My Profile page)*/
+.site-nav {
+    background: #0D1F5C;
     display: flex;
     align-items: center;
     justify-content: space-between;
-
-    border-bottom: 3px solid #17BEBB;
+    padding: 10px 40px;
 
     position: sticky;
     top: 0;
     z-index: 1000;
 }
 
-.logo {
-    font-size: 23px;
-    font-weight: bold;
+.nav-brand img {
+    height: 70px;
+    display: block;
 }
 
-nav {
+.nav-links {
     display: flex;
-    gap: 30px;
+    align-items: center;
+    gap: 28px;
 }
 
-nav a {
+.nav-links a {
     color: #FFFFFF;
     text-decoration: none;
-    font-size: 16px;
-    padding: 10px 5px;
-    transition: 0.3s;
+    font-size: 0.9rem;
+    padding-bottom: 4px;
+    border-bottom: 2px solid transparent;
 }
 
-nav a:hover,
-nav a.active {
-    color: #A855F7;
-    border-bottom: 2px solid #FFFFFF;
+.nav-links a:hover {
+    color: #A0AEC0;
+}
+
+.nav-links a.active {
+    border-bottom-color: #2388F5;
+}
+
+/* headings use Oswald, like the video */
+h1, h2, h3 {
+    font-family: "Oswald", Arial, sans-serif;
+    letter-spacing: 0.5px;
 }
 
 /*Main Rooms Section*/
@@ -221,4 +228,68 @@ nav a.active {
     font-size: 0.8rem; 
     font-style: normal; 
     margin-top: 6px;
+}
+
+/* Navigation on small screens */
+@media (max-width: 760px) {
+    .site-nav { flex-direction: column; gap: 10px; padding: 12px 16px; }
+    .nav-links { flex-wrap: wrap; justify-content: center; gap: 16px; }
+}
+
+/* ----- Extra styling (inspired by the hotel booking video) ----- */
+.hero-content h1 {
+    font-size: 52px;
+    line-height: 1.15;
+    text-shadow: 2px 2px 10px rgba(0, 0, 0, 0.5);
+}
+
+.hero-content p {
+    font-size: 17px;
+}
+
+/* coloured line on top of the form (colour from the README) */
+.reserve-panel {
+    border-top: 6px solid #A855F7;
+}
+
+/* button colours from the README */
+.reserve-btn {
+    background-color: #6D28D9;
+    color: #FFFFFF;
+}
+
+.reserve-btn:hover {
+    background-color: #A855F7;
+    color: #FFFFFF;
+}
+
+/* Small screens: put the form under the heading so the page fits the phone */
+@media screen and (max-width: 900px) {
+
+    .restaurants-hero {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .hero-content {
+        max-width: 100%;
+        text-align: center;
+    }
+
+    .reserve-panel {
+        width: 100%;
+        max-width: 500px;
+        margin: 0 auto;
+    }
+}
+
+@media screen and (max-width: 480px) {
+
+    .hero-content h1 {
+        font-size: 34px;
+    }
+
+    .reserve-panel {
+        padding: 22px;
+    }
 }

@@ -87,42 +87,6 @@ document.addEventListener("DOMContentLoaded", function () {
         });
     }
 
-    // Get the Rooms booking form
-    const bookingForm = document.getElementById("bookingForm");
-
-    if (bookingForm) {
-
-        bookingForm.addEventListener("submit", function (event) {
-
-            // Prevent the page from reloading
-            event.preventDefault();
-
-            // Check whether the user is logged in
-            const isLoggedIn = bookingForm.dataset.loggedIn === "true";
-
-            if (!isLoggedIn) {
-
-                // Display the account-required pop-up
-                accountRequired();
-
-            } else {
-
-                // Temporary message until booking functionality is connected
-                showMessage(
-                    "Availability Check",
-                    "Your booking form is ready. Availability checking will be connected later.",
-                    "!",
-                    "warning",
-                    "Okay",
-                    closeMessage
-                );
-
-            }
-
-        });
-
-    }
-
 });
 
 

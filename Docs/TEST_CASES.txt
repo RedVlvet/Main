@@ -1,0 +1,27 @@
+KMK RESERVATIONS - TEST CASES
+=============================
+Import Database\kmk_reservations.sql first so the sample data is there.
+Test accounts: admin@kmk.test / Admin@2026    kayla@test.com / Password1
+
+No. | What we test                         | Steps                                                                 | Expected result                                                    | Pass/Fail
+----|--------------------------------------|-----------------------------------------------------------------------|--------------------------------------------------------------------|----------
+1   | Sign up with a used email            | My Profile > Create account, email devon@test.com                     | "An account with this email already exists"                        |
+2   | Sign up (valid)                      | My Profile > Create account with a new email, password 8+ characters  | Account made, logged in, "Account Created" pop-up                  |
+3   | Log in with wrong password           | My Profile > Log in, kayla@test.com, password "wrong"                 | "Incorrect email or password"                                      |
+4   | Log in (valid)                       | Log in as kayla@test.com / Password1                                  | Profile shows "Kayla Morgan", Home shows recent reservations       |
+5   | Book without logging in              | Log out, go to Restaurants, fill the form, press Reserve              | "Account Required" pop-up, nothing is saved                        |
+6   | Date in the past                     | Logged in, Restaurants, pick yesterday's date                         | "The date cannot be in the past"                                   |
+7   | Restaurant booking                   | Restaurants: Cabarita Inn, a future date, 19:00, 2 adults             | "Booking Confirmed" pop-up, shows in My Bookings as Pending        |
+8   | Same booking twice                   | Do test 7 again with the same restaurant, date and time               | "You already have a reservation here at that date and time"        |
+9   | Room booking, wrong dates            | Accommodations: check-out before check-in                             | "Check-out must be after check-in"                                 |
+10  | Room booking                         | Accommodations: Golden Eye, check-in and check-out in the future      | Saved, shows under Accommodations in My Bookings                   |
+11  | Driver double booking                | Drivers: Phillip, 2026-12-18 at 07:00 (already booked in sample data) | "Phillip is already booked at that date and time"                  |
+12  | Driver, same from and to             | Drivers: Travelling from Kingston, Travelling to Kingston             | Error pop-up "cannot be the same place"                            |
+13  | Driver return trip                   | Drivers: Return, return date before the journey date                  | "The return trip must be after the journey"                        |
+14  | Cancel a booking                     | My Bookings > Current > Cancel reservation > OK                       | "Your reservation has been cancelled", status Cancelled            |
+15  | Customer opens Admin page            | Logged in as kayla, go to /Admin/KMKReservations_Admin.php            | Sent back to Home (not allowed)                                    |
+16  | Admin log in                         | Log in as admin@kmk.test                                              | Goes to Admin Dashboard with summary numbers                       |
+17  | Admin search / filter                | Admin: Service = Driver, Status = Pending, press Filter               | Only pending driver bookings are listed                            |
+18  | Admin confirm                        | Admin: press Confirm on a Pending booking                             | "Booking updated to Confirmed", status changes                     |
+19  | CSV export                           | Admin: press Export CSV                                               | A .csv file downloads with the bookings in the table               |
+20  | Log out                              | My Profile > Log out                                                  | Back on Home, My Bookings asks you to log in                       |

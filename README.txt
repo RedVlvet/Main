@@ -48,3 +48,16 @@ KMK Reservations provides three separate services:
 - My Bookings
   This is where the user can check their previous and current Reservations
   which includes the date the reservation was made and other information entered in by the user.
+
+XAMPP MySQL setup
+-----------------
+1. Start Apache and MySQL from the XAMPP Control Panel.
+2. In phpMyAdmin, import database.sql. It creates the kmk_reservations database
+   and its reservations table.
+3. The application connects to 127.0.0.1 as the default XAMPP root user with
+   an empty password. To use different settings, define DB_HOST, DB_NAME,
+   DB_USER, and DB_PASSWORD for Apache/PHP before starting Apache.
+4. Open the site through Apache (for example, http://localhost/Practice/Main).
+
+Reservations are stored in MySQL and scoped to the current PHP browser session.
+The project does not yet include account registration or sign-in.

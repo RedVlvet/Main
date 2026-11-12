@@ -3,32 +3,164 @@
     session_start();
     $isLoggedIn = isset($_SESSION['user_id']);
 
+    // Database connection and shared functions
+    require_once '../Database/DB.php';
+    require_once '../Shared/KMKReservations_Functions.php';
 
-// After successfully inserting the new account
-// and retrieving the new user's ID:
+    $errors  = [];   // list of error messages to show
+    $message = '';   // success message to show
 
-session_regenerate_id(true); //runs after successful sign in or when automatically signing in the user has an account
+    // Values kept in the forms if there is an error
+    $loginEmail  = '';
+    $signupName  = '';
+    $signupEmail = '';
+    $signupPhone = '';
 
-// Store the user's ID in the session
+    // Details of the logged in user (from the session for now)
+    $fullName = $_SESSION['user_name']  ?? '';
+    $email    = $_SESSION['user_email'] ?? '';
+    $phone    = $_SESSION['user_phone'] ?? '';
+
+    // Logs the user in: saves who they are in the session, then goes to the right page
+    function logUserIn($user, $newAccount = false) {
+        session_regenerate_id(true);   // new session id after log in, so the old one can't be reused
+
+        $_SESSION['user_id']       = $user['user_id'];
+        $_SESSION['user_name']     = $user['full_name'];
+        $_SESSION['user_email']    = $user['email'];
+        $_SESSION['user_phone']    = $user['phone'];
+        $_SESSION['role']          = $user['role'];
+        $_SESSION['last_activity'] = time();
+
+        if ($user['role'] === 'admin') {
+            header("Location: ../Admin/KMKReservations_Admin.php");
+        } elseif ($newAccount) {
+            header("Location: ../MyProfile/KMKReservations_MyProfile.php?account=created");
+        } else {
+            header("Location: ../MyProfile/KMKReservations_MyProfile.php");
+        }
+        exit;
+    }
+
+    if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+
+        // Each form has a hidden "action" field so we know which one was sent
+        $action = $_POST['action'] ?? '';
+
+        // ---------- 1. LOG IN ----------
+        if ($action === 'login') {
+            $loginEmail = trim($_POST['email'] ?? '');
+            $password   = $_POST['password'] ?? '';
+
+            if ($loginEmail == '' || $password == '') {
+                $errors[] = 'Please enter your email and password.';
+            } elseif (!filter_var($loginEmail, FILTER_VALIDATE_EMAIL)) {
+                $errors[] = 'Please enter a valid email address.';
+            } else {
+                // Find the user with this email (prepared statement)
+                $user = getOneRow($conn, "SELECT * FROM users WHERE email = ?", "s", [$loginEmail]);
+
+                // password_verify checks what they typed against the saved hash
+                if ($user && password_verify($password, $user['password'])) {
+                    logUserIn($user);
+                } else {
+                    // Same message for a wrong email or a wrong password, so nobody can guess who has an account
+                    $errors[] = 'Incorrect email or password.';
+                }
+            }
+        }
+
+        // ---------- 2. CREATE ACCOUNT ----------
+        if ($action === 'signup') {
+            $signupName  = trim($_POST['name'] ?? '');
+            $signupEmail = trim($_POST['email'] ?? '');
+            $signupPhone = trim($_POST['phone'] ?? '');
+            $password    = $_POST['password'] ?? '';
+            $confirm     = $_POST['confirm_password'] ?? '';
+
+            if ($signupName == '' || $signupEmail == '' || $signupPhone == '' || $password == '') {
+                $errors[] = 'All fields are required.';
+            }
+            if ($signupEmail != '' && !filter_var($signupEmail, FILTER_VALIDATE_EMAIL)) {
+                $errors[] = 'Please enter a valid email address.';
+            }
+            if ($signupPhone != '' && !isValidPhone($signupPhone)) {
+                $errors[] = 'Please enter a valid phone number.';
+            }
+            checkPassword($password, $confirm, $errors);
+
+            // The email can only be used for one account
+            if (count($errors) == 0 && getOneRow($conn, "SELECT user_id FROM users WHERE email = ?", "s", [$signupEmail])) {
+                $errors[] = 'An account with this email already exists. Please log in instead.';
+            }
+
+            if (count($errors) == 0) {
+                // Never save the real password, only the hash
+                $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
+
+                // New accounts are always regular users (admins are added by KMK staff)
+                $saved = runQuery($conn,
+                    "INSERT INTO users (full_name, email, phone, password, role) VALUES (?, ?, ?, ?, 'user')",
+                    "ssss", [$signupName, $signupEmail, $signupPhone, $hashedPassword]);
+
+                if ($saved) {
+                    $user = getOneRow($conn, "SELECT * FROM users WHERE user_id = ?", "i", [mysqli_insert_id($conn)]);
+                    logUserIn($user, true);
+                } else {
+                    $errors[] = 'Sorry, your account could not be created. Please try again.';
+                }
+            }
+        }
 
 
-// Record the last activity time
-$_SESSION['last_activity'] = time();
+        // ---------- 3. UPDATE PERSONAL DETAILS (logged in users only) ----------
+        if ($action === 'update' && $isLoggedIn) {
+            $fullName    = trim($_POST['name'] ?? '');
+            $email       = trim($_POST['email'] ?? '');
+            $phone       = trim($_POST['phone'] ?? '');
+            $newPassword = $_POST['new_password'] ?? '';
+            $confirm     = $_POST['confirm_password'] ?? '';
 
-// Redirect to My Profile
+            if ($fullName == '' || $email == '') {
+                $errors[] = 'Full name and email are required.';
+            }
+            if ($email != '' && !filter_var($email, FILTER_VALIDATE_EMAIL)) {
+                $errors[] = 'Please enter a valid email address.';
+            }
+            if ($phone != '' && !isValidPhone($phone)) {
+                $errors[] = 'Please enter a valid phone number.';
+            }
+            // Only check the password if the user typed a new one
+            if ($newPassword != '' || $confirm != '') {
+                checkPassword($newPassword, $confirm, $errors);
+            }
 
+            // The new email can't belong to someone else
+            if (count($errors) == 0 && getOneRow($conn, "SELECT user_id FROM users WHERE email = ? AND user_id <> ?",
+                                                 "si", [$email, $_SESSION['user_id']])) {
+                $errors[] = 'This email is already used by another account.';
+            }
 
+            if (count($errors) == 0) {
+                // Save the new details in the users table
+                runQuery($conn, "UPDATE users SET full_name = ?, email = ?, phone = ? WHERE user_id = ?",
+                         "sssi", [$fullName, $email, $phone, $_SESSION['user_id']]);
 
-// Temporary values until login/DB is connected
-$fullName = $_SESSION['user_name']  ?? 'Guest User';
-$email    = $_SESSION['user_email'] ?? 'guest@example.com';
-$phone    = $_SESSION['user_phone'] ?? '';
-$message  = '';
+                // Only change the password if a new one was typed
+                if ($newPassword != '') {
+                    runQuery($conn, "UPDATE users SET password = ? WHERE user_id = ?",
+                             "si", [password_hash($newPassword, PASSWORD_DEFAULT), $_SESSION['user_id']]);
+                }
 
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    // TODO: validate and save to the database with DB.php
-    $message = 'Your details have been saved.';
-}
+                // Keep the new details in the session so the page shows them
+                $_SESSION['user_name']  = $fullName;
+                $_SESSION['user_email'] = $email;
+                $_SESSION['user_phone'] = $phone;
+
+                $message = 'Your details have been updated.';
+            }
+        }
+    }
 ?>
 
 <!DOCTYPE html>
@@ -38,7 +170,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <title>My Account | KMK Reservations</title>
         <link rel="stylesheet" href="KMKReservations_MyProfile.css"> 
-        <link rel="stylesheet" href="MessagePopUps.css">       
+        <link rel="stylesheet" href="../Shared/MessagePopUps.css">       
     </head>
     <body>
 
@@ -49,10 +181,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         <nav class="nav-links">
             <a href="../Home/KMKReservations_Home.php">Home</a>
             <a href="../Restaurants/KMKReservations_Restaurants.php">Restaurant</a>
-            <a href="../Accomodations/KMKReservations_Accomodations.php">Accomodations</a>
+            <a href="../Accomodations/KMKReservations_Accomodations.php">Accommodations</a>
             <a href="../Drivers/KMKReservations_Drivers.php">Drivers</a>
             <a href="../MyBookings/KMKReservations_MyBookings.php">My Bookings</a>
             <a class ="active" href="../MyProfile/KMKReservations_MyProfile.php">My Profile</a>
+            <!-- Admin link: only admins see it -->
+            <?php if (($_SESSION['role'] ?? '') === 'admin'): ?>
+                <a href="../Admin/KMKReservations_Admin.php">Admin</a>
+            <?php endif; ?>
         </nav>
     </header>
 
@@ -66,11 +202,91 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     <main class="account-layout">
 
+    <?php if (!$isLoggedIn): ?>
+
+        <!-- ===== Not logged in: Log in and Create account ===== -->
+        <section class="form-card">
+            <h2>Log in</h2>
+
+            <?php if (count($errors) > 0 && ($_POST['action'] ?? '') === 'login'): ?>
+                <div class="alert-error">
+                    <?php foreach ($errors as $error): ?>
+                        <p><?= htmlspecialchars($error) ?></p>
+                    <?php endforeach; ?>
+                </div>
+            <?php endif; ?>
+
+            <form method="post" action="">
+                <input type="hidden" name="action" value="login">
+
+                <div class="field">
+                    <label for="login_email">Email address</label>
+                    <input type="email" id="login_email" name="email" value="<?= htmlspecialchars($loginEmail) ?>" required>
+                </div>
+
+                <div class="field">
+                    <label for="login_password">Password</label>
+                    <input type="password" id="login_password" name="password" autocomplete="current-password" required>
+                </div>
+
+                <button type="submit" class="btn btn-primary">Log in</button>
+            </form>
+        </section>
+
+        <section class="form-card">
+            <h2>Create an account</h2>
+
+            <?php if (count($errors) > 0 && ($_POST['action'] ?? '') === 'signup'): ?>
+                <div class="alert-error">
+                    <?php foreach ($errors as $error): ?>
+                        <p><?= htmlspecialchars($error) ?></p>
+                    <?php endforeach; ?>
+                </div>
+            <?php endif; ?>
+
+            <form method="post" action="">
+                <input type="hidden" name="action" value="signup">
+
+                <div class="field">
+                    <label for="signup_name">Full name</label>
+                    <input type="text" id="signup_name" name="name" value="<?= htmlspecialchars($signupName) ?>" required>
+                </div>
+
+                <div class="field">
+                    <label for="signup_email">Email address</label>
+                    <input type="email" id="signup_email" name="email" value="<?= htmlspecialchars($signupEmail) ?>" required>
+                </div>
+
+                <div class="field">
+                    <label for="signup_phone">Phone number</label>
+                    <input type="tel" id="signup_phone" name="phone" value="<?= htmlspecialchars($signupPhone) ?>" placeholder="876-000-0000" required>
+                </div>
+
+                <div class="field">
+                    <label for="signup_password">Password (at least 8 characters)</label>
+                    <input type="password" id="signup_password" name="password" autocomplete="new-password" required>
+                </div>
+
+                <div class="field">
+                    <label for="signup_confirm">Confirm password</label>
+                    <input type="password" id="signup_confirm" name="confirm_password" autocomplete="new-password" required>
+                </div>
+
+                <button type="submit" class="btn btn-primary">Create account</button>
+            </form>
+        </section>
+
+    <?php else: ?>
+
+        <!-- ===== Logged in: profile and personal details ===== -->
         <aside class="profile-card">
-            <div class="avatar"><?= strtoupper(substr($fullName, 0, 1)) ?></div>
-            <h2><?= htmlspecialchars($fullName) ?></h2>
-            <p class="profile-email"><?= htmlspecialchars($email) ?></p>
+            <div class="avatar"><?= htmlspecialchars(strtoupper(substr($_SESSION['user_name'] ?? 'U', 0, 1))) ?></div>
+            <h2><?= htmlspecialchars($_SESSION['user_name'] ?? '') ?></h2>
+            <p class="profile-email"><?= htmlspecialchars($_SESSION['user_email'] ?? '') ?></p>
             <a href="../MyBookings/KMKReservations_MyBookings.php" class="btn btn-primary">View my bookings</a>
+            <?php if (($_SESSION['role'] ?? '') === 'admin'): ?>
+                <a href="../Admin/KMKReservations_Admin.php" class="btn btn-primary">Admin dashboard</a>
+            <?php endif; ?>
             <a href="logout.php" class="btn btn-outline">Log out</a>
         </aside>
 
@@ -81,7 +297,17 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 <p class="alert-success"><?= htmlspecialchars($message) ?></p>
             <?php endif; ?>
 
+            <?php if (count($errors) > 0): ?>
+                <div class="alert-error">
+                    <?php foreach ($errors as $error): ?>
+                        <p><?= htmlspecialchars($error) ?></p>
+                    <?php endforeach; ?>
+                </div>
+            <?php endif; ?>
+
             <form method="post" action="">
+                <input type="hidden" name="action" value="update">
+
                 <div class="field">
                     <label for="name">Full name</label>
                     <input type="text" id="name" name="name" value="<?= htmlspecialchars($fullName) ?>" required>
@@ -112,11 +338,56 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 <button type="submit" class="btn btn-primary">Save changes</button>
             </form>
         </section>
+
+    <?php endif; ?>
+
     </main>
 
+
+        <!-- Pop-up message box (used by MessagePopUps.js) -->
+        <div id="bookingModal" class="modal-overlay">
+            <div class="modal-box">
+                <button
+                    type="button"
+                    id="modalClose"
+                    class="close-btn"
+                    aria-label="Close pop-up">
+                    &times;
+                </button>
+
+                <div id="modalIcon" class="modal-icon">
+                    !
+                </div>
+
+                <h2 id="modalTitle" class="modal-title">
+                    Message Title
+                </h2>
+
+                <p id="modalMessage" class="modal-message">
+                    Message will appear here.
+                </p>
+
+                <div class="modal-actions">
+
+                    <button
+                        type="button"
+                        id="modalPrimary"
+                        class="modal-button">
+                        Continue
+                    </button>
+
+                    <button
+                        type="button"
+                        id="modalSecondary"
+                        class="modal-button secondary">
+                        Cancel
+                    </button>
+                </div>
+            </div>
+        </div>
+
         <!-- Link the JavaScript file -->
-        <script> src="MessagePopUps.js"></script>
-        <script src="../Myb/ookings/KMKReservations_MyBookings.js"></script>
+        <script src="../Shared/MessagePopUps.js"></script>
         <script src ="../MyProfile/KMKReservations_MyProfile.js"></script>
 
     <footer class="site-footer">

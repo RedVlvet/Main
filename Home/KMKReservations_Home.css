@@ -1,3 +1,6 @@
+/* Fonts (from Google Fonts) */
+@import url('https://fonts.googleapis.com/css2?family=Oswald:wght@500;600&family=Poppins:wght@400;500;600&display=swap');
+
 /* General page styling */
 * {
     margin: 0;
@@ -6,53 +9,56 @@
 }
 
 body {
-    font-family: Arial, sans-serif;
+    font-family: "Poppins", Arial, sans-serif;
     background-color: #001F3C;
     color: #FFFFFF;
 }
 
-/*Navigation Bar*/
-header {
-    background-color: #001F3C;
-    color: #FFFFFF;
-    min-height: 75px;
-    padding: 15px 40px;
-
+/*Navigation Bar (same as the My Profile page)*/
+.site-nav {
+    background: #0D1F5C;
     display: flex;
     align-items: center;
     justify-content: space-between;
-
-    border-bottom: 3px solid #17BEBB;
+    padding: 10px 40px;
 
     position: sticky;
     top: 0;
     z-index: 1000;
 }
 
-.logo {
-    font-size: 23px;
-    font-weight: bold;
+.nav-brand img {
+    height: 70px;
+    display: block;
 }
 
-nav {
+.nav-links {
     display: flex;
-    gap: 30px;
+    align-items: center;
+    gap: 28px;
 }
 
-nav a {
+.nav-links a {
     color: #FFFFFF;
     text-decoration: none;
-    font-size: 16px;
-    padding: 10px 5px;
-    transition: 0.3s;
+    font-size: 0.9rem;
+    padding-bottom: 4px;
+    border-bottom: 2px solid transparent;
 }
 
-nav a:hover,
-nav a.active {
-    color: #A855F7;
-    border-bottom: 2px solid #FFFFFF;
+.nav-links a:hover {
+    color: #A0AEC0;
 }
 
+.nav-links a.active {
+    border-bottom-color: #2388F5;
+}
+
+/* headings use Oswald, like the video */
+h1, h2, h3 {
+    font-family: "Oswald", Arial, sans-serif;
+    letter-spacing: 0.5px;
+}
 
 /* headings */
 h1, h2, h3 {
@@ -71,21 +77,6 @@ h1, h2, h3 {
     font-size: 16px;
     margin-bottom: 10px;
 }
-
-@media (max-width: 760px) {
-    header {
-        flex-direction: column;
-        gap: 10px;
-        padding: 12px 16px;
-    }
-
-    nav {
-        flex-wrap: wrap;
-        justify-content: center;
-        gap: 16px;
-    }
-}
-
 
 @media (max-width: 400px) {
 
@@ -286,4 +277,129 @@ h1, h2, h3 {
     font-size: 0.8rem; 
     font-style: normal; 
     margin-top: 6px; 
+}
+
+/* Navigation on small screens */
+@media (max-width: 760px) {
+    .site-nav { flex-direction: column; gap: 10px; padding: 12px 16px; }
+    .nav-links { flex-wrap: wrap; justify-content: center; gap: 16px; }
+}
+
+/* ----- Home banner (big photo at the top, like the video) ----- */
+.home-banner {
+    min-height: 70vh;
+    padding: 60px 6%;
+
+    display: flex;
+    align-items: center;
+
+    background-image:
+        linear-gradient(90deg, rgba(0, 21, 43, 0.85) 0%, rgba(0, 21, 43, 0.35) 70%),
+        url("../Accomodations/Accomodation.jpg");
+    background-size: cover;
+    background-position: center;
+}
+
+.banner-text {
+    max-width: 560px;
+}
+
+.banner-text h1 {
+    text-align: left;
+    font-size: 52px;
+    line-height: 1.15;
+    margin-bottom: 18px;
+}
+
+.banner-text p {
+    font-size: 17px;
+    line-height: 1.7;
+    color: #E2E8F0;
+}
+
+.banner-btn {
+    display: inline-block;
+    margin-top: 28px;
+    padding: 14px 30px;
+
+    background-color: #6D28D9;
+    color: #FFFFFF;
+    text-decoration: none;
+    font-weight: 600;
+    border-radius: 6px;
+
+    transition: 0.3s;
+}
+
+.banner-btn:hover {
+    background-color: #A855F7;
+}
+
+@media (max-width: 760px) {
+    .home-banner { min-height: 55vh; text-align: center; justify-content: center; }
+    .banner-text h1 { text-align: center; font-size: 36px; }
+}
+
+/* ----- Your recent reservations (logged in users) ----- */
+.recent-bookings {
+    width: 95%;
+    max-width: 1100px;
+    margin: 40px auto 0;
+    text-align: center;
+}
+
+.recent-bookings h2 {
+    margin-bottom: 18px;
+}
+
+.recent-list {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 16px;
+}
+
+.recent-card {
+    background: #0D1F5C;
+    border-left: 5px solid #17BEBB;
+    border-radius: 10px;
+    padding: 16px 20px;
+    width: 280px;
+    text-align: left;
+}
+
+.recent-card h3 {
+    text-align: left;
+    font-size: 18px;
+    margin: 4px 0 6px;
+}
+
+.recent-card p {
+    color: #CBD5E1;
+    font-size: 14px;
+}
+
+.recent-type {
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: #17BEBB;
+    font-weight: 600;
+}
+
+.recent-status {
+    margin-top: 6px;
+    font-weight: 600;
+}
+
+.recent-empty {
+    color: #A0AEC0;
+}
+
+.recent-link {
+    display: inline-block;
+    margin-top: 16px;
+    color: #A855F7;
+    font-weight: 600;
+    text-decoration: none;
 }

@@ -1,0 +1,55 @@
+KMK RESERVATIONS - SETUP GUIDE
+==============================
+
+WHAT YOU NEED
+- XAMPP (Apache + MySQL) with PHP 8
+- A web browser
+
+
+STEP 1 - Put the files in htdocs
+Copy the whole KMK_Reservations folder into:
+    C:\xampp\htdocs\
+So the Home page is at:
+    C:\xampp\htdocs\KMK_Reservations\Home\KMKReservations_Home.php
+
+
+STEP 2 - Start XAMPP
+Open the XAMPP Control Panel and press Start for Apache and MySQL.
+
+
+STEP 3 - Create the database
+1. Go to http://localhost/phpmyadmin
+2. Click the Import tab at the top
+3. Choose the file: KMK_Reservations\Database\kmk_reservations.sql
+4. Press Import (at the bottom)
+This makes the "kmk_reservations" database with 3 tables
+(users, services, bookings) and the sample data.
+You can import it again any time to reset the data.
+
+
+STEP 4 - Open the website
+Go to: http://localhost/KMK_Reservations/
+
+
+TEST ACCOUNTS
+  Admin:     admin@kmk.test     password: Admin@2026
+  Customer:  kayla@test.com     password: Password1
+  Customer:  devon@test.com     password: Password1
+  Customer:  shanice@test.com   password: Password1
+You can also make a new account on the My Profile page.
+
+
+DATABASE SETTINGS
+The connection is in Database\DB.php:
+  host: localhost   user: root   password: (none)   database: kmk_reservations
+These are the normal XAMPP settings. If your MySQL has a password, change it there.
+
+
+FOLDERS
+  Home\, Restaurants\, Accomodations\, Drivers\   - the main pages
+  MyBookings\    - the customer's bookings (current / previous, cancel)
+  MyProfile\     - log in, sign up, edit details, log out
+  Admin\         - admin dashboard and CSV export (admins only)
+  Shared\        - shared PHP functions and the pop-up messages
+  Database\      - DB.php (connection) and kmk_reservations.sql
+  Docs\          - this guide, test cases, README and page notes

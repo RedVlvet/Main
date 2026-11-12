@@ -1,0 +1,9 @@
+# Default branch name for new repos
+git config --global init.defaultBranch main
+
+# Make `git push` push the current branch and set up tracking automatically
+git config --global push.default current
+git config --global push.autoSetupRemote true
+
+# Rewrite any https://github.com/ URL to SSH automatically
+git config --global 'url.git@github.com:.insteadOf' 'https://github.com/'
