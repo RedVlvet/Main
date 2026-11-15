@@ -5,7 +5,7 @@ CREATE DATABASE IF NOT EXISTS kmk_reservations
 
 USE kmk_reservations;
 
--- Keep user accounts
+-- stores user accounts
 CREATE TABLE IF NOT EXISTS users (
     user_id     INT AUTO_INCREMENT PRIMARY KEY,
     full_name   VARCHAR(100) NOT NULL,
@@ -38,7 +38,7 @@ CREATE TABLE IF NOT EXISTS drivers (
     FOREIGN KEY (user_id) REFERENCES users(user_id)
 ) ENGINE=InnoDB;
 
--- Store restaurant bookings
+-- Stores restaurant bookings
 CREATE TABLE IF NOT EXISTS restaurants (
     restaurant_id   INT AUTO_INCREMENT PRIMARY KEY,
     reference       VARCHAR(12) NOT NULL UNIQUE,
@@ -54,7 +54,7 @@ CREATE TABLE IF NOT EXISTS restaurants (
     FOREIGN KEY (user_id) REFERENCES users(user_id)
 ) ENGINE=InnoDB;
 
--- Store room bookings
+-- Stores room bookings
 CREATE TABLE IF NOT EXISTS rooms (
     room_id            INT AUTO_INCREMENT PRIMARY KEY,
     reference          VARCHAR(12) NOT NULL UNIQUE,
@@ -71,7 +71,7 @@ CREATE TABLE IF NOT EXISTS rooms (
     FOREIGN KEY (user_id) REFERENCES users(user_id)
 ) ENGINE=InnoDB;
 
--- Copy bookings from the previous schema
+-- Copy bookings from the previous schema so the data is not deleted when schema is imported (AI assisted)
 SET @legacy_service_tables = (
     SELECT COUNT(*) = 2
     FROM information_schema.tables
