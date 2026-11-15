@@ -27,7 +27,7 @@ function showMessage(
     messageBox.textContent = message;
     iconBox.textContent = icon;
 
-    iconBox.className = "modal-icon " + type;
+    iconBox.className = "modal icon " + type;
 
     primaryButton.textContent = primaryText;
 

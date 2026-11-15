@@ -14,6 +14,7 @@
     require_once '../Database/DB.php';
     require_once '../Shared/KMKReservations_Functions.php';
 
+    // Validate submitted room details.
     if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         if (!$isLoggedIn) {
             $error = 'Please log in or create an account before making a reservation.';
@@ -25,12 +26,12 @@
             $error = 'Check-out must be after check-in.';
         } elseif ($rooms > $adults) {
             $error = 'Each room needs at least one adult.';
-        } elseif (($serviceId = getServiceId($conn, 'room', $accomodation)) === null) {
+        } elseif (!isValidService('room', $accomodation)) {
             $error = 'Please choose an accommodation from the list.';
-        } elseif (isAlreadyBooked($conn, $serviceId, $checkin, null, $_SESSION['user_id'])) {
+        } elseif (isAlreadyBooked($conn, 'room', $accomodation, $checkin, null, $_SESSION['user_id'])) {
             $error = 'You already have a booking here for that check-in date.';
         } else {
-            $reference = saveBooking($conn, $_SESSION['user_id'], $serviceId, [
+            $reference = saveBooking($conn, $_SESSION['user_id'], 'room', $accomodation, [
                 'booking_date' => $checkin,
                 'end_date'     => $checkout,
                 'adults'       => (int) $adults,
@@ -57,16 +58,16 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Accommodations | KMK Reservations</title>
-        <link rel="stylesheet" href="KMKReservations_Accomodations.css">
-        <link rel="stylesheet" href="../Shared/MessagePopUps.css">
+        <link rel="stylesheet" href="KMKReservations_Accomodations.css?v=<?= filemtime(__DIR__ . DIRECTORY_SEPARATOR . 'KMKReservations_Accomodations.css') ?>">
+        <link rel="stylesheet" href="../Shared/MessagePopUps.css?v=<?= filemtime(__DIR__ . DIRECTORY_SEPARATOR . '..' . DIRECTORY_SEPARATOR . 'Shared' . DIRECTORY_SEPARATOR . 'MessagePopUps.css') ?>">
     </head>
 
     <body data-done="<?php echo $done ? '1' : '0'; ?>">
-        <header class="site-nav">
-            <a href="../Home/KMKReservations_Home.php" class="nav-brand">
+        <header class="site nav">
+            <a href="../Home/KMKReservations_Home.php" class="nav brand">
                 <img src="../KMKReservations_Logo.png" alt="KMK Reservations logo">
             </a>
-            <nav class="nav-links">
+            <nav class="nav links">
                 <a href="../Home/KMKReservations_Home.php">Home</a>
                 <a href="../Restaurants/KMKReservations_Restaurants.php">Restaurant</a>
                 <a class="active" href="../Accomodations/KMKReservations_Accomodations.php">Accommodations</a>
@@ -79,18 +80,19 @@
             </nav>
         </header>
 
-        <main class="accomodation-hero">
-            <section class="hero-content">
+        <main class="accomodation hero">
+            <section class="hero content">
                 <h1>Room Reservations</h1>
                 <p>Find and reserve a comfortable room for your stay.</p>
             </section>
-            <section class="booking-panel">
+            <section class="booking panel">
                 <h2>Book Your Room</h2>
 
                 <?php if ($error != ''): ?>
-                    <p class="alert-error"><?= htmlspecialchars($error) ?></p>
+                    <p class="alert error"><?= htmlspecialchars($error) ?></p>
                 <?php endif; ?>
 
+                <!-- Reservation inputs -->
                 <form
                     id="bookingForm"
                     action=""
@@ -102,7 +104,7 @@
 
                     <input type="hidden" name="service" value="rooms">
 
-                    <div class="form-group">
+                    <div class="form group">
                         <label for="accomodation">Accommodations:</label>
                         <select id="accomodation" name="accomodation" required>
                             <option value="">Select an Accommodation</option>
@@ -115,17 +117,17 @@
                         </select>
                     </div>
 
-                    <div class="form-group">
+                    <div class="form group">
                         <label for="checkin">Check-in:</label>
                         <input type="date" id="checkin" name="checkin" value="<?= htmlspecialchars($checkin) ?>" required>
                     </div>
 
-                    <div class="form-group">
+                    <div class="form group">
                         <label for="checkout">Check-out:</label>
                         <input type="date" id="checkout" name="checkout" value="<?= htmlspecialchars($checkout) ?>" required>
                     </div>
 
-                    <div class="form-group">
+                    <div class="form group">
                         <label for="adults">Adults:</label>
                         <select id="adults" name="adults" required>
                             <option value="1" <?= $adults == '1' ? 'selected' : '' ?>>1 Adult</option>
@@ -137,7 +139,7 @@
                         </select>
                     </div>
 
-                    <div class="form-group">
+                    <div class="form group">
                         <label for="children">Children:</label>
                         <select id="children" name="children">
                             <option value="0" <?= $children == '0' ? 'selected' : '' ?>>No Children</option>
@@ -148,7 +150,7 @@
                         </select>
                     </div>
 
-                    <div class="form-group">
+                    <div class="form group">
                         <label for="rooms">Number of Rooms:</label>
                         <select id="rooms" name="rooms" required>
                             <option value="1" <?= $rooms == '1' ? 'selected' : '' ?>>1 Room</option>
@@ -158,36 +160,36 @@
                         </select>
                     </div>
 
-                    <button type="submit" class="booking-btn">Check Availability</button>
+                    <button type="submit" class="booking btn">Check Availability</button>
                 </form>
             </section>
         </main>
 
-        <div id="bookingModal" class="modal-overlay">
-            <div class="modal-box">
+        <div id="bookingModal" class="modal overlay">
+            <div class="modal box">
                 <button
                     type="button"
                     id="modalClose"
-                    class="close-btn"
+                    class="close btn"
                     aria-label="Close pop-up">
                     &times;
                 </button>
 
-                <div id="modalIcon" class="modal-icon">!</div>
-                <h2 id="modalTitle" class="modal-title">Message Title</h2>
-                <p id="modalMessage" class="modal-message">Message will appear here.</p>
+                <div id="modalIcon" class="modal icon">!</div>
+                <h2 id="modalTitle" class="modal title">Message Title</h2>
+                <p id="modalMessage" class="modal message">Message will appear here.</p>
 
-                <div class="modal-actions">
+                <div class="modal actions">
                     <button
                         type="button"
                         id="modalPrimary"
-                        class="modal-button">
+                        class="modal button">
                         Continue
                     </button>
                     <button
                         type="button"
                         id="modalSecondary"
-                        class="modal-button secondary">
+                        class="modal button secondary">
                         Cancel
                     </button>
                 </div>
@@ -195,9 +197,9 @@
         </div>
 
         <script src="../Shared/MessagePopUps.js"></script>
-        <footer class="site-footer">
+        <footer class="site footer">
             <p>Plan your day your way.</p>
-            <p class="footer-small">&copy; 2026 KMK Reservations</p>
+            <p class="footer small">&copy; 2026 KMK Reservations</p>
         </footer>
     </body>
 </html>

@@ -7,14 +7,11 @@
         require_once '../Database/DB.php';
         require_once '../Shared/KMKReservations_Functions.php';
 
-        $recentBookings = getAllRows($conn,
-            "SELECT b.*, s.service_type, s.name AS service_name
-             FROM bookings b
-             JOIN services s ON b.service_id = s.service_id
-             WHERE b.user_id = ?
-             ORDER BY b.created_at DESC
-             LIMIT 3",
-            "i", [$_SESSION['user_id']]);
+        $recentBookings = getUserBookings($conn, $_SESSION['user_id']);
+        usort($recentBookings, function ($first, $second) {
+            return strcmp($second['created_at'], $first['created_at']);
+        });
+        $recentBookings = array_slice($recentBookings, 0, 3);
     }
 ?>
 
@@ -24,14 +21,14 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Home | KMK Reservations</title>
-    <link rel="stylesheet" href="KMKReservations_Home.css">
+    <link rel="stylesheet" href="KMKReservations_Home.css?v=<?= filemtime(__DIR__ . DIRECTORY_SEPARATOR . 'KMKReservations_Home.css') ?>">
 </head>
 <body>
-    <header class="site-nav">
-        <a href="../Home/KMKReservations_Home.php" class="nav-brand">
+    <header class="site nav">
+        <a href="../Home/KMKReservations_Home.php" class="nav brand">
             <img src="../KMKReservations_Logo.png" alt="KMK Reservations logo">
         </a>
-        <nav class="nav-links">
+        <nav class="nav links">
             <a class="active" href="../Home/KMKReservations_Home.php">Home</a>
             <a href="../Restaurants/KMKReservations_Restaurants.php">Restaurant</a>
             <a href="../Accomodations/KMKReservations_Accomodations.php">Accommodations</a>
@@ -45,33 +42,33 @@
     </header>
 
     <main>
-        <section class="home-banner">
-            <div class="banner-text">
+        <section class="home banner">
+            <div class="banner text">
                 <h1>Your plans, perfectly reserved.</h1>
                 <p>Book restaurants, rooms and drivers all in one place.</p>
                 <p>Fast, easy and reliable across Jamaica.</p>
-                <a href="#services" class="banner-btn">Discover now</a>
+                <a href="#services" class="banner btn">Discover now</a>
             </div>
         </section>
 
         <?php if ($isLoggedIn): ?>
-        <section class="recent-bookings">
+        <section class="recent bookings">
             <h2>Your recent reservations</h2>
 
             <?php if (count($recentBookings) == 0): ?>
-                <p class="recent-empty">You have no reservations yet. Choose a service below to get started.</p>
+                <p class="recent empty">You have no reservations yet. Choose a service below to get started.</p>
             <?php else: ?>
-                <div class="recent-list">
+                <div class="recent list">
                     <?php foreach ($recentBookings as $booking): ?>
-                        <div class="recent-card">
-                            <span class="recent-type"><?= serviceName($booking['service_type']) ?></span>
+                        <div class="recent card">
+                            <span class="recent type"><?= serviceName($booking['service_type']) ?></span>
                             <h3><?= htmlspecialchars($booking['service_name']) ?></h3>
                             <p><?= htmlspecialchars($booking['booking_date']) ?> &middot; <?= htmlspecialchars($booking['reference']) ?></p>
-                            <p class="recent-status"><?= htmlspecialchars($booking['status']) ?></p>
+                            <p class="recent status"><?= htmlspecialchars($booking['status']) ?></p>
                         </div>
                     <?php endforeach; ?>
                 </div>
-                <a href="../MyBookings/KMKReservations_MyBookings.php" class="recent-link">See all my bookings &rarr;</a>
+                <a href="../MyBookings/KMKReservations_MyBookings.php" class="recent link">See all my bookings &rarr;</a>
             <?php endif; ?>
         </section>
         <?php endif; ?>
@@ -109,46 +106,46 @@
             </section>
         </section>
 
-        <section class="services-section" id="services">
-            <div class="services-heading">
+        <section class="services section" id="services">
+            <div class="services heading">
                 <h1>What would you like to reserve?</h1>
                 <p>Select a service below to get started.</p>
             </div>
 
-            <div class="services-container">
-                <div class="service-card restaurant-card">
-                    <img class="service-image" src="../Restaurants/RestaurantReservation.jpg" alt="Restaurant reservation">
-                    <div class="service-content">
+            <div class="services container">
+                <div class="service card restaurant card">
+                    <img class="service image" src="../Restaurants/RestaurantReservation.jpg" alt="Restaurant reservation">
+                    <div class="service content">
                         <h2>Restaurant Reservation</h2>
                         <p>Find and reserve a table at your favourite restaurant.</p>
-                        <a href="../Restaurants/KMKReservations_Restaurants.php" class="explore-btn">Explore Service</a>
+                        <a href="../Restaurants/KMKReservations_Restaurants.php" class="explore btn">Explore Service</a>
                     </div>
                 </div>
 
-                <div class="service-card room-card">
-                    <img class="service-image" src="../Accomodations/Accomodation.jpg" alt="Accommodation">
-                    <div class="service-content">
+                <div class="service card room card">
+                    <img class="service image" src="../Accomodations/Accomodation.jpg" alt="Accommodation">
+                    <div class="service content">
                         <h2>Accommodations</h2>
                         <p>Find and reserve a comfortable space for your stay.</p>
-                        <a href="../Accomodations/KMKReservations_Accomodations.php" class="explore-btn">Explore Service</a>
+                        <a href="../Accomodations/KMKReservations_Accomodations.php" class="explore btn">Explore Service</a>
                     </div>
                 </div>
 
-                <div class="service-card driver-card">
-                    <img class="service-image" src="../Drivers/DriverReservation.jpeg" alt="Driver reservation">
-                    <div class="service-content">
+                <div class="service card driver card">
+                    <img class="service image" src="../Drivers/DriverReservation.jpeg" alt="Driver reservation">
+                    <div class="service content">
                         <h2>Driver Reservation</h2>
                         <p>Book a reliable driver for your journey.</p>
-                        <a href="../Drivers/KMKReservations_Drivers.php" class="explore-btn">Explore Service</a>
+                        <a href="../Drivers/KMKReservations_Drivers.php" class="explore btn">Explore Service</a>
                     </div>
                 </div>
             </div>
         </section>
     </main>
 
-    <footer class="site-footer">
+    <footer class="site footer">
         <p>Plan your day your way.</p>
-        <p class="footer-small">&copy; 2026 KMK Reservations</p>
+        <p class="footer small">&copy; 2026 KMK Reservations</p>
     </footer>
 </body>
 </html>

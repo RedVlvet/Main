@@ -16,7 +16,7 @@ body {
     min-height: 100vh;
 }
 
-.site-nav {
+.site.nav {
     background: #0D1F5C;
     display: flex;
     align-items: center;
@@ -28,18 +28,18 @@ body {
     z-index: 1000;
 }
 
-.nav-brand img {
+.nav.brand img {
     height: 70px;
     display: block;
 }
 
-.nav-links {
+.nav.links {
     display: flex;
     align-items: center;
     gap: 28px;
 }
 
-.nav-links a {
+.nav.links a {
     color: #FFFFFF;
     text-decoration: none;
     font-size: 0.9rem;
@@ -47,11 +47,11 @@ body {
     border-bottom: 2px solid transparent;
 }
 
-.nav-links a:hover {
+.nav.links a:hover {
     color: #A0AEC0;
 }
 
-.nav-links a.active {
+.nav.links a.active {
     border-bottom-color: #2388F5;
 }
 
@@ -84,14 +84,14 @@ h1, h2, h3 {
     color: #555555;
 }
 
-.service-sections {
+.service.sections {
     display: flex;
     flex-direction: column;
     gap: 20px;
     margin-bottom: 40px;
 }
 
-.service-card {
+.service.card {
     width: 100%;
     padding: 30px;
     min-height: 150px;
@@ -103,11 +103,11 @@ h1, h2, h3 {
     transition: 0.3s;
 }
 
-.service-card h2 {
+.service.card h2 {
     margin-bottom: 10px;
 }
 
-.service-card p {
+.service.card p {
     color: white;
 }
 
@@ -123,12 +123,12 @@ h1, h2, h3 {
     background-color: #001F3C;
 }
 
-.service-card.active {
+.service.card.active {
     border-color: #222222;
     transform: translateY(-3px);
 }
 
-.service-card:hover {
+.service.card:hover {
     opacity: 0.9;
 }
 
@@ -141,7 +141,7 @@ h1, h2, h3 {
     margin-bottom: 20px;
 }
 
-.reservation-tabs {
+.reservation.tabs {
     display: flex;
     gap: 10px;
     margin-bottom: 25px;
@@ -162,13 +162,13 @@ h1, h2, h3 {
     color: white;
 }
 
-.reservation-list {
+.reservation.list {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
     gap: 20px;
 }
 
-.reservation-card {
+.reservation.card {
     background-color: white;
     border: 1px solid #DDDDDD;
     border-left: 5px solid #17BEBB;
@@ -176,12 +176,12 @@ h1, h2, h3 {
     padding: 20px;
 }
 
-.reservation-card h3 {
+.reservation.card h3 {
     color: #001F3C;
     margin-bottom: 15px;
 }
 
-.reservation-card p {
+.reservation.card p {
     margin-bottom: 8px;
     color: #555555;
 }
@@ -197,7 +197,7 @@ h1, h2, h3 {
     font-weight: bold;
 }
 
-.reservation-card[hidden],
+.reservation.card[hidden],
 #noReservations[hidden] {
     display: none;
 }
@@ -221,7 +221,7 @@ h1, h2, h3 {
     --nav-muted: #A0AEC0;
 }
 
-.site-footer {
+.site.footer {
     background: var(--nav-bg);
     color: var(--nav-text);
     text-align: center;
@@ -229,7 +229,7 @@ h1, h2, h3 {
     font-style: italic;
 }
 
-.footer-small {
+.footer.small {
     color: var(--nav-muted);
     font-size: 0.8rem;
     font-style: normal;
@@ -239,7 +239,7 @@ h1, h2, h3 {
 @media screen and (max-width: 700px) {
 
 
-    .reservation-list {
+    .reservation.list {
         grid-template-columns: 1fr;
     }
 
@@ -250,28 +250,28 @@ h1, h2, h3 {
 }
 
 @media (max-width: 760px) {
-    .site-nav {
+    .site.nav {
         flex-direction: column;
         gap: 10px;
         padding: 12px 16px;
     }
 
-    .nav-links {
+    .nav.links {
         flex-wrap: wrap;
         justify-content: center;
         gap: 16px;
     }
 }
 
-.status-pending { background-color: #FEF3C7; color: #92400E; }
-.status-confirmed { background-color: #DCFCE7; color: #166534; }
-.status-cancelled { background-color: #FEE2E2; color: #991B1B; }
+.status.pending { background-color: #FEF3C7; color: #92400E; }
+.status.confirmed { background-color: #DCFCE7; color: #166534; }
+.status.cancelled { background-color: #FEE2E2; color: #991B1B; }
 
-.cancel-form {
+.cancel.form {
     margin-top: 14px;
 }
 
-.cancel-booking-btn {
+.cancel.booking.btn {
     padding: 9px 16px;
     border: 1px solid #B91C1C;
     border-radius: 6px;
@@ -281,13 +281,13 @@ h1, h2, h3 {
     cursor: pointer;
 }
 
-.cancel-booking-btn:hover {
+.cancel.booking.btn:hover {
     background: #B91C1C;
     color: #FFFFFF;
 }
 
-.login-note,
-.booking-message {
+.login.note,
+.booking.message {
     margin-top: 12px;
     padding: 10px 14px;
     border-radius: 8px;

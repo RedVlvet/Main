@@ -17,30 +17,27 @@
 
     if ($isLoggedIn) {
 
+        // Handles booking cancellation.
         if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['cancel_id'])) {
-            $stmt = runQuery($conn,
-                "UPDATE bookings SET status = 'Cancelled'
-                 WHERE booking_id = ? AND user_id = ? AND status <> 'Cancelled'
-                   AND COALESCE(end_date, booking_date) >= CURDATE()",
-                "ii", [(int) $_POST['cancel_id'], $_SESSION['user_id']]);
+            $bookingType = $_POST['booking_type'] ?? '';
+            $stmt = cancelUserBooking(
+                $conn,
+                $bookingType,
+                (int) $_POST['cancel_id'],
+                $_SESSION['user_id']
+            );
 
             $message = ($stmt && mysqli_stmt_affected_rows($stmt) == 1)
                 ? 'Your reservation has been cancelled.'
                 : 'That reservation could not be cancelled.';
         }
 
-        $rows = getAllRows($conn,
-            "SELECT b.*, s.service_type, s.name AS service_name, s.location
-             FROM bookings b
-             JOIN services s ON b.service_id = s.service_id
-             WHERE b.user_id = ?
-             ORDER BY b.booking_date, b.booking_time",
-            "i", [$_SESSION['user_id']]);
+        $rows = getUserBookings($conn, $_SESSION['user_id']);
 
         foreach ($rows as $row) {
             $reservations[$row['service_type']][] = [
                 'id'        => $row['booking_id'],
-                'name'      => $row['service_name'] . ' - ' . $row['location'],
+                'name'      => $row['service_name'],
                 'date'      => $row['booking_date'],
                 'time'      => $row['booking_time'] ? substr($row['booking_time'], 0, 5) : 'Check-in day',
                 'details'   => bookingDetails($row),
@@ -59,14 +56,14 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>My Bookings | KMK Reservations</title>
-    <link rel="stylesheet" href="KMKReservations_MyBookings.css">
+    <link rel="stylesheet" href="KMKReservations_MyBookings.css?v=<?= filemtime(__DIR__ . DIRECTORY_SEPARATOR . 'KMKReservations_MyBookings.css') ?>">
 </head>
 <body>
-    <header class="site-nav">
-        <a href="../Home/KMKReservations_Home.php" class="nav-brand">
+    <header class="site nav">
+        <a href="../Home/KMKReservations_Home.php" class="nav brand">
             <img src="../KMKReservations_Logo.png" alt="KMK Reservations logo">
         </a>
-        <nav class="nav-links">
+        <nav class="nav links">
             <a href="../Home/KMKReservations_Home.php">Home</a>
             <a href="../Restaurants/KMKReservations_Restaurants.php">Restaurant</a>
             <a href="../Accomodations/KMKReservations_Accomodations.php">Accommodations</a>
@@ -85,26 +82,26 @@
             <p>These are your current and previous reservations. Where you can view in one place.</p>
 
             <?php if (!$isLoggedIn): ?>
-                <p class="login-note">
+                <p class="login note">
                     Please <a href="../MyProfile/KMKReservations_MyProfile.php">log in</a> to see your reservations.
                 </p>
             <?php endif; ?>
 
             <?php if ($message != ''): ?>
-                <p class="booking-message"><?= htmlspecialchars($message) ?></p>
+                <p class="booking message"><?= htmlspecialchars($message) ?></p>
             <?php endif; ?>
         </section>
 
-        <section class="service-sections">
-            <button class="service-card restaurant active" data-service="restaurant">
+        <section class="service sections">
+            <button class="service card restaurant active" data-service="restaurant">
                 <h2>Restaurant</h2>
                 <p>View your restaurant reservations.</p>
             </button>
-            <button class="service-card room" data-service="room">
+            <button class="service card room" data-service="room">
                 <h2>Room</h2>
                 <p>View your room reservations.</p>
             </button>
-            <button class="service-card driver" data-service="driver">
+            <button class="service card driver" data-service="driver">
                 <h2>Drivers</h2>
                 <p>View your driver reservations.</p>
             </button>
@@ -113,16 +110,16 @@
         <section class="reservations">
             <h2 id="reservationTitle">Restaurant Reservations</h2>
 
-            <div class="reservation-tabs">
+            <div class="reservation tabs">
                 <button class="tab active" data-status="current">Current Reservations</button>
                 <button class="tab" data-status="previous">Previous Reservations</button>
             </div>
 
-            <div class="reservation-list">
+            <div class="reservation list">
                 <?php foreach ($reservations as $service => $serviceReservations): ?>
                     <?php foreach ($serviceReservations as $reservation): ?>
                         <div
-                            class="reservation-card"
+                            class="reservation card"
                             data-service="<?= htmlspecialchars($service) ?>"
                             data-status="<?= htmlspecialchars($reservation['status']) ?>"
                         >
@@ -132,19 +129,21 @@
                             <p><strong>Details:</strong> <?= htmlspecialchars($reservation['details']) ?></p>
                             <p><strong>Reference Number:</strong> <?= htmlspecialchars($reservation['reference']) ?></p>
                             <p><strong>Booked on:</strong> <?= htmlspecialchars($reservation['made_on']) ?></p>
-                            <span class="status status-<?= strtolower($reservation['booking_status']) ?>">
+                            <span class="status status <?= strtolower($reservation['booking_status']) ?>">
                                 <?= htmlspecialchars($reservation['booking_status']) ?>
                             </span>
 
                             <?php if ($reservation['status'] === 'current' && $reservation['booking_status'] !== 'Cancelled'): ?>
+                                <!-- Cancel this booking -->
                                 <form
                                     method="post"
                                     action=""
-                                    class="cancel-form"
+                                    class="cancel form"
                                     onsubmit="return confirm('Cancel reservation <?= htmlspecialchars($reservation['reference']) ?>?');"
                                 >
+                                    <input type="hidden" name="booking_type" value="<?= htmlspecialchars($service) ?>">
                                     <input type="hidden" name="cancel_id" value="<?= (int) $reservation['id'] ?>">
-                                    <button type="submit" class="cancel-booking-btn">Cancel reservation</button>
+                                    <button type="submit" class="cancel booking btn">Cancel reservation</button>
                                 </form>
                             <?php endif; ?>
                         </div>
@@ -162,9 +161,9 @@
     <script src="../Shared/MessagePopUps.js"></script>
     <script src="KMKReservations_MyBookings.js"></script>
 
-    <footer class="site-footer">
+    <footer class="site footer">
         <p>Plan your day your way.</p>
-        <p class="footer-small">&copy; 2026 KMK Reservations</p>
+        <p class="footer small">&copy; 2026 KMK Reservations</p>
     </footer>
 </body>
 </html>

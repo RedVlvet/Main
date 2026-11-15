@@ -15,7 +15,7 @@ body {
     flex-direction: column;
 }
 
-.site-nav {
+.site.nav {
     background: #0D1F5C;
     display: flex;
     align-items: center;
@@ -27,18 +27,18 @@ body {
     z-index: 1000;
 }
 
-.nav-brand img {
+.nav.brand img {
     height: 70px;
     display: block;
 }
 
-.nav-links {
+.nav.links {
     display: flex;
     align-items: center;
     gap: 28px;
 }
 
-.nav-links a {
+.nav.links a {
     color: #FFFFFF;
     text-decoration: none;
     font-size: 0.9rem;
@@ -46,11 +46,11 @@ body {
     border-bottom: 2px solid transparent;
 }
 
-.nav-links a:hover {
+.nav.links a:hover {
     color: #A0AEC0;
 }
 
-.nav-links a.active {
+.nav.links a.active {
     border-bottom-color: #2388F5;
 }
 
@@ -59,24 +59,24 @@ h1, h2, h3 {
     letter-spacing: 0.5px;
 }
 
-.admin-page {
+.admin.page {
     flex: 1;
     width: 95%;
     max-width: 1300px;
     margin: 30px auto;
 }
 
-.admin-heading h1 {
+.admin.heading h1 {
     font-size: 38px;
     margin-bottom: 6px;
 }
 
-.admin-heading p {
+.admin.heading p {
     color: #A0AEC0;
     margin-bottom: 24px;
 }
 
-.admin-message {
+.admin.message {
     background: #DCFCE7;
     color: #166534;
     padding: 10px 14px;
@@ -91,7 +91,7 @@ h1, h2, h3 {
     margin-bottom: 14px;
 }
 
-.summary-card {
+.summary.card {
     background: #0D1F5C;
     border-top: 5px solid #2388F5;
     border-radius: 12px;
@@ -100,27 +100,27 @@ h1, h2, h3 {
     flex-direction: column;
 }
 
-.summary-card.upcoming  { border-top-color: #17BEBB; }
-.summary-card.pending   { border-top-color: #F59E0B; }
-.summary-card.cancelled { border-top-color: #EF4444; }
+.summary.card.upcoming  { border-top-color: #17BEBB; }
+.summary.card.pending   { border-top-color: #F59E0B; }
+.summary.card.cancelled { border-top-color: #EF4444; }
 
-.summary-number {
+.summary.number {
     font-family: "Oswald", Arial, sans-serif;
     font-size: 36px;
 }
 
-.summary-label {
+.summary.label {
     color: #A0AEC0;
     font-size: 14px;
 }
 
-.per-service {
+.per.service {
     color: #CBD5E1;
     margin-bottom: 26px;
     font-size: 14px;
 }
 
-.filter-bar {
+.filter.bar {
     background: #FFFFFF;
     color: #222222;
     border-radius: 12px;
@@ -132,18 +132,18 @@ h1, h2, h3 {
     margin-bottom: 22px;
 }
 
-.filter-field {
+.filter.field {
     display: flex;
     flex-direction: column;
     min-width: 150px;
 }
 
-.filter-field.wide {
+.filter.field.wide {
     flex: 1;
     min-width: 220px;
 }
 
-.filter-field label {
+.filter.field label {
     font-size: 11px;
     font-weight: 600;
     text-transform: uppercase;
@@ -152,15 +152,15 @@ h1, h2, h3 {
     margin-bottom: 5px;
 }
 
-.filter-field input,
-.filter-field select {
+.filter.field input,
+.filter.field select {
     padding: 10px;
     border: 1px solid #CCCCCC;
     border-radius: 6px;
     font-size: 14px;
 }
 
-.filter-buttons {
+.filter.buttons {
     display: flex;
     gap: 8px;
 }
@@ -179,24 +179,24 @@ h1, h2, h3 {
 }
 
 .btn:hover { background: #2388F5; }
-.btn-light {
+.btn.light {
     background: #E5E7EB;
     color: #001F3C;
 }
 
-.btn-light:hover {
+.btn.light:hover {
     background: #D1D5DB;
 }
 
-.btn-csv {
+.btn.csv {
     background: #0EA5A4;
 }
 
-.btn-csv:hover {
+.btn.csv:hover {
     background: #17BEBB;
 }
 
-.table-box {
+.table.box {
     background: #FFFFFF;
     color: #222222;
     border-radius: 12px;
@@ -204,25 +204,25 @@ h1, h2, h3 {
     overflow-x: auto;
 }
 
-.result-count {
+.result.count {
     color: #6B7280;
     font-size: 14px;
     margin-bottom: 12px;
 }
 
-.no-results {
+.no.results {
     text-align: center;
     padding: 30px;
     color: #6B7280;
 }
 
-.booking-table {
+.booking.table {
     width: 100%;
     border-collapse: collapse;
     font-size: 14px;
 }
 
-.booking-table th {
+.booking.table th {
     text-align: left;
     background: #001F3C;
     color: #FFFFFF;
@@ -230,17 +230,17 @@ h1, h2, h3 {
     white-space: nowrap;
 }
 
-.booking-table td {
+.booking.table td {
     padding: 10px;
     border-bottom: 1px solid #E5E7EB;
     vertical-align: top;
 }
 
-.booking-table tr:hover td {
+.booking.table tr:hover td {
     background: #F8FAFC;
 }
 
-.booking-table small {
+.booking.table small {
     color: #6B7280;
 }
 
@@ -252,9 +252,9 @@ h1, h2, h3 {
     font-weight: bold;
 }
 
-.status-pending { background: #FEF3C7; color: #92400E; }
-.status-confirmed { background: #DCFCE7; color: #166534; }
-.status-cancelled { background: #FEE2E2; color: #991B1B; }
+.status.pending { background: #FEF3C7; color: #92400E; }
+.status.confirmed { background: #DCFCE7; color: #166534; }
+.status.cancelled { background: #FEE2E2; color: #991B1B; }
 
 .actions {
     white-space: nowrap;
@@ -265,7 +265,7 @@ h1, h2, h3 {
     margin: 2px;
 }
 
-.small-btn {
+.small.btn {
     padding: 6px 12px;
     border-radius: 5px;
     border: none;
@@ -275,11 +275,11 @@ h1, h2, h3 {
     color: #FFFFFF;
 }
 
-.small-btn.confirm { background: #16A34A; }
-.small-btn.cancel { background: #DC2626; }
-.small-btn:hover { opacity: 0.85; }
+.small.btn.confirm { background: #16A34A; }
+.small.btn.cancel { background: #DC2626; }
+.small.btn:hover { opacity: 0.85; }
 
-.site-footer {
+.site.footer {
     background: #001F3C;
     color: #FFFFFF;
     text-align: center;
@@ -287,7 +287,7 @@ h1, h2, h3 {
     font-style: italic;
 }
 
-.footer-small {
+.footer.small {
     color: #A0AEC0;
     font-size: 0.8rem;
     font-style: normal;
@@ -295,13 +295,13 @@ h1, h2, h3 {
 }
 
 @media (max-width: 760px) {
-    .site-nav {
+    .site.nav {
         flex-direction: column;
         gap: 10px;
         padding: 12px 16px;
     }
 
-    .nav-links {
+    .nav.links {
         flex-wrap: wrap;
         justify-content: center;
         gap: 16px;

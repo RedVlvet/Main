@@ -1,11 +1,11 @@
 
 document.addEventListener("DOMContentLoaded", function () {
 
-    const serviceButtons = document.querySelectorAll(".service-card");
+    const serviceButtons = document.querySelectorAll(".service.card");
 
     const statusButtons = document.querySelectorAll(".tab");
 
-    const reservationCards = document.querySelectorAll(".reservation-card");
+    const reservationCards = document.querySelectorAll(".reservation.card");
 
     const reservationTitle = document.getElementById("reservationTitle");
 

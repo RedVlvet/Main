@@ -1,6 +1,7 @@
 <?php
     mysqli_report(MYSQLI_REPORT_OFF);
 
+    // Connect to the reservations database.
     $conn = mysqli_connect("localhost", "root", "", "kmk_reservations");
 
     if ($conn === false) {

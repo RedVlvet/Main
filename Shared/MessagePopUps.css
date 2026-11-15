@@ -1,6 +1,6 @@
 
 
-.modal-overlay {
+.modal.overlay {
     display: none;
     position: fixed;
     top: 0;
@@ -16,11 +16,11 @@
     box-sizing: border-box;
 }
 
-.modal-overlay.show {
+.modal.overlay.show {
     display: flex;
 }
 
-.modal-box {
+.modal.box {
     position: relative;
     background: #FFFFFF;
     width: 100%;
@@ -45,7 +45,7 @@
     }
 }
 
-.close-btn {
+.close.btn {
     position: absolute;
     top: 12px;
     right: 15px;
@@ -56,7 +56,7 @@
     cursor: pointer;
 }
 
-.modal-icon {
+.modal.icon {
     width: 60px;
     height: 60px;
     margin: 0 auto 18px;
@@ -72,39 +72,39 @@
     font-weight: bold;
 }
 
-.modal-icon.success {
+.modal.icon.success {
     background: #16A34A;
 }
 
-.modal-icon.warning {
+.modal.icon.warning {
     background: #D97706;
 }
 
-.modal-icon.error {
+.modal.icon.error {
     background: #6D28D9;
 }
 
-.modal-title {
+.modal.title {
     color: #001F3C;
     font-size: 23px;
     margin-bottom: 10px;
 }
 
-.modal-message {
+.modal.message {
     color: #555555;
     font-size: 15px;
     line-height: 1.6;
     margin-bottom: 25px;
 }
 
-.modal-actions {
+.modal.actions {
     display: flex;
     justify-content: center;
     gap: 10px;
     flex-wrap: wrap;
 }
 
-.modal-button {
+.modal.button {
     padding: 12px 20px;
     border: none;
     border-radius: 7px;
@@ -115,30 +115,30 @@
     cursor: pointer;
 }
 
-.modal-button:hover {
+.modal.button:hover {
     opacity: 0.85;
 }
 
-.modal-button.secondary {
+.modal.button.secondary {
     background: #E5E7EB;
     color: #001F3C;
 }
 
-.modal-button.hidden {
+.modal.button.hidden {
     display: none;
 }
 
 @media screen and (max-width: 480px) {
 
-    .modal-box {
+    .modal.box {
         padding: 25px 18px;
     }
 
-    .modal-actions {
+    .modal.actions {
         flex-direction: column;
     }
 
-    .modal-button {
+    .modal.button {
         width: 100%;
     }
 }

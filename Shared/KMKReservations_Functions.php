@@ -58,58 +58,168 @@
     function makeReference($conn) {
         do {
             $reference = 'KMK-' . strtoupper(substr(bin2hex(random_bytes(4)), 0, 6));
-            $found = getOneRow($conn, "SELECT booking_id FROM bookings WHERE reference = ?", "s", [$reference]);
+            $found = getOneRow($conn,
+                "SELECT reference FROM (
+                    SELECT reference FROM drivers
+                    UNION ALL SELECT reference FROM restaurants
+                    UNION ALL SELECT reference FROM rooms
+                 ) AS reservations
+                 WHERE reference = ?",
+                "s", [$reference]);
         } while ($found !== null);
 
         return $reference;
     }
 
-    function getServiceId($conn, $serviceType, $name) {
-        $row = getOneRow($conn, "SELECT service_id FROM services WHERE service_type = ? AND name = ?",
-                         "ss", [$serviceType, $name]);
-        return $row ? $row['service_id'] : null;
+    function isValidService($serviceType, $name) {
+        $options = [
+            'driver' => ['Marcus', 'John', 'Phillip', 'Martin', 'Francis'],
+            'restaurant' => [
+                'The Jerk Centre',
+                'Pier 1 Restaurant',
+                'Food to go',
+                "Sally's at Sunset",
+                'Cabarita Inn',
+                'Roots 21 | Bar & Kitchen'
+            ],
+            'room' => [
+                'Bahia Principe Explore Jamaica',
+                'The Blue House Boutique Bed & Breakfast Villa',
+                'Royalton Blue Waters',
+                'Golden Eye',
+                'Couples Sans Souci',
+                'Sandals Jamaica Montego Bay'
+            ]
+        ];
+
+        return isset($options[$serviceType]) && in_array($name, $options[$serviceType], true);
     }
 
-    function isAlreadyBooked($conn, $serviceId, $date, $time, $userId = null) {
-        $sql = "SELECT booking_id FROM bookings
-                WHERE service_id = ? AND booking_date = ? AND booking_time <=> ? AND status <> 'Cancelled'";
-        $types = "iss";
-        $values = [$serviceId, $date, $time];
-
-        if ($userId !== null) {
-            $sql .= " AND user_id = ?";
-            $types .= "i";
-            $values[] = $userId;
+    function isAlreadyBooked($conn, $serviceType, $serviceName, $date, $time = null, $userId = null) {
+        if ($serviceType === 'driver') {
+            $sql = "SELECT driver_id FROM drivers
+                    WHERE driver_name = ? AND booking_date = ? AND booking_time = ?
+                      AND status <> 'Cancelled'";
+            $types = "sss";
+            $values = [$serviceName, $date, $time];
+        } elseif ($serviceType === 'restaurant') {
+            $sql = "SELECT restaurant_id FROM restaurants
+                    WHERE restaurant_name = ? AND booking_date = ? AND booking_time = ?
+                      AND user_id = ? AND status <> 'Cancelled'";
+            $types = "sssi";
+            $values = [$serviceName, $date, $time, $userId];
+        } elseif ($serviceType === 'room') {
+            $sql = "SELECT room_id FROM rooms
+                    WHERE accommodation_name = ? AND checkin_date = ?
+                      AND user_id = ? AND status <> 'Cancelled'";
+            $types = "ssi";
+            $values = [$serviceName, $date, $userId];
+        } else {
+            return false;
         }
 
         return getOneRow($conn, $sql, $types, $values) !== null;
     }
 
-    function saveBooking($conn, $userId, $serviceId, $data) {
+    function saveBooking($conn, $userId, $serviceType, $serviceName, $data) {
         $reference = makeReference($conn);
 
-        $stmt = runQuery($conn,
-            "INSERT INTO bookings (reference, user_id, service_id, booking_date, booking_time, end_date, end_time,
-                                   adults, children, rooms, from_place, to_place, trip_type)
-             VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
-            "siissssiiisss",
-            [
-                $reference,
-                $userId,
-                $serviceId,
-                $data['booking_date'],
-                $data['booking_time'] ?? null,
-                $data['end_date'] ?? null,
-                $data['end_time'] ?? null,
-                $data['adults'],
-                $data['children'],
-                $data['rooms'] ?? null,
-                $data['from_place'] ?? null,
-                $data['to_place'] ?? null,
-                $data['trip_type'] ?? null
-            ]);
+        if ($serviceType === 'driver') {
+            $stmt = runQuery($conn,
+                "INSERT INTO drivers
+                    (reference, user_id, driver_name, booking_date, booking_time, return_date, return_time,
+                     adults, children, from_place, to_place, trip_type)
+                 VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
+                "sisssssiiiss",
+                [
+                    $reference,
+                    $userId,
+                    $serviceName,
+                    $data['booking_date'],
+                    $data['booking_time'],
+                    $data['end_date'],
+                    $data['end_time'],
+                    $data['adults'],
+                    $data['children'],
+                    $data['from_place'],
+                    $data['to_place'],
+                    $data['trip_type']
+                ]);
+        } elseif ($serviceType === 'restaurant') {
+            $stmt = runQuery($conn,
+                "INSERT INTO restaurants
+                    (reference, user_id, restaurant_name, booking_date, booking_time, adults, children)
+                 VALUES (?, ?, ?, ?, ?, ?, ?)",
+                "sisssii",
+                [
+                    $reference,
+                    $userId,
+                    $serviceName,
+                    $data['booking_date'],
+                    $data['booking_time'],
+                    $data['adults'],
+                    $data['children']
+                ]);
+        } elseif ($serviceType === 'room') {
+            $stmt = runQuery($conn,
+                "INSERT INTO rooms
+                    (reference, user_id, accommodation_name, checkin_date, checkout_date,
+                     adults, children, room_count)
+                 VALUES (?, ?, ?, ?, ?, ?, ?, ?)",
+                "sisssiii",
+                [
+                    $reference,
+                    $userId,
+                    $serviceName,
+                    $data['booking_date'],
+                    $data['end_date'],
+                    $data['adults'],
+                    $data['children'],
+                    $data['rooms']
+                ]);
+        } else {
+            return false;
+        }
 
         return $stmt === false ? false : $reference;
+    }
+
+    function bookingQuery() {
+        return "SELECT d.driver_id AS booking_id, d.reference, d.user_id, 'driver' AS service_type,
+                       d.driver_name AS service_name, NULL AS location, d.booking_date, d.booking_time,
+                       d.return_date AS end_date, d.return_time AS end_time, d.adults, d.children,
+                       NULL AS rooms, d.from_place, d.to_place, d.trip_type, d.status, d.created_at,
+                       COALESCE(u.full_name, 'Guest') AS full_name,
+                       COALESCE(u.email, '') AS email, COALESCE(u.phone, '') AS phone
+                FROM drivers d
+                LEFT JOIN users u ON d.user_id = u.user_id
+                UNION ALL
+                SELECT r.restaurant_id AS booking_id, r.reference, r.user_id, 'restaurant' AS service_type,
+                       r.restaurant_name AS service_name, NULL AS location, r.booking_date, r.booking_time,
+                       NULL AS end_date, NULL AS end_time, r.adults, r.children, NULL AS rooms,
+                       NULL AS from_place, NULL AS to_place, NULL AS trip_type, r.status, r.created_at,
+                       COALESCE(u.full_name, 'Guest') AS full_name,
+                       COALESCE(u.email, '') AS email, COALESCE(u.phone, '') AS phone
+                FROM restaurants r
+                LEFT JOIN users u ON r.user_id = u.user_id
+                UNION ALL
+                SELECT rm.room_id AS booking_id, rm.reference, rm.user_id, 'room' AS service_type,
+                       rm.accommodation_name AS service_name, NULL AS location, rm.checkin_date AS booking_date,
+                       NULL AS booking_time, rm.checkout_date AS end_date, NULL AS end_time,
+                       rm.adults, rm.children, rm.room_count AS rooms, NULL AS from_place,
+                       NULL AS to_place, NULL AS trip_type, rm.status, rm.created_at,
+                       COALESCE(u.full_name, 'Guest') AS full_name,
+                       COALESCE(u.email, '') AS email, COALESCE(u.phone, '') AS phone
+                FROM rooms rm
+                LEFT JOIN users u ON rm.user_id = u.user_id";
+    }
+
+    function getUserBookings($conn, $userId) {
+        return getAllRows($conn,
+            "SELECT * FROM (" . bookingQuery() . ") AS reservations
+             WHERE user_id = ?
+             ORDER BY booking_date, booking_time",
+            "i", [$userId]);
     }
 
     function bookingPeriod($booking) {
@@ -149,45 +259,109 @@
     }
 
     function getFilteredBookings($conn, $filters) {
-        $sql = "SELECT b.*, s.service_type, s.name AS service_name, s.location,
-                       u.full_name, u.email, u.phone
-                FROM bookings b
-                JOIN services s ON b.service_id = s.service_id
-                JOIN users u    ON b.user_id = u.user_id
-                WHERE 1 = 1";
+        $sql = "SELECT * FROM (" . bookingQuery() . ") AS bookings WHERE 1 = 1";
         $types = "";
         $values = [];
 
         if ($filters['search'] !== '') {
-            $sql .= " AND (b.reference LIKE ? OR u.full_name LIKE ? OR u.email LIKE ? OR s.name LIKE ?)";
+            $sql .= " AND (reference LIKE ? OR full_name LIKE ? OR email LIKE ? OR service_name LIKE ?
+                      OR from_place LIKE ? OR to_place LIKE ?)";
             $like = '%' . $filters['search'] . '%';
-            $types .= "ssss";
-            array_push($values, $like, $like, $like, $like);
+            $types .= "ssssss";
+            array_push($values, $like, $like, $like, $like, $like, $like);
         }
         if (in_array($filters['service'], ['restaurant', 'room', 'driver'])) {
-            $sql .= " AND s.service_type = ?";
+            $sql .= " AND service_type = ?";
             $types .= "s";
             $values[] = $filters['service'];
         }
         if (in_array($filters['status'], ['Pending', 'Confirmed', 'Cancelled'])) {
-            $sql .= " AND b.status = ?";
+            $sql .= " AND status = ?";
             $types .= "s";
             $values[] = $filters['status'];
         }
         if (isValidDate($filters['from'])) {
-            $sql .= " AND b.booking_date >= ?";
+            $sql .= " AND booking_date >= ?";
             $types .= "s";
             $values[] = $filters['from'];
         }
         if (isValidDate($filters['to'])) {
-            $sql .= " AND b.booking_date <= ?";
+            $sql .= " AND booking_date <= ?";
             $types .= "s";
             $values[] = $filters['to'];
         }
 
-        $sql .= " ORDER BY b.booking_date DESC, b.booking_time DESC";
+        $sql .= " ORDER BY booking_date DESC, booking_time DESC";
 
         return getAllRows($conn, $sql, $types, $values);
+    }
+
+    function updateBookingStatus($conn, $serviceType, $bookingId, $status) {
+        $tables = [
+            'driver' => ['drivers', 'driver_id'],
+            'restaurant' => ['restaurants', 'restaurant_id'],
+            'room' => ['rooms', 'room_id']
+        ];
+
+        if (!isset($tables[$serviceType]) || !in_array($status, ['Confirmed', 'Cancelled'], true)) {
+            return false;
+        }
+
+        [$table, $idColumn] = $tables[$serviceType];
+        return runQuery($conn,
+            "UPDATE {$table} SET status = ? WHERE {$idColumn} = ?",
+            "si", [$status, $bookingId]);
+    }
+
+    function cancelUserBooking($conn, $serviceType, $bookingId, $userId) {
+        $tables = [
+            'driver' => ['drivers', 'driver_id', 'COALESCE(return_date, booking_date)'],
+            'restaurant' => ['restaurants', 'restaurant_id', 'booking_date'],
+            'room' => ['rooms', 'room_id', 'checkout_date']
+        ];
+
+        if (!isset($tables[$serviceType])) {
+            return false;
+        }
+
+        [$table, $idColumn, $lastDate] = $tables[$serviceType];
+        return runQuery($conn,
+            "UPDATE {$table} SET status = 'Cancelled'
+             WHERE {$idColumn} = ? AND user_id = ? AND status <> 'Cancelled'
+               AND {$lastDate} >= CURDATE()",
+            "ii", [$bookingId, $userId]);
+    }
+
+    function getBookingSummary($conn) {
+        $today = date('Y-m-d');
+        $rows = getAllRows($conn,
+            "SELECT service_type, COUNT(*) AS total,
+                    SUM(status <> 'Cancelled') AS active,
+                    SUM(status = 'Pending') AS pending,
+                    SUM(status = 'Confirmed') AS confirmed,
+                    SUM(status = 'Cancelled') AS cancelled,
+                    SUM(status <> 'Cancelled' AND COALESCE(end_date, booking_date) >= ?) AS upcoming
+             FROM (" . bookingQuery() . ") AS reservations
+             GROUP BY service_type",
+            "s", [$today]);
+
+        $summary = [
+            'total' => 0,
+            'pending' => 0,
+            'confirmed' => 0,
+            'cancelled' => 0,
+            'upcoming' => 0,
+            'per_service' => ['restaurant' => 0, 'room' => 0, 'driver' => 0]
+        ];
+
+        foreach ($rows as $row) {
+            $summary['per_service'][$row['service_type']] = (int) $row['active'];
+            foreach (['total', 'pending', 'confirmed', 'cancelled', 'upcoming'] as $key) {
+                $summary[$key] += (int) $row[$key];
+            }
+        }
+
+        return $summary;
     }
 
     function isValidDate($date) {

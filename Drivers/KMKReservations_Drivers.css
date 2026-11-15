@@ -12,7 +12,7 @@ body {
     color: #FFFFFF;
 }
 
-.site-nav {
+.site.nav {
     background: #0D1F5C;
     display: flex;
     align-items: center;
@@ -24,18 +24,18 @@ body {
     z-index: 1000;
 }
 
-.nav-brand img {
+.nav.brand img {
     height: 70px;
     display: block;
 }
 
-.nav-links {
+.nav.links {
     display: flex;
     align-items: center;
     gap: 28px;
 }
 
-.nav-links a {
+.nav.links a {
     color: #FFFFFF;
     text-decoration: none;
     font-size: 0.9rem;
@@ -43,11 +43,11 @@ body {
     border-bottom: 2px solid transparent;
 }
 
-.nav-links a:hover {
+.nav.links a:hover {
     color: #A0AEC0;
 }
 
-.nav-links a.active {
+.nav.links a.active {
     border-bottom-color: #2388F5;
 }
 
@@ -56,7 +56,7 @@ h1, h2, h3 {
     letter-spacing: 0.5px;
 }
 
-.drivers-hero {
+.drivers.hero {
     min-height: 85vh;
     padding: 50px 4%;
 
@@ -75,25 +75,25 @@ h1, h2, h3 {
     background-repeat: no-repeat;
 }
 
-.hero-content {
+.hero.content {
     flex: 1;
     max-width: 550px;
 }
 
-.hero-content h1 {
+.hero.content h1 {
     font-size: 52px;
     line-height: 1.15;
     margin-bottom: 15px;
     text-shadow: 2px 2px 10px rgba(0, 0, 0, 0.5);
 }
 
-.hero-content p {
+.hero.content p {
     font-size: 17px;
     line-height: 1.7;
     margin-bottom: 30px;
 }
 
-.reserve-panel {
+.reserve.panel {
     border-top: 6px solid #60A5FA;
     background-color: #FFFFFF;
     color: #222222;
@@ -105,25 +105,25 @@ h1, h2, h3 {
     box-shadow: 0 5px 20px rgba(0, 0, 0, 0.3);
 }
 
-.reserve-panel h2 {
+.reserve.panel h2 {
     font-size: 25px;
     margin-bottom: 30px;
     color: #001F3C;
 }
 
-.form-group {
+.form.group {
     margin-bottom: 22px;
 }
 
-.form-group label {
+.form.group label {
     display: block;
     margin-bottom: 9px;
     font-size: 15px;
     font-weight: 500;
 }
 
-.form-group input,
-.form-group select {
+.form.group input,
+.form.group select {
     width: 100%;
     padding: 13px;
 
@@ -135,13 +135,13 @@ h1, h2, h3 {
     color: #222222;
 }
 
-.form-group input:focus,
-.form-group select:focus {
+.form.group input:focus,
+.form.group select:focus {
     outline: none;
     border: 2px solid #17BEBB;
 }
 
-.alert-error {
+.alert.error {
     background: #FEE2E2;
     color: #991B1B;
     border: 1px solid #FCA5A5;
@@ -153,7 +153,7 @@ h1, h2, h3 {
     box-sizing: border-box;
 }
 
-.reserve-btn {
+.reserve.btn {
     width: 100%;
     padding: 15px;
 
@@ -170,7 +170,7 @@ h1, h2, h3 {
     transition: 0.3s;
 }
 
-.reserve-btn:hover {
+.reserve.btn:hover {
     background-color: #2388F5;
     color: #FFFFFF;
 }
@@ -181,7 +181,7 @@ h1, h2, h3 {
     --nav-muted: #A0AEC0;
 }
 
-.site-footer {
+.site.footer {
     background: var(--nav-bg);
     color: var(--nav-text);
     text-align: center;
@@ -189,7 +189,7 @@ h1, h2, h3 {
     font-style: italic;
 }
 
-.footer-small {
+.footer.small {
     color: var(--nav-muted);
     font-size: 0.8rem;
     font-style: normal;
@@ -197,47 +197,47 @@ h1, h2, h3 {
 }
 
 @media (max-width: 760px) {
-    .site-nav {
+    .site.nav {
         flex-direction: column;
         gap: 10px;
         padding: 12px 16px;
     }
 
-    .nav-links {
+    .nav.links {
         flex-wrap: wrap;
         justify-content: center;
         gap: 16px;
     }
 }
 
-.trip-heading {
+.trip.heading {
     display: flex;
     align-items: center;
     gap: 10px;
 }
 
-.trip-heading svg {
+.trip.heading svg {
     color: #1D4ED8;
 }
 
-.route-box {
+.route.box {
     position: relative;
     border: 1px solid #CCCCCC;
     border-radius: 6px;
     margin-bottom: 22px;
 }
 
-.route-field {
+.route.field {
     padding: 8px 52px 8px 12px;
 }
 
-.route-field + .route-field {
+.route.field + .route.field {
     border-top: 1px solid #CCCCCC;
 }
 
-.route-field label,
-.form-row .form-group label,
-.passenger-label {
+.route.field label,
+.form.row .form.group label,
+.passenger.label {
     display: block;
     font-size: 11px;
     font-weight: 600;
@@ -247,7 +247,7 @@ h1, h2, h3 {
     margin-bottom: 4px;
 }
 
-.route-field select {
+.route.field select {
     width: 100%;
     border: none;
     padding: 4px 0;
@@ -256,15 +256,15 @@ h1, h2, h3 {
     color: #222222;
 }
 
-.route-field select:focus {
+.route.field select:focus {
     outline: none;
 }
 
-.route-box:focus-within {
+.route.box:focus-within {
     border-color: #17BEBB;
 }
 
-.swap-btn {
+.swap.btn {
     position: absolute;
     right: 12px;
     top: 50%;
@@ -280,41 +280,41 @@ h1, h2, h3 {
     cursor: pointer;
 }
 
-.swap-btn:hover {
+.swap.btn:hover {
     background: #EFF6FF;
 }
 
-.form-row {
+.form.row {
     display: grid;
     grid-template-columns: 1fr 1fr;
     gap: 12px;
 }
 
-.form-row[hidden] {
+.form.row[hidden] {
     display: none;
 }
 
-.trip-type {
+.trip.type {
     display: flex;
     gap: 24px;
     margin-bottom: 22px;
     font-size: 15px;
 }
 
-.trip-type label {
+.trip.type label {
     display: flex;
     align-items: center;
     gap: 6px;
     cursor: pointer;
 }
 
-.trip-type input {
+.trip.type input {
     accent-color: #1D4ED8;
     width: 17px;
     height: 17px;
 }
 
-.passenger-btn {
+.passenger.btn {
     width: 100%;
     text-align: left;
     padding: 10px 13px;
@@ -328,34 +328,34 @@ h1, h2, h3 {
     cursor: pointer;
 }
 
-.passenger-btn:hover {
+.passenger.btn:hover {
     border-color: #17BEBB;
 }
 
-.passenger-box {
+.passenger.box {
     display: grid;
     grid-template-columns: 1fr 1fr;
     gap: 12px;
     margin-top: -10px;
 }
 
-.passenger-box[hidden] {
+.passenger.box[hidden] {
     display: none;
 }
 
 @media screen and (max-width: 900px) {
 
-    .drivers-hero {
+    .drivers.hero {
         flex-direction: column;
         align-items: stretch;
     }
 
-    .hero-content {
+    .hero.content {
         max-width: 100%;
         text-align: center;
     }
 
-    .reserve-panel {
+    .reserve.panel {
         width: 100%;
         max-width: 500px;
         margin: 0 auto;
@@ -364,11 +364,11 @@ h1, h2, h3 {
 
 @media screen and (max-width: 480px) {
 
-    .hero-content h1 {
+    .hero.content h1 {
         font-size: 34px;
     }
 
-    .reserve-panel {
+    .reserve.panel {
         padding: 22px;
     }
 }

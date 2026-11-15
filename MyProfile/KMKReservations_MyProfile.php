@@ -37,6 +37,7 @@
         exit;
     }
 
+    // Handle submitted account details.
     if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
         $action = $_POST['action'] ?? '';
@@ -148,16 +149,16 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <title>My Account | KMK Reservations</title>
-        <link rel="stylesheet" href="KMKReservations_MyProfile.css">
-        <link rel="stylesheet" href="../Shared/MessagePopUps.css">
+        <link rel="stylesheet" href="KMKReservations_MyProfile.css?v=<?= filemtime(__DIR__ . DIRECTORY_SEPARATOR . 'KMKReservations_MyProfile.css') ?>">
+        <link rel="stylesheet" href="../Shared/MessagePopUps.css?v=<?= filemtime(__DIR__ . DIRECTORY_SEPARATOR . '..' . DIRECTORY_SEPARATOR . 'Shared' . DIRECTORY_SEPARATOR . 'MessagePopUps.css') ?>">
     </head>
     <body>
 
-    <header class="site-nav">
-        <a href="../Home/KMKReservations_Home.php" class="nav-brand">
+    <header class="site nav">
+        <a href="../Home/KMKReservations_Home.php" class="nav brand">
             <img src="../KMKReservations_Logo.png" alt="KMK Reservations logo">
         </a>
-        <nav class="nav-links">
+        <nav class="nav links">
             <a href="../Home/KMKReservations_Home.php">Home</a>
             <a href="../Restaurants/KMKReservations_Restaurants.php">Restaurant</a>
             <a href="../Accomodations/KMKReservations_Accomodations.php">Accommodations</a>
@@ -170,27 +171,28 @@
         </nav>
     </header>
 
-    <section class="page-hero">
-        <div class="hero-icon">&#128100;</div>
+    <section class="page hero">
+        <div class="hero icon">&#128100;</div>
         <h1>My Account</h1>
         <p>Manage your details and keep your bookings up to date.</p>
     </section>
 
-    <main class="account-layout">
+    <main class="account layout">
 
     <?php if (!$isLoggedIn): ?>
 
-        <section class="form-card">
+        <section class="form card">
             <h2>Log in</h2>
 
             <?php if (count($errors) > 0 && ($_POST['action'] ?? '') === 'login'): ?>
-                <div class="alert-error">
+                <div class="alert error">
                     <?php foreach ($errors as $error): ?>
                         <p><?= htmlspecialchars($error) ?></p>
                     <?php endforeach; ?>
                 </div>
             <?php endif; ?>
 
+            <!-- Sign-in details -->
             <form method="post" action="">
                 <input type="hidden" name="action" value="login">
 
@@ -204,21 +206,22 @@
                     <input type="password" id="login_password" name="password" autocomplete="current-password" required>
                 </div>
 
-                <button type="submit" class="btn btn-primary">Log in</button>
+                <button type="submit" class="btn btn primary">Log in</button>
             </form>
         </section>
 
-        <section class="form-card">
+        <section class="form card">
             <h2>Create an account</h2>
 
             <?php if (count($errors) > 0 && ($_POST['action'] ?? '') === 'signup'): ?>
-                <div class="alert-error">
+                <div class="alert error">
                     <?php foreach ($errors as $error): ?>
                         <p><?= htmlspecialchars($error) ?></p>
                     <?php endforeach; ?>
                 </div>
             <?php endif; ?>
 
+            <!-- New account details -->
             <form method="post" action="">
                 <input type="hidden" name="action" value="signup">
 
@@ -247,38 +250,39 @@
                     <input type="password" id="signup_confirm" name="confirm_password" autocomplete="new-password" required>
                 </div>
 
-                <button type="submit" class="btn btn-primary">Create account</button>
+                <button type="submit" class="btn btn primary">Create account</button>
             </form>
         </section>
 
     <?php else: ?>
 
-        <aside class="profile-card">
+        <aside class="profile card">
             <div class="avatar"><?= htmlspecialchars(strtoupper(substr($_SESSION['user_name'] ?? 'U', 0, 1))) ?></div>
             <h2><?= htmlspecialchars($_SESSION['user_name'] ?? '') ?></h2>
-            <p class="profile-email"><?= htmlspecialchars($_SESSION['user_email'] ?? '') ?></p>
-            <a href="../MyBookings/KMKReservations_MyBookings.php" class="btn btn-primary">View my bookings</a>
+            <p class="profile email"><?= htmlspecialchars($_SESSION['user_email'] ?? '') ?></p>
+            <a href="../MyBookings/KMKReservations_MyBookings.php" class="btn btn primary">View my bookings</a>
             <?php if (($_SESSION['role'] ?? '') === 'admin'): ?>
-                <a href="../Admin/KMKReservations_Admin.php" class="btn btn-primary">Admin dashboard</a>
+                <a href="../Admin/KMKReservations_Admin.php" class="btn btn primary">Admin dashboard</a>
             <?php endif; ?>
-            <a href="logout.php" class="btn btn-outline">Log out</a>
+            <a href="logout.php" class="btn btn outline">Log out</a>
         </aside>
 
-        <section class="form-card">
+        <section class="form card">
             <h2>Personal details</h2>
 
             <?php if ($message): ?>
-                <p class="alert-success"><?= htmlspecialchars($message) ?></p>
+                <p class="alert success"><?= htmlspecialchars($message) ?></p>
             <?php endif; ?>
 
             <?php if (count($errors) > 0): ?>
-                <div class="alert-error">
+                <div class="alert error">
                     <?php foreach ($errors as $error): ?>
                         <p><?= htmlspecialchars($error) ?></p>
                     <?php endforeach; ?>
                 </div>
             <?php endif; ?>
 
+            <!-- Profile details -->
             <form method="post" action="">
                 <input type="hidden" name="action" value="update">
 
@@ -297,7 +301,7 @@
                     <input type="tel" id="phone" name="phone" value="<?= htmlspecialchars($phone) ?>" placeholder="876-000-0000">
                 </div>
 
-                <h2 class="form-subtitle">Change password</h2>
+                <h2 class="form subtitle">Change password</h2>
 
                 <div class="field">
                     <label for="new_password">New password</label>
@@ -309,7 +313,7 @@
                     <input type="password" id="confirm_password" name="confirm_password" autocomplete="new-password">
                 </div>
 
-                <button type="submit" class="btn btn-primary">Save changes</button>
+                <button type="submit" class="btn btn primary">Save changes</button>
             </form>
         </section>
 
@@ -317,33 +321,33 @@
 
     </main>
 
-    <div id="bookingModal" class="modal-overlay">
-        <div class="modal-box">
+    <div id="bookingModal" class="modal overlay">
+        <div class="modal box">
             <button
                 type="button"
                 id="modalClose"
-                class="close-btn"
+                class="close btn"
                 aria-label="Close pop-up">
                 &times;
             </button>
 
-            <div id="modalIcon" class="modal-icon">!</div>
+            <div id="modalIcon" class="modal icon">!</div>
 
-            <h2 id="modalTitle" class="modal-title">Message Title</h2>
-            <p id="modalMessage" class="modal-message">Message will appear here.</p>
+            <h2 id="modalTitle" class="modal title">Message Title</h2>
+            <p id="modalMessage" class="modal message">Message will appear here.</p>
 
-            <div class="modal-actions">
+            <div class="modal actions">
                 <button
                     type="button"
                     id="modalPrimary"
-                    class="modal-button">
+                    class="modal button">
                     Continue
                 </button>
 
                 <button
                     type="button"
                     id="modalSecondary"
-                    class="modal-button secondary">
+                    class="modal button secondary">
                     Cancel
                 </button>
             </div>
@@ -353,9 +357,9 @@
     <script src="../Shared/MessagePopUps.js"></script>
     <script src="../MyProfile/KMKReservations_MyProfile.js"></script>
 
-    <footer class="site-footer">
+    <footer class="site footer">
         <p>Plan your day your way.</p>
-        <p class="footer-small">&copy; 2026 KMK Reservations</p>
+        <p class="footer small">&copy; 2026 KMK Reservations</p>
     </footer>
     </body>
 </html>

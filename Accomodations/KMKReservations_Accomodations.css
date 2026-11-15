@@ -13,7 +13,7 @@ body {
 }
 
 
-.site-nav {
+.site.nav {
     background: #0D1F5C;
     display: flex;
     align-items: center;
@@ -25,18 +25,18 @@ body {
     z-index: 1000;
 }
 
-.nav-brand img {
+.nav.brand img {
     height: 70px;
     display: block;
 }
 
-.nav-links {
+.nav.links {
     display: flex;
     align-items: center;
     gap: 28px;
 }
 
-.nav-links a {
+.nav.links a {
     color: #FFFFFF;
     text-decoration: none;
     font-size: 0.9rem;
@@ -44,11 +44,11 @@ body {
     border-bottom: 2px solid transparent;
 }
 
-.nav-links a:hover {
+.nav.links a:hover {
     color: #A0AEC0;
 }
 
-.nav-links a.active {
+.nav.links a.active {
     border-bottom-color: #2388F5;
 }
 
@@ -57,7 +57,7 @@ h1, h2, h3 {
     letter-spacing: 0.5px;
 }
 
-.accomodation-hero {
+.accomodation.hero {
     min-height: 85vh;
     padding: 50px 4%;
 
@@ -76,25 +76,25 @@ h1, h2, h3 {
     background-repeat: no-repeat;
 }
 
-.hero-content {
+.hero.content {
     flex: 1;
     max-width: 550px;
 }
 
-.hero-content h1 {
+.hero.content h1 {
     font-size: 52px;
     line-height: 1.15;
     margin-bottom: 15px;
     text-shadow: 2px 2px 10px rgba(0, 0, 0, 0.5);
 }
 
-.hero-content p {
+.hero.content p {
     font-size: 17px;
     line-height: 1.7;
     margin-bottom: 30px;
 }
 
-.booking-panel {
+.booking.panel {
     background-color: #FFFFFF;
     color: #222222;
 
@@ -106,25 +106,25 @@ h1, h2, h3 {
     box-shadow: 0 5px 20px rgba(0, 0, 0, 0.3);
 }
 
-.booking-panel h2 {
+.booking.panel h2 {
     font-size: 25px;
     margin-bottom: 30px;
     color: #001F3C;
 }
 
-.form-group {
+.form.group {
     margin-bottom: 22px;
 }
 
-.form-group label {
+.form.group label {
     display: block;
     margin-bottom: 9px;
     font-size: 15px;
     font-weight: 500;
 }
 
-.form-group input,
-.form-group select {
+.form.group input,
+.form.group select {
     width: 100%;
     padding: 13px;
 
@@ -136,14 +136,14 @@ h1, h2, h3 {
     color: #222222;
 }
 
-.form-group input:focus,
-.form-group select:focus {
+.form.group input:focus,
+.form.group select:focus {
     outline: none;
     border: 2px solid #17BEBB;
 }
 
 
-.booking-btn {
+.booking.btn {
     width: 100%;
     padding: 15px;
 
@@ -160,24 +160,24 @@ h1, h2, h3 {
     transition: 0.3s;
 }
 
-.booking-btn:hover {
+.booking.btn:hover {
     background-color: #17BEBB;
     color: #FFFFFF;
 }
 
 @media screen and (max-width: 900px) {
 
-    .accomodation-hero {
+    .accomodation.hero {
         flex-direction: column;
         align-items: center;
     }
 
-    .hero-content {
+    .hero.content {
         max-width: 100%;
         text-align: center;
     }
 
-    .booking-panel {
+    .booking.panel {
         width: 100%;
         max-width: 500px;
     }
@@ -186,11 +186,11 @@ h1, h2, h3 {
 @media screen and (max-width: 600px) {
 
 
-    .hero-content h1 {
+    .hero.content h1 {
         font-size: 32px;
     }
 
-    .booking-panel {
+    .booking.panel {
         padding: 22px;
     }
 }
@@ -201,7 +201,7 @@ h1, h2, h3 {
     --nav-muted: #A0AEC0;
 }
 
-.site-footer {
+.site.footer {
     background: var(--nav-bg);
     color: var(--nav-text);
     text-align: center;
@@ -209,7 +209,7 @@ h1, h2, h3 {
     font-style: italic;
 }
 
-.footer-small {
+.footer.small {
     color: var(--nav-muted);
     font-size: 0.8rem;
     font-style: normal;
@@ -217,13 +217,13 @@ h1, h2, h3 {
 }
 
 @media (max-width: 760px) {
-    .site-nav {
+    .site.nav {
         flex-direction: column;
         gap: 10px;
         padding: 12px 16px;
     }
 
-    .nav-links {
+    .nav.links {
         flex-wrap: wrap;
         justify-content: center;
         gap: 16px;

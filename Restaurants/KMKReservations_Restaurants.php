@@ -13,6 +13,7 @@
     $error = '';
     $done  = false;
 
+    // Validate submitted restaurant details.
     if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $restaurant = trim($_POST['restaurant']);
         $date       = $_POST['date'];
@@ -28,12 +29,12 @@
             $error = 'The date cannot be in the past.';
         } elseif ($adults < 1 || $adults > 6 || $children < 0 || $children > 4) {
             $error = 'Please choose a valid number of guests.';
-        } elseif (($serviceId = getServiceId($conn, 'restaurant', $restaurant)) === null) {
+        } elseif (!isValidService('restaurant', $restaurant)) {
             $error = 'Please choose a restaurant from the list.';
-        } elseif (isAlreadyBooked($conn, $serviceId, $date, $time, $_SESSION['user_id'])) {
+        } elseif (isAlreadyBooked($conn, 'restaurant', $restaurant, $date, $time, $_SESSION['user_id'])) {
             $error = 'You already have a reservation here at that date and time.';
         } else {
-            $reference = saveBooking($conn, $_SESSION['user_id'], $serviceId, [
+            $reference = saveBooking($conn, $_SESSION['user_id'], 'restaurant', $restaurant, [
                 'booking_date' => $date,
                 'booking_time' => $time,
                 'adults'       => (int) $adults,
@@ -58,16 +59,16 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Restaurants | KMK Reservations</title>
-        <link rel="stylesheet" href="KMKReservations_Restaurants.css">   
-        <link rel="stylesheet" href="../Shared/MessagePopUps.css">
+        <link rel="stylesheet" href="KMKReservations_Restaurants.css?v=<?= filemtime(__DIR__ . DIRECTORY_SEPARATOR . 'KMKReservations_Restaurants.css') ?>">
+        <link rel="stylesheet" href="../Shared/MessagePopUps.css?v=<?= filemtime(__DIR__ . DIRECTORY_SEPARATOR . '..' . DIRECTORY_SEPARATOR . 'Shared' . DIRECTORY_SEPARATOR . 'MessagePopUps.css') ?>">
     </head>
 
     <body data-done="<?php echo $done ? '1' : '0'; ?>">
-        <header class="site-nav">
-            <a href="../Home/KMKReservations_Home.php" class="nav-brand">
+        <header class="site nav">
+            <a href="../Home/KMKReservations_Home.php" class="nav brand">
                 <img src="../KMKReservations_Logo.png" alt="KMK Reservations logo">
             </a>
-            <nav class="nav-links">
+            <nav class="nav links">
                 <a href="../Home/KMKReservations_Home.php">Home</a>
                 <a class="active" href="../Restaurants/KMKReservations_Restaurants.php">Restaurant</a>
                 <a href="../Accomodations/KMKReservations_Accomodations.php">Accommodations</a>
@@ -80,18 +81,19 @@
             </nav>
         </header>
         
-        <main class="restaurants-hero">
-            <section class="hero-content">
+        <main class="restaurants hero">
+            <section class="hero content">
                 <h1>Restaurant Reservations</h1>
                 <p>Find and reserve a table at your favourite restaurant.</p>
             </section>
-            <section class="reserve-panel">
+            <section class="reserve panel">
                 <h2> Reserve your table </h2>
 
                 <?php if ($error != ''): ?>
-                    <p class="alert-error"><?= htmlspecialchars($error) ?></p>
+                    <p class="alert error"><?= htmlspecialchars($error) ?></p>
                 <?php endif; ?>
 
+                <!-- Reservation inputs -->
                 <form
                     id="bookingForm"
                     action=""
@@ -103,7 +105,7 @@
 
                     <input type="hidden" name="service" value="restaurants">
 
-                    <div class="form-group">
+                    <div class="form group">
                         <label for="restaurant">Select restaurant:</label>
                         <select id="restaurant" name="restaurant" required>
                             <option value="">Select a restaurant</option>
@@ -116,17 +118,17 @@
                         </select>
                     </div>
 
-                    <div class="form-group">
+                    <div class="form group">
                         <label for="date"> Reservation Date: </label>
                         <input type="date" id="date" name="date" value="<?= htmlspecialchars($date) ?>" required>
                     </div>
 
-                    <div class="form-group">
+                    <div class="form group">
                         <label for="time">Time for your reservation</label>
                         <input type="time" id="time" name="time" value="<?= htmlspecialchars($time) ?>" required>
                     </div>
                    
-                    <div class="form-group">
+                    <div class="form group">
                         <label for="adults">Adults:</label>
                         <select id="adults" name="adults" required>
                             <option value="1" <?= $adults == '1' ? 'selected' : '' ?>>1 Adult</option>
@@ -138,7 +140,7 @@
                         </select>
                     </div>
 
-                    <div class="form-group">
+                    <div class="form group">
                         <label for="children">Children:</label>
                         <select id="children" name="children">
                             <option value="0" <?= $children == '0' ? 'selected' : '' ?>>No Children</option>
@@ -148,37 +150,37 @@
                             <option value="4" <?= $children == '4' ? 'selected' : '' ?>>4 Children</option>
                         </select>
                     </div>
-                    <button type="submit" class="reserve-btn">Check Availability</button>
+                    <button type="submit" class="reserve btn">Check Availability</button>
                 </form>
             </section>
         </main>
         
 
-        <div id="bookingModal" class="modal-overlay">
-            <div class="modal-box">
+        <div id="bookingModal" class="modal overlay">
+            <div class="modal box">
                 <button
                     type="button"
                     id="modalClose"
-                    class="close-btn"
+                    class="close btn"
                     aria-label="Close pop-up">
                     &times;
                 </button>
 
-                <div id="modalIcon" class="modal-icon">!</div>
-                <h2 id="modalTitle" class="modal-title">Message Title</h2>
-                <p id="modalMessage" class="modal-message">Message will appear here.</p>
+                <div id="modalIcon" class="modal icon">!</div>
+                <h2 id="modalTitle" class="modal title">Message Title</h2>
+                <p id="modalMessage" class="modal message">Message will appear here.</p>
 
-                <div class="modal-actions">
+                <div class="modal actions">
                     <button
                         type="button"
                         id="modalPrimary"
-                        class="modal-button">
+                        class="modal button">
                         Continue
                     </button>
                     <button
                         type="button"
                         id="modalSecondary"
-                        class="modal-button secondary">
+                        class="modal button secondary">
                         Cancel
                     </button>
                 </div>
@@ -188,9 +190,9 @@
         <script src="../Shared/MessagePopUps.js"></script>
         <script src="KMKReservations_Restaurants.js"></script>
 
-        <footer class="site-footer">
+        <footer class="site footer">
             <p>Plan your day your way.</p>
-            <p class="footer-small">&copy; 2026 KMK Reservations</p>
+            <p class="footer small">&copy; 2026 KMK Reservations</p>
         </footer>
     </body>
 </html>
