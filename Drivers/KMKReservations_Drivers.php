@@ -1,20 +1,13 @@
 <?php
-    // Start the session and checks the user is logged in.
     session_start();
     $isLoggedIn = isset($_SESSION['user_id']);
 
-     //get the file name of the website
-    $basepath = dirname(__DIR__);
-    $base = str_replace('\\','/',$basepath);
-
-    // ?? (null coalescing operator): use $_POST if it is set, if not use $_GET, if not use ''
     $driver = $_POST['driver'] ?? $_GET['driver'] ?? '';
     $time = $_POST['time'] ?? $_GET['time'] ?? '';
     $date = $_POST['date'] ?? '';
     $adults = $_POST['adults'] ?? '1';
     $children = $_POST['children'] ?? '0';
 
-    // Trip details (like the Knutsford Express booking form)
     $from       = $_POST['from'] ?? '';
     $to         = $_POST['to'] ?? '';
     $tripType   = $_POST['trip_type'] ?? 'single';
@@ -24,7 +17,6 @@
     $error = '';
     $done  = false;
 
-    // Places the user can travel from and to
     $locations = [
         "Kingston",
         "Norman Manley International Airport",
@@ -45,7 +37,6 @@
         "Moneague"
     ];
 
-    // Database connection and shared functions
     require_once '../Database/DB.php';
     require_once '../Shared/KMKReservations_Functions.php';
 
@@ -69,10 +60,8 @@
         } elseif (($serviceId = getServiceId($conn, 'driver', $driver)) === null) {
             $error = 'Please choose a driver from the list.';
         } elseif (isAlreadyBooked($conn, $serviceId, $date, $time)) {
-            // A driver can't be in two places at once
             $error = $driver . ' is already booked at that date and time. Please choose another time or driver.';
         } else {
-            // Save to the database
             $reference = saveBooking($conn, $_SESSION['user_id'], $serviceId, [
                 'booking_date' => $date,
                 'booking_time' => $time,
@@ -89,7 +78,6 @@
                 $error = 'Sorry, your booking could not be saved. Please try again.';
             } else {
                 $done = true;
-                // Clear the form after a successful booking
                 $driver = $date = $time = $from = $to = $returnDate = $returnTime = '';
                 $tripType = 'single';
                 $adults = '1';
@@ -106,11 +94,9 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Drivers | KMK Reservations</title>
         <link rel="stylesheet" href="KMKReservations_Drivers.css">
-        <link rel ="stylesheet" href="../Shared/MessagePopUps.css">
+        <link rel="stylesheet" href="../Shared/MessagePopUps.css">
     </head>
-    <!-- data-done tells the JavaScript to show the "Booking Confirmed" pop-up -->
     <body data-done="<?php echo $done ? '1' : '0'; ?>">
-         <!-- Navigation Bar -->
         <header class="site-nav">
             <a href="../Home/KMKReservations_Home.php" class="nav-brand">
                 <img src="../KMKReservations_Logo.png" alt="KMK Reservations logo">
@@ -122,25 +108,18 @@
                 <a class="active" href="../Drivers/KMKReservations_Drivers.php">Drivers</a>
                 <a href="../MyBookings/KMKReservations_MyBookings.php">My Bookings</a>
                 <a href="../MyProfile/KMKReservations_MyProfile.php">My Profile</a>
-                <!-- Admin link: only admins see it -->
                 <?php if (($_SESSION['role'] ?? '') === 'admin'): ?>
                     <a href="../Admin/KMKReservations_Admin.php">Admin</a>
                 <?php endif; ?>
             </nav>
         </header>
 
-        <!-- Main Drivers Section -->
         <main class="drivers-hero">
-
-            <!-- Left Side: Welcome Message -->
             <section class="hero-content">
                 <h1>Drivers Reservations</h1>
-                <p> Book a reliable driver for your journey. </p>
+                <p>Book a reliable driver for your journey.</p>
             </section>
-        
-            <!-- Right Side: Reserving Form -->
-            <section class="reserve-panel" id="reserve-panel">
-                <!-- Form heading with a car icon (like "Book a trip" on Knutsford Express) -->
+            <section class="reserve-panel">
                 <h2 class="trip-heading">
                     <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
                         <path d="M5 17h14M3 13l2-6h14l2 6v4H3z"/>
@@ -150,12 +129,10 @@
                     Reserve your driver
                 </h2>
 
-                <!-- Error message from PHP -->
                 <?php if ($error != ''): ?>
                     <p class="alert-error"><?= htmlspecialchars($error) ?></p>
                 <?php endif; ?>
 
-                <!--The data allows the same JavaScript to work with restaurant and driver bookings.-->
                 <form
                     id="bookingForm"
                     action=""
@@ -165,23 +142,20 @@
                     data-profile-url="../MyProfile/KMKReservations_MyProfile.php"
                 >
 
-                    <!-- Hidden field identifies the service -->
                     <input type="hidden" name="service" value="drivers">
 
-                    <!-- Name of the Drivers -->
-                    <div class = "form-group">
-                        <label for = "driver"> Select a Driver: </label>
-                        <select id = "driver" name = "driver" required>
-                            <option value = ""> Select a driver for your journey  </option>
-                            <option value = "Marcus" <?= $driver === 'Marcus' ? 'selected' : '' ?>>Marcus</option>
-                            <option value = "John" <?= $driver === 'John' ? 'selected' : '' ?>>John</option>
-                            <option value = "Phillip" <?= $driver === 'Phillip' ? 'selected' : '' ?>>Phillip</option>
-                            <option value = "Martin" <?= $driver === 'Martin' ? 'selected' : '' ?>>Martin</option>
-                            <option value = "Francis" <?= $driver === 'Francis' ? 'selected' : '' ?>>Francis</option>
+                    <div class="form-group">
+                        <label for="driver">Select a Driver:</label>
+                        <select id="driver" name="driver" required>
+                            <option value="">Select a driver for your journey</option>
+                            <option value="Marcus" <?= $driver === 'Marcus' ? 'selected' : '' ?>>Marcus</option>
+                            <option value="John" <?= $driver === 'John' ? 'selected' : '' ?>>John</option>
+                            <option value="Phillip" <?= $driver === 'Phillip' ? 'selected' : '' ?>>Phillip</option>
+                            <option value="Martin" <?= $driver === 'Martin' ? 'selected' : '' ?>>Martin</option>
+                            <option value="Francis" <?= $driver === 'Francis' ? 'selected' : '' ?>>Francis</option>
                         </select>
                     </div>
 
-                    <!-- Travelling from and to (joined boxes with a swap button) -->
                     <div class="route-box">
                         <div class="route-field">
                             <label for="from">Travelling from</label>
@@ -203,87 +177,73 @@
                             </select>
                         </div>
 
-                        <!-- Swaps the from and to places -->
                         <button type="button" class="swap-btn" id="swapBtn" aria-label="Swap travelling from and to">&#8645;</button>
                     </div>
 
-                    <!-- Date and Time of the Journey (side by side) -->
                     <div class="form-row">
                         <div class="form-group">
-                            <label for="date"> Journey Date: </label>
+                            <label for="date">Journey Date:</label>
                             <input type="date" id="date" name="date" value="<?= htmlspecialchars($date) ?>" required>
                         </div>
 
-                        <div class = "form-group">
-                            <label for = "time"> Time: </label>
-                            <input type = "time" id="time" name = "time" value = "<?= htmlspecialchars($time) ?>" required>
+                        <div class="form-group">
+                            <label for="time">Time:</label>
+                            <input type="time" id="time" name="time" value="<?= htmlspecialchars($time) ?>" required>
                         </div>
                     </div>
 
-                    <!-- Single or Return trip -->
                     <div class="trip-type">
                         <label><input type="radio" name="trip_type" value="single" <?= $tripType !== 'return' ? 'checked' : '' ?>> Single</label>
                         <label><input type="radio" name="trip_type" value="return" <?= $tripType === 'return' ? 'checked' : '' ?>> Return</label>
                     </div>
 
-                    <!-- Return Date and Time (only shown for a Return trip) -->
                     <div class="form-row" id="returnRow" <?= $tripType === 'return' ? '' : 'hidden' ?>>
                         <div class="form-group">
-                            <label for="return_date"> Return Date: </label>
+                            <label for="return_date">Return Date:</label>
                             <input type="date" id="return_date" name="return_date" value="<?= htmlspecialchars($returnDate) ?>">
                         </div>
 
                         <div class="form-group">
-                            <label for="return_time"> Return Time: </label>
+                            <label for="return_time">Return Time:</label>
                             <input type="time" id="return_time" name="return_time" value="<?= htmlspecialchars($returnTime) ?>">
                         </div>
                     </div>
 
-                    <!-- Passengers: click to choose (like Knutsford Express) -->
                     <button type="button" class="passenger-btn" id="passengerBtn" aria-expanded="false">
                         <span class="passenger-label">Passengers</span>
                         <span id="passengerSummary">1 Adult, No Children</span>
                     </button>
 
                     <div class="passenger-box" id="passengerBox">
-                   
-                    <!-- Number of Adults -->
-                    <div class="form-group">
-                        <label for="adults">Adults:</label>
-                        <select id="adults" name="adults" required>
-                            <option value="1" <?= $adults == '1' ? 'selected' : '' ?>>1 Adult</option>
-                            <option value="2" <?= $adults == '2' ? 'selected' : '' ?>>2 Adults</option>
-                            <option value="3" <?= $adults == '3' ? 'selected' : '' ?>>3 Adults</option>
-                            <option value="4" <?= $adults == '4' ? 'selected' : '' ?>>4 Adults</option>
-                            <option value="5" <?= $adults == '5' ? 'selected' : '' ?>>5 Adults</option>
-                            <option value="6" <?= $adults == '6' ? 'selected' : '' ?>>6 Adults</option>
-                        </select>
+                        <div class="form-group">
+                            <label for="adults">Adults:</label>
+                            <select id="adults" name="adults" required>
+                                <option value="1" <?= $adults == '1' ? 'selected' : '' ?>>1 Adult</option>
+                                <option value="2" <?= $adults == '2' ? 'selected' : '' ?>>2 Adults</option>
+                                <option value="3" <?= $adults == '3' ? 'selected' : '' ?>>3 Adults</option>
+                                <option value="4" <?= $adults == '4' ? 'selected' : '' ?>>4 Adults</option>
+                                <option value="5" <?= $adults == '5' ? 'selected' : '' ?>>5 Adults</option>
+                                <option value="6" <?= $adults == '6' ? 'selected' : '' ?>>6 Adults</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="children">Children:</label>
+                            <select id="children" name="children">
+                                <option value="0" <?= $children == '0' ? 'selected' : '' ?>>No Children</option>
+                                <option value="1" <?= $children == '1' ? 'selected' : '' ?>>1 Child</option>
+                                <option value="2" <?= $children == '2' ? 'selected' : '' ?>>2 Children</option>
+                                <option value="3" <?= $children == '3' ? 'selected' : '' ?>>3 Children</option>
+                                <option value="4" <?= $children == '4' ? 'selected' : '' ?>>4 Children</option>
+                            </select>
+                        </div>
                     </div>
 
-                    <!-- Number of Children -->
-                    <div class="form-group">
-                        <label for="children">Children:</label>
-                        <select id="children" name="children">
-                            <option value="0" <?= $children == '0' ? 'selected' : '' ?>>No Children</option>
-                            <option value="1" <?= $children == '1' ? 'selected' : '' ?>>1 Child</option>
-                            <option value="2" <?= $children == '2' ? 'selected' : '' ?>>2 Children</option>
-                            <option value="3" <?= $children == '3' ? 'selected' : '' ?>>3 Children</option>
-                            <option value="4" <?= $children == '4' ? 'selected' : '' ?>>4 Children</option>
-                        </select>
-                    </div>
-                    </div>
-
-                    <!-- Submit Button -->
-                    <button type="submit" class="reserve-btn">
-                        Check Availability
-                    </button>
+                    <button type="submit" class="reserve-btn">Check Availability</button>
                 </form>
             </section>
-        </main>            
-       
-        
+        </main>
 
-        <!-- Pop-up message box (used by MessagePopUps.js) -->
         <div id="bookingModal" class="modal-overlay">
             <div class="modal-box">
                 <button
@@ -294,27 +254,17 @@
                     &times;
                 </button>
 
-                <div id="modalIcon" class="modal-icon">
-                    !
-                </div>
-
-                <h2 id="modalTitle" class="modal-title">
-                    Message Title
-                </h2>
-
-                <p id="modalMessage" class="modal-message">
-                    Message will appear here.
-                </p>
+                <div id="modalIcon" class="modal-icon">!</div>
+                <h2 id="modalTitle" class="modal-title">Message Title</h2>
+                <p id="modalMessage" class="modal-message">Message will appear here.</p>
 
                 <div class="modal-actions">
-
                     <button
                         type="button"
                         id="modalPrimary"
                         class="modal-button">
                         Continue
                     </button>
-
                     <button
                         type="button"
                         id="modalSecondary"
@@ -325,12 +275,8 @@
             </div>
         </div>
 
-        <!-- Link the JavaScript file -->
         <script src="../Shared/MessagePopUps.js"></script>
         <script src="KMKReservations_Drivers.js"></script>
-       
-        
-        <!-- footer with copyright and slogan-->    
         <footer class="site-footer">
             <p>Plan your day your way.</p>
             <p class="footer-small">&copy; 2026 KMK Reservations</p>

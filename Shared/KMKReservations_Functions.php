@@ -1,16 +1,6 @@
 <?php
-    // SHARED FUNCTIONS
-    // Functions used by many pages, so we don't type the same code again.
-    // Load it at the top of a page with:
-    //     require_once '../Shared/KMKReservations_Functions.php';
-
-
-    // ---------- 1. Database helpers (prepared statements) ----------
-
-    // Runs a query with ? marks in it. $types is like "ssi" (s = text, i = number)
-    // Returns the statement, or false if something went wrong
     function runQuery($conn, $sql, $types = "", $values = []) {
-        $stmt = mysqli_prepare($conn, $sql);       // step 1: send the SQL with the ? marks
+        $stmt = mysqli_prepare($conn, $sql);
 
         if ($stmt === false) {
             error_log("Query could not be prepared: " . mysqli_error($conn));
@@ -18,10 +8,10 @@
         }
 
         if ($types !== "") {
-            mysqli_stmt_bind_param($stmt, $types, ...$values);   // step 2: fill in the ? marks
+            mysqli_stmt_bind_param($stmt, $types, ...$values);
         }
 
-        if (!mysqli_stmt_execute($stmt)) {         // step 3: run it
+        if (!mysqli_stmt_execute($stmt)) {
             error_log("Query failed: " . mysqli_stmt_error($stmt));
             return false;
         }
@@ -29,7 +19,6 @@
         return $stmt;
     }
 
-    // Gets ONE row (or null if nothing was found)
     function getOneRow($conn, $sql, $types = "", $values = []) {
         $stmt = runQuery($conn, $sql, $types, $values);
         if ($stmt === false) {
@@ -39,7 +28,6 @@
         return $row ?: null;
     }
 
-    // Gets ALL the rows as an array
     function getAllRows($conn, $sql, $types = "", $values = []) {
         $stmt = runQuery($conn, $sql, $types, $values);
         if ($stmt === false) {
@@ -48,20 +36,14 @@
         return mysqli_fetch_all(mysqli_stmt_get_result($stmt), MYSQLI_ASSOC);
     }
 
-
-    // ---------- 2. Log in and roles ----------
-
-    // true if someone is logged in
     function isLoggedIn() {
         return isset($_SESSION['user_id']);
     }
 
-    // true if the logged in user is an admin
     function isAdmin() {
         return isLoggedIn() && ($_SESSION['role'] ?? '') === 'admin';
     }
 
-    // Only admins can stay on the page. Everyone else is sent away.
     function requireAdmin() {
         if (!isLoggedIn()) {
             header("Location: ../MyProfile/KMKReservations_MyProfile.php");
@@ -73,10 +55,6 @@
         }
     }
 
-
-    // ---------- 3. Bookings ----------
-
-    // Makes a booking reference number that is not used yet, e.g. KMK-4F9A2C
     function makeReference($conn) {
         do {
             $reference = 'KMK-' . strtoupper(substr(bin2hex(random_bytes(4)), 0, 6));
@@ -86,17 +64,12 @@
         return $reference;
     }
 
-    // Finds the service_id for a restaurant / room / driver name (null if it is not in the list)
     function getServiceId($conn, $serviceType, $name) {
         $row = getOneRow($conn, "SELECT service_id FROM services WHERE service_type = ? AND name = ?",
                          "ss", [$serviceType, $name]);
         return $row ? $row['service_id'] : null;
     }
 
-    // Business rule: no double bookings (cancelled bookings don't count)
-    // - with a $userId: has THIS user already booked this service for this date and time?
-    // - without one:    has ANYONE booked it? (used for drivers, a driver can't be in two places)
-    // <=> is like = but also works when the time is empty (rooms have no time)
     function isAlreadyBooked($conn, $serviceId, $date, $time, $userId = null) {
         $sql = "SELECT booking_id FROM bookings
                 WHERE service_id = ? AND booking_date = ? AND booking_time <=> ? AND status <> 'Cancelled'";
@@ -112,8 +85,6 @@
         return getOneRow($conn, $sql, $types, $values) !== null;
     }
 
-    // Saves a new booking. $data holds the extra details (rooms, from_place ...)
-    // Returns the reference number, or false if it could not be saved
     function saveBooking($conn, $userId, $serviceId, $data) {
         $reference = makeReference($conn);
 
@@ -141,7 +112,6 @@
         return $stmt === false ? false : $reference;
     }
 
-    // Current or previous? A booking is "previous" once its last day has passed
     function bookingPeriod($booking) {
         $lastDay = $booking['end_date'] ?? $booking['booking_date'];
         if ($lastDay == '') {
@@ -150,7 +120,6 @@
         return $lastDay >= date('Y-m-d') ? 'current' : 'previous';
     }
 
-    // Short line of details for a booking, used on My Bookings, the Admin page and the CSV file
     function bookingDetails($booking) {
         $people = $booking['adults'] . ' adult(s), ' . $booking['children'] . ' child(ren)';
 
@@ -166,13 +135,9 @@
             return $text . ', ' . $people;
         }
 
-        return $people;   // restaurant
+        return $people;
     }
 
-
-    // ---------- 4. Admin search / filter (used by the Admin page AND the CSV export) ----------
-
-    // Reads the filter boxes from the address bar (GET)
     function getBookingFilters() {
         return [
             'search'  => trim($_GET['search'] ?? ''),
@@ -183,7 +148,6 @@
         ];
     }
 
-    // Gets the bookings that match the filters, newest first
     function getFilteredBookings($conn, $filters) {
         $sql = "SELECT b.*, s.service_type, s.name AS service_name, s.location,
                        u.full_name, u.email, u.phone
@@ -194,7 +158,6 @@
         $types = "";
         $values = [];
 
-        // Each filter adds one more condition and one more ? value
         if ($filters['search'] !== '') {
             $sql .= " AND (b.reference LIKE ? OR u.full_name LIKE ? OR u.email LIKE ? OR s.name LIKE ?)";
             $like = '%' . $filters['search'] . '%';
@@ -227,30 +190,21 @@
         return getAllRows($conn, $sql, $types, $values);
     }
 
-
-    // ---------- 5. Small helpers ----------
-
-    // Checks a date is a real date written as YYYY-MM-DD
     function isValidDate($date) {
         $check = DateTime::createFromFormat('Y-m-d', $date);
         return $check && $check->format('Y-m-d') === $date;
     }
 
-    // Names shown for each service type
     function serviceName($type) {
         $names = ['restaurant' => 'Restaurant', 'room' => 'Accommodation', 'driver' => 'Driver'];
         return $names[$type] ?? $type;
     }
 
-    // ---------- 6. Account form checks ----------
-
-    // Checks a phone number has 7 to 15 digits (spaces, dashes and + are allowed)
     function isValidPhone($phone) {
         $digits = preg_replace('/[^0-9]/', '', $phone);
         return strlen($digits) >= 7 && strlen($digits) <= 15;
     }
 
-    // Checks a new password and its confirmation, adds any problems to $errors
     function checkPassword($password, $confirm, &$errors) {
         if (strlen($password) < 8) {
             $errors[] = 'The password must be at least 8 characters.';

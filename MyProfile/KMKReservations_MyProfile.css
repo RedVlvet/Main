@@ -1,7 +1,5 @@
-/* Fonts (from Google Fonts) */
 @import url('https://fonts.googleapis.com/css2?family=Oswald:wght@500;600&family=Poppins:wght@400;500;600&display=swap');
 
-/* ===== KMK Reservations - Account page ===== */
 :root {
     --nav-bg: #0D1F5C;
     --nav-text: #FFFFFF;
@@ -27,7 +25,6 @@ body {
     flex-direction: column;
 }
 
-/* ----- Navigation ----- */
 .site-nav {
     background: var(--nav-bg);
     display: flex;
@@ -63,17 +60,13 @@ body {
     border-bottom-color: var(--primary);
 }
 
-.nav-account { 
-    font-size: 1.2rem !important; 
-}
-
-/* ----- Hero ----- */
 .page-hero {
     background: linear-gradient(135deg, var(--hero-start), var(--hero-end));
     color: #fff;
-    display: flex;
+    display: grid;
+    grid-template-columns: 68px 1fr;
     align-items: center;
-    gap: 20px;
+    column-gap: 20px;
     padding: 36px 40px;
 }
 .hero-icon {
@@ -83,11 +76,19 @@ body {
     display: grid;
     place-items: center;
     font-size: 2rem;
+    grid-row: 1 / span 2;
 }
-.page-hero h1 { font-size: 1.7rem; margin-bottom: 4px; }
-.page-hero p { color: #DCE3FF; font-size: 0.95rem; }
+.page-hero h1 {
+    font-size: 1.7rem;
+    margin-bottom: 4px;
+    grid-column: 2;
+}
+.page-hero p {
+    color: #DCE3FF;
+    font-size: 0.95rem;
+    grid-column: 2;
+}
 
-/* ----- Layout ----- */
 .account-layout {
     flex: 1;
     width: 100%;
@@ -107,11 +108,12 @@ body {
     padding: 28px;
 }
 
-.profile-card { 
-    text-align: center; 
-    display: flex; 
-    flex-direction: column; 
-    gap: 12px; }
+.profile-card {
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
 
 .avatar {
     width: 84px; height: 84px;
@@ -136,7 +138,6 @@ body {
     word-break: break-word;
 }
 
-/* ----- Form ----- */
 .form-card h2 { 
     font-size: 1.15rem; 
     margin-bottom: 18px; 
@@ -184,7 +185,6 @@ body {
     font-size: 0.9rem;
 }
 
-/* ----- Buttons ----- */
 .btn {
     display: inline-block;
     padding: 12px 22px;
@@ -218,7 +218,6 @@ body {
     color: #fff; 
 }
 
-/* ----- Footer ----- */
 .site-footer {
     background: var(--nav-bg);
     color: var(--nav-text);
@@ -229,7 +228,6 @@ body {
 
 .footer-small { color: var(--nav-muted); font-size: 0.8rem; font-style: normal; margin-top: 6px; }
 
-/* ----- Mobile ----- */
 @media (max-width: 760px) {
     .site-nav { flex-direction: column; gap: 10px; padding: 12px 16px; }
     .nav-links { flex-wrap: wrap; justify-content: center; gap: 16px; }
@@ -237,20 +235,17 @@ body {
     .page-hero { padding: 26px 20px; }
 }
 
-/* headings use Oswald, like the other pages */
 h1, h2, h3 {
     font-family: "Oswald", Arial, sans-serif;
     letter-spacing: 0.5px;
 }
 
-/* make the nav stay at the top when scrolling, like the other pages */
 .site-nav {
     position: sticky;
     top: 0;
     z-index: 1000;
 }
 
-/* message shown when a form has an error */
 .alert-error {
     background: #FEE2E2;
     color: #991B1B;
@@ -265,12 +260,10 @@ h1, h2, h3 {
     margin-top: 4px;
 }
 
-/* the form buttons fill the card width */
 .form-card .btn {
     width: 100%;
 }
 
-/* when logged out, Log in and Create account sit side by side */
 .account-layout:not(:has(.profile-card)) {
     grid-template-columns: 1fr 1fr;
 }

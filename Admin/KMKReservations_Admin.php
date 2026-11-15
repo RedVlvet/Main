@@ -1,37 +1,28 @@
 <?php
-    // ADMIN PAGE
-    // Only admins can open this page. It shows every booking, a summary,
-    // a search / filter, and lets the admin confirm or cancel bookings.
+
     session_start();
 
-    // Database connection and shared functions
     require_once '../Database/DB.php';
     require_once '../Shared/KMKReservations_Functions.php';
 
-    // The role is checked in PHP (hiding the link is not enough)
     requireAdmin();
 
-    // ---------- 1. Confirm or cancel a booking ----------
     if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $bookingId = (int) ($_POST['booking_id'] ?? 0);
         $newStatus = $_POST['new_status'] ?? '';
 
-        // Only these two changes are allowed
         if (in_array($newStatus, ['Confirmed', 'Cancelled'])) {
             runQuery($conn, "UPDATE bookings SET status = ? WHERE booking_id = ?", "si", [$newStatus, $bookingId]);
             $_SESSION['admin_message'] = 'Booking updated to ' . $newStatus . '.';
         }
 
-        // Go back to the same page with the same filters (so refreshing doesn't send the form again)
         header("Location: KMKReservations_Admin.php?" . http_build_query(getBookingFilters()));
         exit;
     }
 
-    // Message from the last confirm / cancel (shown once)
     $message = $_SESSION['admin_message'] ?? '';
     unset($_SESSION['admin_message']);
 
-    // ---------- 2. Summary numbers ----------
     $today = date('Y-m-d');
     $summary = getOneRow($conn,
         "SELECT COUNT(*) AS total,
@@ -43,7 +34,6 @@
 
     $userCount = getOneRow($conn, "SELECT COUNT(*) AS total FROM users WHERE role = 'user'");
 
-    // Bookings for each service
     $perService = ['restaurant' => 0, 'room' => 0, 'driver' => 0];
     $serviceRows = getAllRows($conn,
         "SELECT s.service_type, COUNT(*) AS total
@@ -54,11 +44,9 @@
         $perService[$row['service_type']] = $row['total'];
     }
 
-    // ---------- 3. Search / filter ----------
     $filters  = getBookingFilters();
     $bookings = getFilteredBookings($conn, $filters);
 
-    // Link for the CSV download, with the same filters as the table
     $csvLink = 'export_csv.php?' . http_build_query($filters);
 ?>
 
@@ -72,7 +60,6 @@
 </head>
 <body>
 
-    <!-- Navigation Bar -->
     <header class="site-nav">
         <a href="../Home/KMKReservations_Home.php" class="nav-brand">
             <img src="../KMKReservations_Logo.png" alt="KMK Reservations logo">
@@ -90,7 +77,6 @@
 
     <main class="admin-page">
 
-        <!-- Heading -->
         <section class="admin-heading">
             <h1>Admin Dashboard</h1>
             <p>Hi, <?= htmlspecialchars($_SESSION['user_name']) ?>. Manage all KMK reservations here.</p>
@@ -100,7 +86,6 @@
             <p class="admin-message"><?= htmlspecialchars($message) ?></p>
         <?php endif; ?>
 
-        <!-- Summary cards -->
         <section class="summary">
             <div class="summary-card">
                 <span class="summary-number"><?= (int) $summary['total'] ?></span>
@@ -131,7 +116,6 @@
             Drivers: <strong><?= $perService['driver'] ?></strong>
         </p>
 
-        <!-- Search and filter (GET, so the filters show in the address bar) -->
         <form class="filter-bar" method="get" action="">
             <div class="filter-field wide">
                 <label for="search">Search</label>
@@ -176,7 +160,6 @@
             </div>
         </form>
 
-        <!-- All bookings -->
         <section class="table-box">
             <p class="result-count"><?= count($bookings) ?> booking(s) found</p>
 
@@ -241,7 +224,6 @@
         </section>
     </main>
 
-    <!-- footer with copyright and slogan-->
     <footer class="site-footer">
         <p>Plan your day your way.</p>
         <p class="footer-small">&copy; 2026 KMK Reservations</p>

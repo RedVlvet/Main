@@ -1,6 +1,5 @@
 
 
-/* General pop-up background */
 .modal-overlay {
     display: none;
     position: fixed;
@@ -11,19 +10,16 @@
     background: rgba(0, 21, 43, 0.75);
     z-index: 9999;
 
-    /* Centre the pop-up */
     justify-content: center;
     align-items: center;
     padding: 20px;
     box-sizing: border-box;
 }
 
-/* Show the pop-up */
 .modal-overlay.show {
     display: flex;
 }
 
-/* Main pop-up box */
 .modal-box {
     position: relative;
     background: #FFFFFF;
@@ -37,7 +33,6 @@
     animation: popupAppear 0.3s ease;
 }
 
-/* Pop-up animation */
 @keyframes popupAppear {
     from {
         opacity: 0;
@@ -50,7 +45,6 @@
     }
 }
 
-/* Close button */
 .close-btn {
     position: absolute;
     top: 12px;
@@ -62,7 +56,6 @@
     cursor: pointer;
 }
 
-/* Circular icon */
 .modal-icon {
     width: 60px;
     height: 60px;
@@ -79,7 +72,6 @@
     font-weight: bold;
 }
 
-/* Different icon colours */
 .modal-icon.success {
     background: #16A34A;
 }
@@ -92,14 +84,12 @@
     background: #6D28D9;
 }
 
-/* Pop-up heading */
 .modal-title {
     color: #001F3C;
     font-size: 23px;
     margin-bottom: 10px;
 }
 
-/* Pop-up message */
 .modal-message {
     color: #555555;
     font-size: 15px;
@@ -107,7 +97,6 @@
     margin-bottom: 25px;
 }
 
-/* Button container */
 .modal-actions {
     display: flex;
     justify-content: center;
@@ -115,7 +104,6 @@
     flex-wrap: wrap;
 }
 
-/* General button styling */
 .modal-button {
     padding: 12px 20px;
     border: none;
@@ -127,33 +115,19 @@
     cursor: pointer;
 }
 
-/* Button hover effect */
 .modal-button:hover {
     opacity: 0.85;
 }
 
-/* Secondary button */
 .modal-button.secondary {
     background: #E5E7EB;
     color: #001F3C;
 }
 
-/* Success button */
-.modal-button.success-button {
-    background: #16A34A;
-}
-
-/* Warning button */
-.modal-button.warning-button {
-    background: #D97706;
-}
-
-/* Hide unused buttons */
 .modal-button.hidden {
     display: none;
 }
 
-/* Mobile screen adjustments */
 @media screen and (max-width: 480px) {
 
     .modal-box {

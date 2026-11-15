@@ -1,8 +1,5 @@
-/* Fonts (from Google Fonts) */
 @import url('https://fonts.googleapis.com/css2?family=Oswald:wght@500;600&family=Poppins:wght@400;500;600&display=swap');
 
-
-/* General page styling */
 * {
     margin: 0;
     padding: 0;
@@ -16,7 +13,6 @@ body {
 }
 
 
-/*Navigation Bar (same as the My Profile page)*/
 .site-nav {
     background: #0D1F5C;
     display: flex;
@@ -56,13 +52,10 @@ body {
     border-bottom-color: #2388F5;
 }
 
-/* headings use Oswald, like the video */
 h1, h2, h3 {
     font-family: "Oswald", Arial, sans-serif;
     letter-spacing: 0.5px;
 }
-
-/*Main Rooms Section*/
 
 .accomodation-hero {
     min-height: 85vh;
@@ -73,7 +66,6 @@ h1, h2, h3 {
     justify-content: space-between;
     gap: 40px;
 
-    /* Replace with hotel background image */
     background-image:
         linear-gradient(rgba(0, 21, 43, 0.45),
                         rgba(0, 21, 43, 0.45)),
@@ -84,29 +76,24 @@ h1, h2, h3 {
     background-repeat: no-repeat;
 }
 
-/* Left Side Content */
 .hero-content {
     flex: 1;
     max-width: 550px;
 }
 
 .hero-content h1 {
-    font-size: 42px;
+    font-size: 52px;
+    line-height: 1.15;
     margin-bottom: 15px;
-}
-
-.hero-content h2 {
-    font-size: 32px;
-    margin-bottom: 20px;
+    text-shadow: 2px 2px 10px rgba(0, 0, 0, 0.5);
 }
 
 .hero-content p {
-    font-size: 16px;
+    font-size: 17px;
     line-height: 1.7;
     margin-bottom: 30px;
 }
 
-/*Booking Panel*/
 .booking-panel {
     background-color: #FFFFFF;
     color: #222222;
@@ -114,6 +101,7 @@ h1, h2, h3 {
     width: 430px;
     padding: 30px;
 
+    border-top: 6px solid #2DD4BF;
     border-radius: 10px;
     box-shadow: 0 5px 20px rgba(0, 0, 0, 0.3);
 }
@@ -124,7 +112,6 @@ h1, h2, h3 {
     color: #001F3C;
 }
 
-/* Form Fields */
 .form-group {
     margin-bottom: 22px;
 }
@@ -156,14 +143,12 @@ h1, h2, h3 {
 }
 
 
-/* Booking Button */
-
 .booking-btn {
     width: 100%;
     padding: 15px;
 
-    background-color: #17BEBB;
-    color: #001F3C;
+    background-color: #0EA5A4;
+    color: #FFFFFF;
 
     border: none;
     border-radius: 5px;
@@ -176,179 +161,9 @@ h1, h2, h3 {
 }
 
 .booking-btn:hover {
-    background-color: #308baf;
+    background-color: #17BEBB;
     color: #FFFFFF;
 }
-
-/*Account Required Pop-up*/
-.modal-overlay {
-    display: none;
-    position: fixed;
-    top: 0;
-    left: 0;
-
-    width: 100%;
-    height: 100%;
-
-    background-color: rgba(0, 0, 0, 0.65);
-
-    justify-content: center;
-    align-items: center;
-
-    padding: 20px;
-    z-index: 2000;
-}
-
-
-/* Success message icon */
-.modal-icon.success {
-    background-color: #16A34A;
-}
-
-/* Warning message icon */
-.modal-icon.warning {
-    background-color: #D97706;
-}
-
-/* Error or account message icon */
-.modal-icon.error {
-    background-color: #A855F7;
-}
-
-/* Hide the secondary button when not needed */
-.cancel-btn.hidden {
-    display: none;
-}
-
-/* Change primary button colour for important actions */
-.profile-btn.success-btn {
-    background-color: #16A34A;
-}
-
-.profile-btn.warning-btn {
-    background-color: #D97706;
-}
-
-
-/* JavaScript adds this class to show the pop-up */
-.modal-overlay.show {
-    display: flex;
-}
-
-.modal-box {
-    background-color: #FFFFFF;
-    color: #222222;
-
-    width: 100%;
-    max-width: 420px;
-
-    padding: 35px;
-    border-radius: 12px;
-
-    text-align: center;
-    position: relative;
-
-    animation: popup 0.3s ease;
-}
-
-.modal-icon {
-    width: 55px;
-    height: 55px;
-
-    margin: 0 auto 20px;
-
-    border-radius: 50%;
-    background-color: #A855F7;
-    color: #FFFFFF;
-
-    display: flex;
-    align-items: center;
-    justify-content: center;
-
-    font-size: 30px;
-    font-weight: bold;
-}
-
-.modal-box h2 {
-    color: #001F3C;
-    margin-bottom: 15px;
-}
-
-.modal-box p {
-    font-size: 15px;
-    line-height: 1.6;
-    margin-bottom: 25px;
-}
-
-
-/* Pop-up Buttons */
-
-.profile-btn,
-.cancel-btn {
-    width: 100%;
-    padding: 13px;
-
-    border: none;
-    border-radius: 5px;
-
-    font-size: 15px;
-    cursor: pointer;
-}
-
-.profile-btn {
-    background-color: #6D28D9;
-    color: #FFFFFF;
-    margin-bottom: 12px;
-}
-
-.profile-btn:hover {
-    background-color: #A855F7;
-}
-
-.cancel-btn {
-    background-color: #EEEEEE;
-    color: #222222;
-}
-
-.cancel-btn:hover {
-    background-color: #DDDDDD;
-}
-
-
-/* Close Button */
-
-.close-btn {
-    position: absolute;
-    top: 10px;
-    right: 15px;
-
-    background: none;
-    border: none;
-
-    font-size: 28px;
-    cursor: pointer;
-    color: #555555;
-}
-
-
-/* Pop-up Animation */
-
-@keyframes popup {
-    from {
-        opacity: 0;
-        transform: scale(0.8);
-    }
-
-    to {
-        opacity: 1;
-        transform: scale(1);
-    }
-}
-
-
-/* =========================
-   Responsive Design
-========================= */
 
 @media screen and (max-width: 900px) {
 
@@ -375,23 +190,17 @@ h1, h2, h3 {
         font-size: 32px;
     }
 
-    .hero-content h2 {
-        font-size: 25px;
-    }
-
     .booking-panel {
         padding: 22px;
     }
 }
 
-/* colours used by the footer */
 :root {
     --nav-bg: #001F3C;
     --nav-text: #FFFFFF;
     --nav-muted: #A0AEC0;
 }
 
-/* ----- Footer ----- */
 .site-footer {
     background: var(--nav-bg);
     color: var(--nav-text);
@@ -400,42 +209,23 @@ h1, h2, h3 {
     font-style: italic;
 }
 
-.footer-small { 
-    color: var(--nav-muted); 
-    font-size: 0.8rem; 
+.footer-small {
+    color: var(--nav-muted);
+    font-size: 0.8rem;
     font-style: normal;
-    margin-top: 6px; 
+    margin-top: 6px;
 }
 
-/* Navigation on small screens */
 @media (max-width: 760px) {
-    .site-nav { flex-direction: column; gap: 10px; padding: 12px 16px; }
-    .nav-links { flex-wrap: wrap; justify-content: center; gap: 16px; }
-}
+    .site-nav {
+        flex-direction: column;
+        gap: 10px;
+        padding: 12px 16px;
+    }
 
-/* ----- Extra styling (inspired by the hotel booking video) ----- */
-.hero-content h1 {
-    font-size: 52px;
-    line-height: 1.15;
-    text-shadow: 2px 2px 10px rgba(0, 0, 0, 0.5);
-}
-
-.hero-content p {
-    font-size: 17px;
-}
-
-/* coloured line on top of the form (colour from the README) */
-.booking-panel {
-    border-top: 6px solid #2DD4BF;
-}
-
-/* button colours from the README */
-.booking-btn {
-    background-color: #0EA5A4;
-    color: #FFFFFF;
-}
-
-.booking-btn:hover {
-    background-color: #17BEBB;
-    color: #FFFFFF;
+    .nav-links {
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 16px;
+    }
 }

@@ -1,5 +1,4 @@
 
-// Shared function for displaying pop-up messages
 function showMessage(
     title,
     message,
@@ -11,7 +10,6 @@ function showMessage(
     secondaryAction = null
 ) {
 
-    // Get the pop-up elements from the page
     const modal = document.getElementById("bookingModal");
 
     if (!modal) {
@@ -25,15 +23,12 @@ function showMessage(
     const primaryButton = document.getElementById("modalPrimary");
     const secondaryButton = document.getElementById("modalSecondary");
 
-    // Update the pop-up information
     titleBox.textContent = title;
     messageBox.textContent = message;
     iconBox.textContent = icon;
 
-    // Set the icon colour
     iconBox.className = "modal-icon " + type;
 
-    // Set the main button
     primaryButton.textContent = primaryText;
 
     primaryButton.onclick = function () {
@@ -44,7 +39,6 @@ function showMessage(
         }
     };
 
-    // Set the second button if one is needed
     if (secondaryText !== "") {
 
         secondaryButton.textContent = secondaryText;
@@ -62,23 +56,19 @@ function showMessage(
         secondaryButton.classList.add("hidden");
     }
 
-    // Display the pop-up
     modal.classList.add("show");
 }
 
 
 document.addEventListener("DOMContentLoaded", function () {
 
-    // Get the pop-up elements
     const closeButton = document.getElementById("modalClose");
     const modal = document.getElementById("bookingModal");
 
-    // Close button functionality
     if (closeButton) {
         closeButton.addEventListener("click", closeMessage);
     }
 
-    // Close when clicking outside the pop-up box
     if (modal) {
         modal.addEventListener("click", function (event) {
             if (event.target === modal) {
@@ -87,31 +77,24 @@ document.addEventListener("DOMContentLoaded", function () {
         });
     }
 
-    // PHP sets data-done="1" on the body after a booking passes the checks
     if (document.body.dataset.done === "1") {
         reservationSuccess();
     }
 
-    // Get the booking form (Restaurants, Accomodations or Drivers page)
     const bookingForm = document.getElementById("bookingForm");
 
     if (bookingForm) {
 
         bookingForm.addEventListener("submit", function (event) {
 
-            // Check whether the user is logged in
             const isLoggedIn = bookingForm.dataset.loggedIn === "true";
 
             if (!isLoggedIn) {
 
-                // Stop the form and display the account-required pop-up
                 event.preventDefault();
                 accountRequired();
 
             }
-
-            // If the user is logged in, the form is sent to PHP to be checked
-
         });
 
     }
@@ -120,7 +103,6 @@ document.addEventListener("DOMContentLoaded", function () {
 
 
 
-// Function to close the pop-up
 function closeMessage() {
 
     const modal = document.getElementById("bookingModal");
@@ -131,7 +113,6 @@ function closeMessage() {
 }
 
 
-// 1. Account Required
 function accountRequired() {
 
     showMessage(
@@ -149,7 +130,6 @@ function accountRequired() {
 }
 
 
-// 2. Reservation Successful
 function reservationSuccess() {
 
     showMessage(
@@ -167,7 +147,6 @@ function reservationSuccess() {
 }
 
 
-// 3. Session About to Expire
 function sessionWarning() {
 
     showMessage(
@@ -177,7 +156,6 @@ function sessionWarning() {
         "warning",
         "Continue Session",
         function () {
-            // Connect this button to your PHP session refresh later.
             window.location.reload();
         },
         "Log Out",
@@ -188,7 +166,6 @@ function sessionWarning() {
 }
 
 
-// 4. Leaving Before Completing a Reservation
 function confirmExit(destination) {
 
     showMessage(
@@ -210,7 +187,6 @@ function confirmExit(destination) {
 }
 
 
-// 5. Account Created Successfully
 function accountCreated() {
 
     showMessage(

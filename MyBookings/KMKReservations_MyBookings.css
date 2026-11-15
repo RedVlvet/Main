@@ -1,8 +1,5 @@
-/* Fonts (from Google Fonts) */
 @import url('https://fonts.googleapis.com/css2?family=Oswald:wght@500;600&family=Poppins:wght@400;500;600&display=swap');
 
-
-/* General Page Styling */
 * {
     margin: 0;
     padding: 0;
@@ -19,7 +16,6 @@ body {
     min-height: 100vh;
 }
 
-/*Navigation Bar (same as the My Profile page)*/
 .site-nav {
     background: #0D1F5C;
     display: flex;
@@ -59,26 +55,21 @@ body {
     border-bottom-color: #2388F5;
 }
 
-/* headings use Oswald, like the video */
 h1, h2, h3 {
     font-family: "Oswald", Arial, sans-serif;
     letter-spacing: 0.5px;
 }
 
-/* Main Content */
 .container {
     width: 90%;
     max-width: 1100px;
     margin: 40px auto;
     padding: 30px;
 
-    /* Adds a light background behind the content
-       so the text is easy to read over the image. */
     background-color: rgba(255, 255, 255, 0.94);
     border-radius: 12px;
 }
 
-/* Welcome Message */
 .welcome {
     margin-bottom: 30px;
 }
@@ -93,7 +84,6 @@ h1, h2, h3 {
     color: #555555;
 }
 
-/* Restaurant, Room and Driver Sections */
 .service-sections {
     display: flex;
     flex-direction: column;
@@ -101,7 +91,6 @@ h1, h2, h3 {
     margin-bottom: 40px;
 }
 
-/* Individual Service Panels */
 .service-card {
     width: 100%;
     padding: 30px;
@@ -122,7 +111,6 @@ h1, h2, h3 {
     color: white;
 }
 
-/* Individual Service Colours */
 .restaurant {
     background-color: #17BEBB;
 }
@@ -135,7 +123,6 @@ h1, h2, h3 {
     background-color: #001F3C;
 }
 
-/* Highlight the selected service */
 .service-card.active {
     border-color: #222222;
     transform: translateY(-3px);
@@ -145,7 +132,6 @@ h1, h2, h3 {
     opacity: 0.9;
 }
 
-/* Reservations Section */
 .reservations {
     margin-top: 20px;
 }
@@ -155,7 +141,6 @@ h1, h2, h3 {
     margin-bottom: 20px;
 }
 
-/* Current and Previous Tabs */
 .reservation-tabs {
     display: flex;
     gap: 10px;
@@ -177,7 +162,6 @@ h1, h2, h3 {
     color: white;
 }
 
-/* Reservation Cards */
 .reservation-list {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
@@ -213,13 +197,11 @@ h1, h2, h3 {
     font-weight: bold;
 }
 
-/* Hide reservations that do not match the selected tabs */
 .reservation-card[hidden],
 #noReservations[hidden] {
     display: none;
 }
 
-/* No Reservations Message */
 #noReservations {
     grid-column: 1 / -1;
     text-align: center;
@@ -233,14 +215,12 @@ h1, h2, h3 {
     margin-bottom: 10px;
 }
 
-/* colours used by the footer */
 :root {
     --nav-bg: #001F3C;
     --nav-text: #FFFFFF;
     --nav-muted: #A0AEC0;
 }
 
-/* ----- Footer ----- */
 .site-footer {
     background: var(--nav-bg);
     color: var(--nav-text);
@@ -249,14 +229,13 @@ h1, h2, h3 {
     font-style: italic;
 }
 
-.footer-small { 
-    color: var(--nav-muted); 
-    font-size: 0.8rem; 
-    font-style: normal; 
-    margin-top: 6px; 
+.footer-small {
+    color: var(--nav-muted);
+    font-size: 0.8rem;
+    font-style: normal;
+    margin-top: 6px;
 }
 
-/* Adjust the page for smaller screens */
 @media screen and (max-width: 700px) {
 
 
@@ -270,18 +249,24 @@ h1, h2, h3 {
 
 }
 
-/* Navigation on small screens */
 @media (max-width: 760px) {
-    .site-nav { flex-direction: column; gap: 10px; padding: 12px 16px; }
-    .nav-links { flex-wrap: wrap; justify-content: center; gap: 16px; }
+    .site-nav {
+        flex-direction: column;
+        gap: 10px;
+        padding: 12px 16px;
+    }
+
+    .nav-links {
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 16px;
+    }
 }
 
-/* ----- Booking status colours ----- */
-.status-pending   { background-color: #FEF3C7; color: #92400E; }
+.status-pending { background-color: #FEF3C7; color: #92400E; }
 .status-confirmed { background-color: #DCFCE7; color: #166534; }
 .status-cancelled { background-color: #FEE2E2; color: #991B1B; }
 
-/* Cancel button on each current booking */
 .cancel-form {
     margin-top: 14px;
 }
@@ -301,7 +286,6 @@ h1, h2, h3 {
     color: #FFFFFF;
 }
 
-/* Messages under the welcome text */
 .login-note,
 .booking-message {
     margin-top: 12px;

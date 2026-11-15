@@ -1,5 +1,4 @@
 
-// Drivers page: extra form features (inspired by the Knutsford Express booking form)
 document.addEventListener("DOMContentLoaded", function () {
 
     const fromSelect = document.getElementById("from");
@@ -14,16 +13,12 @@ document.addEventListener("DOMContentLoaded", function () {
     const children = document.getElementById("children");
     const bookingForm = document.getElementById("bookingForm");
 
-
-    // 1. Swap "Travelling from" and "Travelling to"
     swapButton.addEventListener("click", function () {
         const temp = fromSelect.value;
         fromSelect.value = toSelect.value;
         toSelect.value = temp;
     });
 
-
-    // 2. Show the return date and time only for a Return trip
     function updateTripType() {
         const isReturn = document.querySelector('input[name="trip_type"]:checked').value === "return";
         returnRow.hidden = !isReturn;
@@ -37,8 +32,6 @@ document.addEventListener("DOMContentLoaded", function () {
 
     updateTripType();
 
-
-    // 3. Passenger picker: shows a short summary, click to open the choices
     function updateSummary() {
         const a = adults.value;
         const c = children.value;
@@ -47,7 +40,7 @@ document.addEventListener("DOMContentLoaded", function () {
         passengerSummary.textContent = text;
     }
 
-    passengerBox.hidden = true;   // closed until the user clicks
+    passengerBox.hidden = true;
 
     passengerButton.addEventListener("click", function () {
         passengerBox.hidden = !passengerBox.hidden;
@@ -58,8 +51,6 @@ document.addEventListener("DOMContentLoaded", function () {
     children.addEventListener("change", updateSummary);
     updateSummary();
 
-
-    // 4. Error pop-up if from and to are the same place
     bookingForm.addEventListener("submit", function (event) {
         if (bookingForm.dataset.loggedIn === "true" && fromSelect.value !== "" && fromSelect.value === toSelect.value) {
             event.preventDefault();
