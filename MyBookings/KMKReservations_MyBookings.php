@@ -79,7 +79,7 @@
     <main class="container">
         <section class="welcome">
             <h1>Hi, <?= htmlspecialchars($userName) ?>!</h1>
-            <p>These are your current and previous reservations. Where you can view in one place.</p>
+            <p> View all all of your current and previous reservations.</p>
 
             <?php if (!$isLoggedIn): ?>
                 <p class="login note">

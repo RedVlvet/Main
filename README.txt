@@ -8,6 +8,10 @@ XAMPP MySQL setup
    an empty password. To use different settings, define DB_HOST, DB_NAME,
    DB_USER, and DB_PASSWORD for Apache/PHP before starting Apache.
   4. Open the site through Apache (for example, http://localhost/Practice/Main).
+  Admin login
+  Email: admin@kmk.test
+  Password: Admin@2026
+  
 
 
 Home Page 

@@ -7,7 +7,7 @@
 
     requireAdmin();
 
-    // Handle booking status updates.
+    // updates booking status .
     if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $bookingId = (int) ($_POST['booking_id'] ?? 0);
         $serviceType = $_POST['service_type'] ?? '';
@@ -141,6 +141,8 @@
             <div class="filter buttons">
                 <button type="submit" class="btn">Filter</button>
                 <a href="KMKReservations_Admin.php" class="btn btn light">Clear</a>
+                <!-- CSV Export -->
+                <a href="export_csv.php?<?= htmlspecialchars(http_build_query($filters)) ?>" class="btn btn csv">Export CSV</a>
             </div>
         </form>
 

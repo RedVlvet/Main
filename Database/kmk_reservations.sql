@@ -154,13 +154,13 @@ PREPARE copy_statement FROM @copy_old_rooms;
 EXECUTE copy_statement;
 DEALLOCATE PREPARE copy_statement;
 
--- Remove legacy tables after copying
+-- Remove old tables after copying info
 SET FOREIGN_KEY_CHECKS = 0;
 DROP TABLE IF EXISTS bookings;
 DROP TABLE IF EXISTS services;
 DROP TABLE IF EXISTS reservations;
 SET FOREIGN_KEY_CHECKS = 1;
 
--- Ensure the admin account exists
+--  Creates the admin account if it doesn't exist
 INSERT IGNORE INTO users (full_name, email, phone, password, role, created_at) VALUES
 ('KMK Admin', 'admin@kmk.test', '876-555-0100', '$2y$10$bloXXGu04oMV5isQCdN8xOHOYjM9oX0WRqkaDdNXfa0K2bp2m.P5q', 'admin', '2026-10-01 09:00:00');
